@@ -10,6 +10,9 @@
 node_modules/
 vendor/
 
+# Graph
+.codegraph
+
 # Symfony
 .env
 .env.local
