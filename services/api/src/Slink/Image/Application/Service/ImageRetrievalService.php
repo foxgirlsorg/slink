@@ -7,8 +7,8 @@ namespace Slink\Image\Application\Service;
 use Slink\Image\Domain\Service\ImageRetrievalInterface;
 use Slink\Image\Domain\Service\ImageTransformerInterface;
 use Slink\Shared\Domain\ValueObject\ImageOptions;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(ImageRetrievalInterface::class)]

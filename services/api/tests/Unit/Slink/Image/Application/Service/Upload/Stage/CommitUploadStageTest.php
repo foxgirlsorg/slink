@@ -21,7 +21,7 @@ use Slink\Image\Domain\ValueObject\ImageMetadata;
 use Slink\Image\Infrastructure\ReadModel\View\ImageView;
 use Slink\Shared\Domain\Exception\Date\DateTimeException;
 use Slink\Shared\Domain\ValueObject\ID;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Tests\Unit\Slink\Image\Application\Service\Upload\UploadContextFactoryTrait;
 

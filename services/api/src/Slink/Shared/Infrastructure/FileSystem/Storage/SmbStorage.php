@@ -15,8 +15,8 @@ use Slink\Settings\Domain\Provider\ConfigurationProviderInterface;
 use Slink\Shared\Domain\Enum\StorageProvider;
 use Slink\Shared\Domain\ValueObject\BaseFileName;
 use Slink\Shared\Infrastructure\Exception\NotFoundException as StorageNotFoundException;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\DirectoryStorageInterface;
+use Slink\Shared\Domain\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\Storage\DirectoryStorageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 final class SmbStorage extends AbstractStorage implements DirectoryStorageInterface {

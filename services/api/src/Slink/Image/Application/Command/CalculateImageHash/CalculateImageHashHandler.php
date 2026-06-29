@@ -8,7 +8,7 @@ use Slink\Image\Domain\Repository\ImageRepositoryInterface;
 use Slink\Image\Domain\Repository\ImageStoreRepositoryInterface;
 use Slink\Image\Domain\Service\ImageHashCalculatorInterface;
 use Slink\Shared\Application\Command\CommandHandlerInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 
 final readonly class CalculateImageHashHandler implements CommandHandlerInterface {
   public function __construct(

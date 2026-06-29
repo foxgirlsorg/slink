@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Slink\Shared\Infrastructure\FileSystem\Storage\Contract;
+namespace Slink\Shared\Domain\FileSystem\Storage;
 
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\FileStream;
 use Symfony\Component\HttpFoundation\File\File;
 
-#[AutoconfigureTag]
 interface StorageInterface {
   /**
    * @param File $file

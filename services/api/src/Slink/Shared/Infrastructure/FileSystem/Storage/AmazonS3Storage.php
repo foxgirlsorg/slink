@@ -12,8 +12,8 @@ use Slink\Shared\Domain\Enum\StorageProvider;
 use Slink\Shared\Domain\ValueObject\BaseFileName;
 use Slink\Shared\Infrastructure\Exception\NotFoundException;
 use Slink\Shared\Infrastructure\Exception\Storage\AmazonS3Exception;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\ObjectStorageInterface;
+use Slink\Shared\Domain\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\Storage\ObjectStorageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 final class AmazonS3Storage extends AbstractStorage implements ObjectStorageInterface {

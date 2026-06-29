@@ -15,7 +15,7 @@ use Slink\Shared\Application\Http\Item;
 use Slink\Shared\Application\Query\QueryHandlerInterface;
 use Slink\Shared\Domain\Exception\ForbiddenException;
 use Slink\Shared\Infrastructure\Exception\NotFoundException;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Slink\User\Infrastructure\Auth\JwtUser;
 
 final readonly class GetImageByIdHandler implements QueryHandlerInterface {

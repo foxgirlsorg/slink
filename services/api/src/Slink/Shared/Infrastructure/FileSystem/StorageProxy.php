@@ -6,10 +6,10 @@ namespace Slink\Shared\Infrastructure\FileSystem;
 
 use Slink\Settings\Domain\Provider\ConfigurationProviderInterface;
 use Slink\Shared\Domain\Enum\StorageProvider;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\HttpFoundation\File\File;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Slink\Storage\Application\Command\ClearCache;
 
 use Slink\Shared\Application\Command\CommandHandlerInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
 
 final readonly class ClearCacheHandler implements CommandHandlerInterface {
   public function __construct(

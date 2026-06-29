@@ -8,8 +8,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Slink\Settings\Domain\Provider\ConfigurationProviderInterface;
 use Slink\Shared\Infrastructure\FileSystem\Storage\AbstractStorage;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\DirectoryStorageInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\ObjectStorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\DirectoryStorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\ObjectStorageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 abstract class StorageContractTestCase extends TestCase {

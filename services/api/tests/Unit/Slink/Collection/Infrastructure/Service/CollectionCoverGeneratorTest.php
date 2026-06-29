@@ -13,8 +13,8 @@ use Slink\Collection\Domain\Service\CollageBuilderInterface;
 use Slink\Collection\Infrastructure\Service\CollectionCoverGenerator;
 use Slink\Image\Domain\Repository\ImageRepositoryInterface;
 use Slink\Image\Infrastructure\ReadModel\View\ImageView;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 
 final class CollectionCoverGeneratorTest extends TestCase {
   private StorageInterface $storage;

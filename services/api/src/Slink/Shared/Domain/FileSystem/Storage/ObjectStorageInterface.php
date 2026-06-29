@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Slink\Shared\Infrastructure\FileSystem\Storage\Contract;
+namespace Slink\Shared\Domain\FileSystem\Storage;
 
 interface ObjectStorageInterface {
   

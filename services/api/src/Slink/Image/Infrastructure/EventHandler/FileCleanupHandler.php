@@ -7,7 +7,7 @@ namespace Slink\Image\Infrastructure\EventHandler;
 use Slink\Image\Domain\Event\ImageWasDeleted;
 use Slink\Image\Domain\Repository\ImageRepositoryInterface;
 use Slink\Shared\Infrastructure\Exception\NotFoundException;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Slink\Shared\Infrastructure\MessageBus\Event\AbstractEventConsumer;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 

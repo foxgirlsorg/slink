@@ -12,7 +12,7 @@ use Slink\Image\Application\Service\Upload\UploadStageInterface;
 use Slink\Image\Domain\Context\ImageCreationContext;
 use Slink\Image\Domain\Image;
 use Slink\Image\Domain\Repository\ImageStoreRepositoryInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
 #[AsTaggedItem(priority: UploadPhase::Persist->value)]

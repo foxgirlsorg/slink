@@ -14,8 +14,8 @@ use Slink\Image\Domain\ValueObject\Operation\Cover;
 use Slink\Image\Domain\ValueObject\Operation\Filter;
 use Slink\Image\Domain\ValueObject\Operation\Fit;
 use Slink\Image\Infrastructure\Service\VipsImageProcessor;
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\FileStream;
 use Tests\Support\ImageFormatFixtures;
 use Tests\Support\WiresVipsProcessor;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Slink\Shared\Infrastructure\FileSystem;
+namespace Slink\Shared\Domain\FileSystem;
 
 use InvalidArgumentException;
 use RuntimeException;

@@ -12,10 +12,10 @@ use PHPUnit\Framework\TestCase;
 use Slink\Image\Application\Service\ImageRetrievalService;
 use Slink\Image\Domain\Service\ImageTransformerInterface;
 use Slink\Shared\Domain\ValueObject\ImageOptions;
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 
 final class ImageRetrievalServiceTest extends TestCase {
   private StorageInterface&MockObject $storage;

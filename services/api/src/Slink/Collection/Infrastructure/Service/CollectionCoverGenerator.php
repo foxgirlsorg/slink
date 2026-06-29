@@ -9,8 +9,8 @@ use Slink\Collection\Domain\Repository\CollectionItemRepositoryInterface;
 use Slink\Collection\Domain\Service\CollageBuilderInterface;
 use Slink\Collection\Domain\Service\CollectionCoverGeneratorInterface;
 use Slink\Image\Domain\Repository\ImageRepositoryInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Throwable;
 

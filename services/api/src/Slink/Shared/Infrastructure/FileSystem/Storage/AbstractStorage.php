@@ -3,12 +3,14 @@
 namespace Slink\Shared\Infrastructure\FileSystem\Storage;
 
 use Slink\Settings\Domain\Provider\ConfigurationProviderInterface;
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\DirectoryStorageInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\ObjectStorageInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageCacheInterface;
-use Slink\Shared\Infrastructure\FileSystem\Storage\Contract\StorageInterface;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\Storage\DirectoryStorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\ObjectStorageInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageCacheInterface;
+use Slink\Shared\Domain\FileSystem\Storage\StorageInterface;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag(StorageInterface::class)]
 abstract class AbstractStorage implements StorageInterface, StorageCacheInterface {
   /**
    * @var string

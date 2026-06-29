@@ -21,8 +21,8 @@ use Slink\Image\Domain\ValueObject\Operation\Filter;
 use Slink\Image\Domain\ValueObject\Operation\Fit;
 use Slink\Settings\Application\Service\SettingsService;
 use Slink\Shared\Domain\ValueObject\ImageOptions;
-use Slink\Shared\Infrastructure\FileSystem\FileSource;
-use Slink\Shared\Infrastructure\FileSystem\FileStream;
+use Slink\Shared\Domain\FileSystem\FileSource;
+use Slink\Shared\Domain\FileSystem\FileStream;
 use SplFileInfo;
 use Symfony\Component\HttpFoundation\File\File;
 
