@@ -79,8 +79,11 @@ final class ImageRepository extends AbstractRepository implements ImageRepositor
     $qb = $this->getEntityManager()
       ->createQueryBuilder()
       ->from(ImageView::class, 'image')
+      ->select('image')
       ->leftJoin('image.user', 'user')
-      ->select('image');
+      ->addSelect('user')
+      ->leftJoin('image.license', 'license')
+      ->addSelect('license');
 
     if (($isPublic = $imageListFilter->getIsPublic()) !== null) {
       $qb->andWhere('image.attributes.isPublic = :isPublic')
