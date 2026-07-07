@@ -1,34 +1,11 @@
 import { cva } from 'class-variance-authority';
+import { tv } from 'tailwind-variants';
 
-export const actionBarContainerVariants = cva('flex items-center', {
+export const actionButtonVariants = cva('rounded-[7px]', {
   variants: {
     layout: {
       default: '',
-      hero: 'gap-3',
-    },
-  },
-  defaultVariants: {
-    layout: 'default',
-  },
-});
-
-export const actionBarSecondaryGroupVariants = cva('flex items-center', {
-  variants: {
-    layout: {
-      default: '',
-      hero: 'gap-1',
-    },
-  },
-  defaultVariants: {
-    layout: 'default',
-  },
-});
-
-export const actionButtonVariants = cva('', {
-  variants: {
-    layout: {
-      default: '',
-      hero: 'h-auto min-w-0 rounded-lg',
+      hero: 'h-auto min-w-0 flex-1 rounded-lg',
     },
     variant: {
       default: '',
@@ -59,7 +36,7 @@ export const actionButtonVariants = cva('', {
     {
       layout: 'default',
       variant: 'primary',
-      class: 'gap-1.5 px-3 min-w-fit flex-3',
+      class: 'gap-1.5 px-3',
     },
     {
       layout: 'default',
@@ -70,6 +47,16 @@ export const actionButtonVariants = cva('', {
   defaultVariants: {
     layout: 'default',
     variant: 'default',
+  },
+});
+
+export const copyControlVariants = tv({
+  slots: {
+    group:
+      'flex h-8 items-stretch overflow-hidden rounded-[7px] border-[0.5px] border-gray-200 transition-colors hover:bg-gray-100/50 dark:border-gray-700 dark:hover:bg-gray-700/30',
+    zone: 'h-full rounded-none focus-visible:ring-inset focus-visible:ring-offset-0',
+    caret:
+      'w-5 min-w-0 flex-none border-l-[0.5px] border-gray-200 bg-gray-100/50 px-0 dark:border-gray-700 dark:bg-gray-700/30',
   },
 });
 
