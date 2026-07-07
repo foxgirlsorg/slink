@@ -21,11 +21,13 @@ final class OwnershipPlanTest extends TestCase {
       ['path' => '/app/var/data', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => false, 'optional' => false, 'glob' => false],
       ['path' => '/services/api/var', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => false, 'glob' => false],
       ['path' => '/app/var/data/*.db', 'owner' => 'www-data', 'group' => 'www-data', 'mode' => null, 'recursive' => false, 'optional' => true, 'glob' => true],
+      ['path' => '/data', 'owner' => 'slink', 'group' => 'slink', 'mode' => null, 'recursive' => false, 'optional' => false, 'glob' => false],
       ['path' => '/data/caddy', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => false, 'glob' => false],
       ['path' => '/data/redis', 'owner' => 'redis', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => false, 'glob' => false],
       ['path' => '/app/slink/images', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => false, 'glob' => false],
       ['path' => '/app/slink/cache', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => true, 'glob' => false],
       ['path' => '/app/slink/chunks', 'owner' => 'www-data', 'group' => 'slink', 'mode' => null, 'recursive' => true, 'optional' => true, 'glob' => false],
+      ['path' => '/data', 'owner' => null, 'group' => null, 'mode' => 0o2771, 'recursive' => false, 'optional' => false, 'glob' => false],
       ['path' => '/app/var/data', 'owner' => null, 'group' => null, 'mode' => 0o770, 'recursive' => false, 'optional' => false, 'glob' => false],
       ['path' => '/app/slink/images', 'owner' => null, 'group' => null, 'mode' => 0o2770, 'recursive' => false, 'optional' => false, 'glob' => false],
       ['path' => '/app/slink/cache', 'owner' => null, 'group' => null, 'mode' => 0o2770, 'recursive' => false, 'optional' => true, 'glob' => false],
@@ -37,7 +39,7 @@ final class OwnershipPlanTest extends TestCase {
       ['path' => '/run', 'owner' => 'root', 'group' => 'root', 'mode' => null, 'recursive' => false, 'optional' => false, 'glob' => false],
     ];
 
-    self::assertCount(18, $plan->getEntries());
+    self::assertCount(20, $plan->getEntries());
     self::assertSame($expected, $actual);
   }
 
@@ -62,6 +64,20 @@ final class OwnershipPlanTest extends TestCase {
     self::assertSame('slink', $first->getOwner());
     self::assertSame('slink', $first->getGroup());
     self::assertTrue($first->isRecursive());
+  }
+
+  #[Test]
+  public function dataRootIsSlinkOwnedWithTraverseOnlyAccessForNonMembers(): void {
+    $plan = OwnershipPlan::fromStoragePaths('/app', '/services/api/var', '/data', '/run');
+
+    $ownership = $this->ownershipEntryFor($plan, '/data');
+    $mode = $this->modeEntryFor($plan, '/data');
+
+    self::assertSame('slink', $ownership->getOwner());
+    self::assertSame('slink', $ownership->getGroup());
+    self::assertFalse($ownership->isRecursive());
+    self::assertSame(0o2771, $mode->getMode());
+    self::assertFalse($mode->isRecursive());
   }
 
   #[Test]
