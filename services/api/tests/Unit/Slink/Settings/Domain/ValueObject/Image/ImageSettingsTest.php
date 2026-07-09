@@ -7,6 +7,8 @@ namespace Unit\Slink\Settings\Domain\ValueObject\Image;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Slink\Media\Domain\Enum\MediaFormat;
+use Slink\Settings\Domain\Exception\InvalidAllowedFormatsException;
 use Slink\Settings\Domain\Exception\InvalidChunkSizeException;
 use Slink\Settings\Domain\ValueObject\Image\ImageSettings;
 
@@ -94,6 +96,98 @@ final class ImageSettingsTest extends TestCase {
       ]);
     } catch (InvalidChunkSizeException $exception) {
       $this->assertSame('image.chunkSize', $exception->getProperty());
+
+      throw $exception;
+    }
+  }
+
+  #[Test]
+  public function itRoundTripsAllowedFormatsMaskThroughPayload(): void {
+    $mask = MediaFormat::Png->bit() | MediaFormat::Jpeg->bit();
+
+    $settings = ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => $mask,
+    ]);
+
+    $this->assertSame(['png', 'jpeg'], $settings->getAllowedFormats());
+    $this->assertSame($mask, $settings->toPayload()['allowedFormats']);
+  }
+
+  #[Test]
+  public function itDefaultsAllowedFormatsToAllWhenKeyMissing(): void {
+    $settings = ImageSettings::fromPayload([
+      'maxSize' => '5M',
+    ]);
+
+    $this->assertSame(MediaFormat::allValues(), $settings->getAllowedFormats());
+    $this->assertSame(-1, $settings->toPayload()['allowedFormats']);
+  }
+
+  #[Test]
+  public function itResolvesAllMediaFormatsFromFullMask(): void {
+    $settings = ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => -1,
+    ]);
+
+    $this->assertSame(MediaFormat::allValues(), $settings->getAllowedFormats());
+  }
+
+  #[Test]
+  public function itResolvesAllowedMimeTypesFromMask(): void {
+    $settings = ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => MediaFormat::Jpeg->bit() | MediaFormat::Svg->bit(),
+    ]);
+
+    $this->assertSame(
+      ['image/jpeg', 'image/jpg', 'image/svg+xml', 'image/svg'],
+      $settings->getAllowedMimeTypes(),
+    );
+  }
+
+  #[Test]
+  public function itIgnoresUnknownBitsInAllowedFormatsMask(): void {
+    $settings = ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => (1 << 30) | MediaFormat::Png->bit(),
+    ]);
+
+    $this->assertSame(['png'], $settings->getAllowedFormats());
+  }
+
+  #[Test]
+  public function itRejectsZeroAllowedFormatsMask(): void {
+    $this->expectException(InvalidAllowedFormatsException::class);
+
+    ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => 0,
+    ]);
+  }
+
+  #[Test]
+  public function itRejectsMaskWithOnlyUnknownBits(): void {
+    $this->expectException(InvalidAllowedFormatsException::class);
+
+    ImageSettings::fromPayload([
+      'maxSize' => '5M',
+      'allowedFormats' => 1 << 30,
+    ]);
+  }
+
+  #[Test]
+  public function itThrowsExceptionExposingAllowedFormatsProperty(): void {
+    $this->expectException(InvalidAllowedFormatsException::class);
+
+    try {
+      ImageSettings::fromPayload([
+        'maxSize' => '5M',
+        'allowedFormats' => 0,
+      ]);
+    } catch (InvalidAllowedFormatsException $exception) {
+      $this->assertSame('image.allowedFormats', $exception->getProperty());
 
       throw $exception;
     }

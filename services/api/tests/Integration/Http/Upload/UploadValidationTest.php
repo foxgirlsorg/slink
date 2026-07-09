@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration\Http\Upload;
 
 use PHPUnit\Framework\Attributes\Test;
+use Slink\Media\Domain\Enum\MediaFormat;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tests\Integration\Http\HttpTestCase;
 
@@ -89,6 +90,19 @@ final class UploadValidationTest extends HttpTestCase {
       . \pack('N', \crc32($type . $data));
   }
 
+  private function sampleGif(): UploadedFile {
+    $temp = (string) \tempnam(\sys_get_temp_dir(), 'slink_upload_') . '.gif';
+
+    $gif = \base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true);
+    if ($gif === false) {
+      throw new \RuntimeException('Unable to decode test gif image.');
+    }
+
+    \file_put_contents($temp, $gif);
+
+    return new UploadedFile($temp, 'sample.gif', 'image/gif', null, true);
+  }
+
   #[Test]
   public function nonImageFileIsRejected(): void {
     $this->bootUser();
@@ -111,5 +125,21 @@ final class UploadValidationTest extends HttpTestCase {
     self::assertGreaterThan(5 * 1024 * 1024, (int) $file->getSize());
 
     self::assertSame(422, $this->upload($file));
+  }
+
+  #[Test]
+  public function disallowedFormatIsRejectedWhenAllowedFormatsRestricted(): void {
+    $this->bootUser();
+    $this->saveSettings('image', ['maxSize' => '5M', 'allowedFormats' => MediaFormat::Png->bit()]);
+
+    self::assertSame(422, $this->upload($this->sampleGif()));
+  }
+
+  #[Test]
+  public function allowedFormatPassesWhenAllowedFormatsRestricted(): void {
+    $this->bootUser();
+    $this->saveSettings('image', ['maxSize' => '5M', 'allowedFormats' => MediaFormat::Png->bit()]);
+
+    self::assertContains($this->upload($this->sampleImage()), [200, 201]);
   }
 }

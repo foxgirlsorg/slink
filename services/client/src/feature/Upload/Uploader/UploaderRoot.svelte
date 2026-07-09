@@ -12,13 +12,20 @@
   import {
     type UploaderContainerState,
     UploaderContainerTheme,
-    UploaderPatternTheme,
+    UploaderHeroTheme,
+    UploaderSurfaceTheme,
   } from './Uploader.theme';
+  import UploaderConstraints from './UploaderConstraints.svelte';
+  import UploaderDragOverlay from './UploaderDragOverlay.svelte';
+  import UploaderQuickPaste from './UploaderQuickPaste.svelte';
 
   interface Props {
     disabled?: boolean;
     onchange?: (files: File[]) => void;
     allowMultiple?: boolean;
+    allowedMimeTypes?: string[];
+    allowedFormats?: string[];
+    maxSize?: string | null;
     children?: Snippet;
   }
 
@@ -26,13 +33,29 @@
     disabled = false,
     onchange,
     allowMultiple = false,
+    allowedMimeTypes = [],
+    allowedFormats = [],
+    maxSize = null,
     children,
   }: Props = $props();
 
-  const isImage = (file: File): boolean => {
-    if (!file?.type) return true;
-    return file.type.startsWith('image/');
+  const isGenericMedia = (type: string): boolean => {
+    return type.startsWith('image/') || type.startsWith('video/');
   };
+
+  const isAcceptedMedia = (file: File): boolean => {
+    if (!file?.type) return true;
+
+    if (allowedMimeTypes.length > 0) {
+      return allowedMimeTypes.includes(file.type);
+    }
+
+    return isGenericMedia(file.type);
+  };
+
+  const acceptAttribute = $derived(
+    allowedMimeTypes.length > 0 ? allowedMimeTypes.join(',') : 'image/*',
+  );
 
   const handleReject = (reason: Dropzone.FileDropRejectReason) => {
     if (reason === 'none') {
@@ -53,7 +76,7 @@
   const fileDrop = Dropzone.createFileDropState({
     disabled: () => disabled,
     multiple: () => allowMultiple,
-    accept: isImage,
+    accept: isAcceptedMedia,
     onFiles: (files) => onchange?.(files),
     onReject: handleReject,
   });
@@ -67,20 +90,33 @@
 
 <svelte:document onpaste={fileDrop.handlePaste} />
 
-<div class={UploaderContainerTheme({ state: containerState })}>
-  <div class={cn(cardTheme(), 'transition-all duration-300')}>
-    <div class={UploaderPatternTheme()}></div>
+<div
+  class={UploaderContainerTheme({ state: containerState })}
+  {...fileDrop.dragHandlers}
+>
+  <Dropzone.Root state={fileDrop}>
+    <div class={cn(cardTheme(), 'isolate transition-all duration-300')}>
+      <div class={UploaderSurfaceTheme()}>
+        <Dropzone.Input
+          accept={acceptAttribute}
+          class={cn(
+            UploaderHeroTheme({ disabled }),
+            'flex flex-col items-center px-4 pt-8 pb-4 text-center sm:px-5 sm:pt-10 sm:pb-4',
+          )}
+        >
+          {@render children?.()}
 
-    <Dropzone.Root state={fileDrop}>
-      <Dropzone.Input
-        accept="image/*"
-        class={cn(
-          'relative w-full cursor-pointer transition-all duration-500',
-          disabled && 'pointer-events-none opacity-60',
-        )}
-      >
-        {@render children?.()}
-      </Dropzone.Input>
-    </Dropzone.Root>
-  </div>
+          <div class="mt-8 hidden sm:block">
+            <UploaderQuickPaste />
+          </div>
+
+          <div class="mt-3 w-full sm:mt-8">
+            <UploaderConstraints {allowedFormats} {maxSize} />
+          </div>
+        </Dropzone.Input>
+      </div>
+
+      <UploaderDragOverlay />
+    </div>
+  </Dropzone.Root>
 </div>

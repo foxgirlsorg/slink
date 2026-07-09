@@ -4,13 +4,18 @@
   import { FileSizeInput, NumberInput } from '@slink/ui/components/input';
   import { Select } from '@slink/ui/components/select';
   import { Switch } from '@slink/ui/components/switch';
+  import { TogglePills } from '@slink/ui/components/toggle-pills';
 
   import type { SettingCategory } from '@slink/lib/settings/Type/GlobalSettings';
   import type { ImageSettings as ImageSettingsType } from '@slink/lib/settings/Type/ImageSettings';
+  import type { MediaFormatOption } from '@slink/lib/settings/Type/MediaFormat';
+
+  import { MediaFormatSelection } from './MediaFormatSelection';
 
   interface Props {
     settings: ImageSettingsType;
     defaultSettings?: ImageSettingsType;
+    mediaFormats?: MediaFormatOption[];
     loading?: boolean;
     onSave: (event: {
       category: SettingCategory;
@@ -21,6 +26,7 @@
   let {
     settings = $bindable(),
     defaultSettings,
+    mediaFormats = [],
     loading = false,
     onSave,
   }: Props = $props();
@@ -32,6 +38,14 @@
   ];
 
   let targetFormat = $derived.by(() => settings.targetFormat ?? 'webp');
+
+  const mediaFormatSelection = new MediaFormatSelection(
+    mediaFormats,
+    () => settings.allowedFormats ?? -1,
+    (mask) => {
+      settings.allowedFormats = mask;
+    },
+  );
 </script>
 
 <SettingsPane category="image" {loading} on={{ save: onSave }}>
@@ -161,6 +175,30 @@
       min={1}
       max={100}
       step={1}
+    />
+  </SettingItem>
+
+  <SettingItem
+    defaultValue={defaultSettings?.allowedFormats}
+    defaultLabel="Default"
+    currentValue={settings.allowedFormats}
+    layout="stacked"
+    reset={(value) => {
+      settings.allowedFormats = value;
+    }}
+  >
+    {#snippet label()}
+      Allowed Upload Formats
+    {/snippet}
+    {#snippet hint()}
+      Choose which media formats users may upload. At least one format is
+      required.
+    {/snippet}
+    <TogglePills
+      options={mediaFormatSelection.options}
+      bind:value={mediaFormatSelection.values}
+      minItems={1}
+      aria-label="Allowed upload formats"
     />
   </SettingItem>
 

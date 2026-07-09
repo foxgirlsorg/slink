@@ -9,4 +9,7 @@ export type ImageSettings = {
   forceFormatConversion: boolean;
   targetFormat: string | null;
   convertAnimatedImages: boolean;
+  allowedFormats?: number;
+  allowedMimeTypes?: string[];
+  allowedFormatLabels?: string[];
 };

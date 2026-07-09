@@ -406,10 +406,6 @@ msgstr "Only one file allowed at a time"
 msgid "or click to browse from your device"
 msgstr "or click to browse from your device"
 
-#: src/feature/Upload/Uploader/UploaderIdle.svelte
-msgid "View all supported formats"
-msgstr "View all supported formats"
-
 #: src/feature/Upload/Uploader/UploaderDragOverlay.svelte
 msgid "Drop to upload"
 msgstr "Drop to upload"
@@ -1329,6 +1325,7 @@ msgstr "Signing..."
 msgid "Copied"
 msgstr "Copied"
 
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ShareLinkCopy/ShareLinkCopy.svelte
 #: src/feature/Text/CopyContainer/CopyContainer.svelte
 msgid "Copy"
@@ -2692,7 +2689,6 @@ msgstr "Pick a date"
 msgid "Submit"
 msgstr "Submit"
 
-#: src/ui/components/enhanced-select/enhanced-select.svelte
 #: src/ui/components/select/select.svelte
 msgid "Select an option"
 msgstr "Select an option"
@@ -2861,6 +2857,7 @@ msgstr "Configure storage providers and cache management"
 msgid "Visibility Options"
 msgstr "Visibility Options"
 
+#: src/feature/Settings/ImageSettings/ImageSettings.svelte
 #: src/routes/help/faq/+page.svelte
 msgid "Default"
 msgstr "Default"
@@ -4521,7 +4518,7 @@ msgstr "Close search"
 msgid "View mode"
 msgstr "View mode"
 
-#: src/feature/Upload/Uploader/UploaderIdle.svelte
+#: src/feature/Upload/Uploader/UploaderQuickPaste.svelte
 msgid "Quick paste"
 msgstr "Quick paste"
 
@@ -4952,9 +4949,7 @@ msgstr "Inherits the global approval setting."
 msgid "{0} options"
 msgstr "{0} options"
 
-#. 0: selectedItems.length
 #. 0: selectedCount
-#: src/ui/components/enhanced-select/enhanced-select.svelte
 #: src/ui/components/select/select.svelte
 msgid "{0} items selected"
 msgstr "{0} items selected"
@@ -5008,3 +5003,36 @@ msgstr "HTML"
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 msgid "Copy link options"
 msgstr "Copy link options"
+
+#: src/feature/Settings/ImageSettings/ImageSettings.svelte
+msgid "Allowed Upload Formats"
+msgstr "Allowed Upload Formats"
+
+#: src/feature/Settings/ImageSettings/ImageSettings.svelte
+msgid "Choose which media formats users may upload. At least one format is required."
+msgstr "Choose which media formats users may upload. At least one format is required."
+
+#: src/feature/Settings/ImageSettings/ImageSettings.svelte
+msgid "Allowed upload formats"
+msgstr "Allowed upload formats"
+
+#: src/feature/Upload/Uploader/UploaderConstraints.svelte
+msgid "Supported formats"
+msgstr "Supported formats"
+
+#: src/feature/Upload/Uploader/UploaderConstraints.svelte
+msgid "Show less"
+msgstr "Show less"
+
+#: src/feature/Upload/Uploader/UploaderConstraints.svelte
+msgid "up to <0/>"
+msgstr "up to <0/>"
+
+#. 0: formats.hiddenCount
+#: src/feature/Upload/Uploader/UploaderConstraints.svelte
+msgid "+{0} more"
+msgstr "+{0} more"
+
+#: src/feature/Upload/Uploader/UploaderConstraints.svelte
+msgid "Max size"
+msgstr "Max size"
