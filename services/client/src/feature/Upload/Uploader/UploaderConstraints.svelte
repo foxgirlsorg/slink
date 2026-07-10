@@ -20,7 +20,6 @@
     labelRow,
     label,
     formats: formatsClass,
-    formatText,
     toggle,
     inlineSize,
     sizeValue,
@@ -46,8 +45,7 @@
           {/if}
         </div>
         <p class={formatsClass()}>
-          <span class={formatText()}>{formats.visible.join(' ')}</span
-          >{#if formats.hiddenCount > 0}<button
+          {formats.visible.join(' ')}{#if formats.hiddenCount > 0}<button
               type="button"
               class={toggle()}
               aria-expanded={formats.expanded}

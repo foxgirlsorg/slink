@@ -101,16 +101,16 @@
           accept={acceptAttribute}
           class={cn(
             UploaderHeroTheme({ disabled }),
-            'flex flex-col items-center px-4 pt-8 pb-4 text-center sm:px-5 sm:pt-10 sm:pb-4',
+            'flex flex-col items-center px-4 pt-[38px] pb-[18px] text-center sm:px-[26px]',
           )}
         >
           {@render children?.()}
 
-          <div class="mt-8 hidden sm:block">
+          <div class="mt-6 hidden sm:block">
             <UploaderQuickPaste />
           </div>
 
-          <div class="mt-3 w-full sm:mt-8">
+          <div class="mt-3 w-full sm:mt-[26px]">
             <UploaderConstraints {allowedFormats} {maxSize} />
           </div>
         </Dropzone.Input>

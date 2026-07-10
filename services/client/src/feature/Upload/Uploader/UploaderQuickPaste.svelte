@@ -4,16 +4,20 @@
 
 <div class="group/shortcut">
   <div
-    class="flex items-center gap-4 pl-4 pr-3 py-2 rounded-xl bg-slate-100/70 dark:bg-slate-700/40 border border-slate-200/50 dark:border-slate-600/30 backdrop-blur-sm group-hover/shortcut:bg-slate-200/80 dark:group-hover/shortcut:bg-slate-600/50 transition-all duration-200"
+    class="flex items-center gap-4 rounded-full py-[9px] pl-5 pr-2.5 bg-slate-100/70 border border-slate-200/60 dark:bg-slate-400/5 dark:border-slate-400/10 transition-colors duration-200"
   >
     <span
-      class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400"
+      class="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500"
       >Quick paste</span
     >
     <span
-      class="h-5 w-px bg-slate-300/70 dark:bg-slate-600/60"
+      class="w-px h-[18px] bg-slate-300/70 dark:bg-slate-400/15"
       aria-hidden="true"
     ></span>
-    <Shortcut control={true} key="v" size="lg" />
+    <Shortcut
+      control={true}
+      key="v"
+      class="h-auto rounded-[10px] px-3 py-[5px] text-[13px] dark:border-slate-400/25 dark:bg-slate-800/80 dark:text-slate-300"
+    />
   </div>
 </div>
