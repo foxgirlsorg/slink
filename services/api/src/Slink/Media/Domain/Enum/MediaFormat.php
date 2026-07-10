@@ -62,7 +62,7 @@ enum MediaFormat: string {
       self::Svg => ['image/svg+xml', 'image/svg'],
       self::Bmp => ['image/bmp'],
       self::Ico => ['image/x-icon', 'image/vnd.microsoft.icon'],
-      self::Tga => ['image/x-tga'],
+      self::Tga => ['image/x-tga', 'image/targa', 'image/tga', 'image/x-targa', 'application/tga'],
       self::Heic => ['image/heic', 'image/heif'],
       self::Tiff => ['image/tiff', 'image/tif'],
     };

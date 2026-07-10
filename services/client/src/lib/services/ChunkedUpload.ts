@@ -16,6 +16,24 @@ import { messages } from '@slink/lib/utils/i18n/messages/toast.language';
 
 const CHUNK_TIMEOUT_MS = 30_000;
 
+const FALLBACK_MIME_TYPES: Record<string, string> = {
+  tga: 'image/x-tga',
+};
+
+const resolveMimeType = (file: File): string => {
+  if (file.type) {
+    return file.type;
+  }
+
+  const dotIndex = file.name.lastIndexOf('.');
+  if (dotIndex === -1) {
+    return 'application/octet-stream';
+  }
+
+  const extension = file.name.slice(dotIndex + 1).toLowerCase();
+  return FALLBACK_MIME_TYPES[extension] ?? 'application/octet-stream';
+};
+
 export interface UploadItem {
   file: File;
   id: string;
@@ -141,7 +159,7 @@ export class ChunkedUpload {
       {
         fileName: this.item.file.name,
         totalSize: this.item.file.size,
-        mimeType: this.item.file.type || 'application/octet-stream',
+        mimeType: resolveMimeType(this.item.file),
         tagIds: params.tagIds,
         collectionIds: params.collectionIds,
       },

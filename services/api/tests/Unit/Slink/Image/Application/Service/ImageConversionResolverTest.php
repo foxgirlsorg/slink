@@ -330,6 +330,11 @@ class ImageConversionResolverTest extends TestCase {
     yield 'heif is enforced to jpeg' => ['image/heif'];
     yield 'tiff is enforced to jpeg' => ['image/tiff'];
     yield 'tif is enforced to jpeg' => ['image/tif'];
+    yield 'x-tga is enforced to jpeg' => ['image/x-tga'];
+    yield 'targa is enforced to jpeg' => ['image/targa'];
+    yield 'tga is enforced to jpeg' => ['image/tga'];
+    yield 'x-targa is enforced to jpeg' => ['image/x-targa'];
+    yield 'application/tga is enforced to jpeg' => ['application/tga'];
   }
 
   /**

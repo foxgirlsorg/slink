@@ -26,7 +26,7 @@ final class ImageCapabilityCheckerTest extends TestCase {
         return new ImageCapabilityChecker(
             resizableMimeTypes: ['image/bmp', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif', 'image/avif'],
             stripExifMimeTypes: ['image/jpeg', 'image/jpg', 'image/heic', 'image/heif', 'image/tiff', 'image/tif'],
-            enforceConversionMimeTypes: ['image/heic', 'image/heif', 'image/tiff', 'image/tif'],
+            enforceConversionMimeTypes: ['image/heic', 'image/heif', 'image/tiff', 'image/tif', 'image/x-tga', 'image/targa', 'image/tga', 'image/x-targa', 'application/tga'],
             sanitizationRequiredMimeTypes: ['image/svg+xml', 'image/svg']
         );
     }
@@ -168,6 +168,11 @@ final class ImageCapabilityCheckerTest extends TestCase {
         yield 'heif requires conversion' => ['image/heif', true];
         yield 'tiff requires conversion' => ['image/tiff', true];
         yield 'tif requires conversion' => ['image/tif', true];
+        yield 'x-tga requires conversion' => ['image/x-tga', true];
+        yield 'targa requires conversion' => ['image/targa', true];
+        yield 'tga requires conversion' => ['image/tga', true];
+        yield 'x-targa requires conversion' => ['image/x-targa', true];
+        yield 'application/tga requires conversion' => ['application/tga', true];
         yield 'bmp does not require conversion' => ['image/bmp', false];
         yield 'png does not require conversion' => ['image/png', false];
         yield 'jpeg does not require conversion' => ['image/jpeg', false];
@@ -179,7 +184,6 @@ final class ImageCapabilityCheckerTest extends TestCase {
         yield 'svg does not require conversion' => ['image/svg', false];
         yield 'x-icon does not require conversion' => ['image/x-icon', false];
         yield 'vnd.microsoft.icon does not require conversion' => ['image/vnd.microsoft.icon', false];
-        yield 'x-tga does not require conversion' => ['image/x-tga', false];
     }
 
     /**
