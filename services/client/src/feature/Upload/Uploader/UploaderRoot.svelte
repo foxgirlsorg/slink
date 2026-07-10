@@ -1,7 +1,7 @@
 <script lang="ts">
-  import UnsupportedFileFormat from '@slink/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte';
   import { cardTheme } from '@slink/ui/components/card';
   import * as Dropzone from '@slink/ui/components/dropzone';
+  import { UnsupportedFormatToast } from '@slink/ui/components/sonner/toasts/index.js';
   import type { Snippet } from 'svelte';
 
   import { className as cn } from '$lib/utils/ui/className';
@@ -68,7 +68,7 @@
       return;
     }
 
-    toast.component(UnsupportedFileFormat, {
+    toast.component(UnsupportedFormatToast, {
       duration: 5000,
     });
   };
