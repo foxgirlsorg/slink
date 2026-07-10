@@ -5,7 +5,6 @@ import { SvelteMap } from 'svelte/reactivity';
 import { ReactiveState } from '@slink/api/ReactiveState';
 import type { OAuthProviderDetails } from '@slink/api/Resources/OAuthResource';
 
-import type { SortDirection } from '@slink/lib/enum/SortDirection';
 import { bindRequestState } from '@slink/lib/utils/store/bindRequestState.svelte';
 import { printErrorsAsToastMessage } from '@slink/lib/utils/ui/printErrorsAsToastMessage';
 
@@ -41,13 +40,10 @@ export class OAuthProviderListState {
   );
 
   private _move = bindRequestState(
-    ReactiveState<void>((id: string, direction: SortDirection) =>
-      ApiClient.oauth.move(id, direction),
+    ReactiveState<void>((id: string, position: number) =>
+      ApiClient.oauth.move(id, position),
     ),
   );
-
-  private _movingId: string | null = $state(null);
-  private _movingDirection: SortDirection | null = $state(null);
 
   private get _isBusy() {
     return (
@@ -88,52 +84,21 @@ export class OAuthProviderListState {
     }
   }
 
-  isMoving(id: string, direction: SortDirection): boolean {
-    return this._movingId === id && this._movingDirection === direction;
-  }
-
-  canMoveUp(provider: OAuthProviderDetails): boolean {
-    return this._order.indexOf(provider.id) > 0;
-  }
-
-  canMoveDown(provider: OAuthProviderDetails): boolean {
-    return this._order.indexOf(provider.id) < this._order.length - 1;
-  }
-
-  async moveUp(provider: OAuthProviderDetails) {
-    await this._performMove(provider, 'up');
-  }
-
-  async moveDown(provider: OAuthProviderDetails) {
-    await this._performMove(provider, 'down');
-  }
-
-  private async _performMove(
-    provider: OAuthProviderDetails,
-    direction: SortDirection,
-  ) {
+  async reorder(id: string, toIndex: number) {
     if (this._isBusy) return;
 
-    this._movingId = provider.id;
-    this._movingDirection = direction;
+    const fromIndex = this._order.indexOf(id);
+    if (fromIndex === -1 || fromIndex === toIndex) return;
 
-    try {
-      await this._move.run(provider.id, direction);
+    const previousOrder = [...this._order];
+    this._order.splice(fromIndex, 1);
+    this._order.splice(toIndex, 0, id);
 
-      if (this._move.error) {
-        printErrorsAsToastMessage(this._move.error);
-      } else {
-        const currentIndex = this._order.indexOf(provider.id);
-        const neighborIndex =
-          direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+    await this._move.run(id, toIndex);
 
-        const temp = this._order[currentIndex];
-        this._order[currentIndex] = this._order[neighborIndex];
-        this._order[neighborIndex] = temp;
-      }
-    } finally {
-      this._movingId = null;
-      this._movingDirection = null;
+    if (this._move.error) {
+      this._order = previousOrder;
+      printErrorsAsToastMessage(this._move.error);
     }
   }
 

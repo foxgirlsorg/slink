@@ -5,6 +5,7 @@
     ActionsMenu,
     DropdownSimpleGroup,
     DropdownSimpleItem,
+    SortableList,
   } from '@slink/ui/components';
   import { Switch } from '@slink/ui/components/switch';
 
@@ -24,10 +25,10 @@
 
   let { providers, onEdit }: Props = $props();
 
-  const state = new OAuthProviderListState(providers);
+  const listState = new OAuthProviderListState(providers);
 </script>
 
-{#if state.providers.length === 0}
+{#if listState.providers.length === 0}
   <div
     class="flex flex-col items-center justify-center py-12 text-center rounded-xl border border-dashed border-gray-200 dark:border-gray-700"
   >
@@ -41,15 +42,28 @@
     </p>
   </div>
 {:else}
-  <div
+  <SortableList
+    items={listState.providers}
+    key={(provider) => provider.id}
+    onReorder={(id, index) => listState.reorder(id, index)}
     class="divide-y divide-gray-100 dark:divide-gray-800 rounded-xl bg-gray-50/50 dark:bg-gray-900/30 border border-gray-100 dark:border-gray-800 overflow-hidden"
   >
-    {#each state.providers as provider (provider.id)}
+    {#snippet row({ item: provider, handle })}
       {@const preset = OAuthProviderConfig.resolve(provider.slug)}
       <div
         class="flex items-center justify-between gap-4 px-4 py-3.5 hover:bg-gray-100/50 dark:hover:bg-gray-800/30 transition-colors duration-150"
       >
         <div class="flex items-center gap-3 min-w-0">
+          {#if listState.providers.length > 1}
+            <button
+              type="button"
+              aria-label="Drag to reorder"
+              class="shrink-0 cursor-grab active:cursor-grabbing text-gray-300 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-500 transition-colors duration-150"
+              {...handle}
+            >
+              <Icon icon="ph:dots-six-vertical" class="w-4 h-4" />
+            </button>
+          {/if}
           <div
             class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0"
           >
@@ -87,34 +101,12 @@
         <div class="flex items-center gap-3 shrink-0">
           <Switch
             checked={provider.enabled}
-            onCheckedChange={(checked) => state.toggle(provider, checked)}
+            onCheckedChange={(checked) => listState.toggle(provider, checked)}
           />
 
           <ActionsMenu tone="ghost" label="Provider actions">
             <DropdownSimpleGroup>
-              {#if state.deleteConfirmId !== provider.id}
-                <DropdownSimpleItem
-                  on={{ click: () => state.moveUp(provider) }}
-                  closeOnSelect={false}
-                  loading={state.isMoving(provider.id, 'up')}
-                  disabled={!state.canMoveUp(provider)}
-                >
-                  {#snippet icon()}
-                    <Icon icon="ph:arrow-up" class="h-4 w-4" />
-                  {/snippet}
-                  <span>Move Up</span>
-                </DropdownSimpleItem>
-                <DropdownSimpleItem
-                  on={{ click: () => state.moveDown(provider) }}
-                  closeOnSelect={false}
-                  loading={state.isMoving(provider.id, 'down')}
-                  disabled={!state.canMoveDown(provider)}
-                >
-                  {#snippet icon()}
-                    <Icon icon="ph:arrow-down" class="h-4 w-4" />
-                  {/snippet}
-                  <span>Move Down</span>
-                </DropdownSimpleItem>
+              {#if listState.deleteConfirmId !== provider.id}
                 <DropdownSimpleItem on={{ click: () => onEdit(provider) }}>
                   {#snippet icon()}
                     <Icon icon="ph:note-pencil" class="h-4 w-4" />
@@ -123,7 +115,7 @@
                 </DropdownSimpleItem>
                 <DropdownSimpleItem
                   danger={true}
-                  on={{ click: () => state.requestDelete(provider) }}
+                  on={{ click: () => listState.requestDelete(provider) }}
                   closeOnSelect={false}
                 >
                   {#snippet icon()}
@@ -135,15 +127,15 @@
                 <OAuthProviderDeleteConfirmation
                   {provider}
                   {preset}
-                  loading={state.isDeleting(provider.id)}
-                  onConfirm={() => state.confirmDelete(provider)}
-                  onCancel={() => state.cancelDelete()}
+                  loading={listState.isDeleting(provider.id)}
+                  onConfirm={() => listState.confirmDelete(provider)}
+                  onCancel={() => listState.cancelDelete()}
                 />
               {/if}
             </DropdownSimpleGroup>
           </ActionsMenu>
         </div>
       </div>
-    {/each}
-  </div>
+    {/snippet}
+  </SortableList>
 {/if}

@@ -6,12 +6,10 @@ namespace Unit\Slink\User\Application\Command\MoveOAuthProvider;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Slink\Shared\Domain\Enum\SortDirection;
 use Slink\Shared\Domain\ValueObject\ID;
 use Slink\User\Application\Command\MoveOAuthProvider\MoveOAuthProviderCommand;
 use Slink\User\Application\Command\MoveOAuthProvider\MoveOAuthProviderHandler;
 use Slink\User\Domain\Exception\OAuthProviderNotFoundException;
-use PHPUnit\Framework\MockObject\MockObject;
 use Slink\User\Domain\OAuthProvider;
 use Slink\User\Domain\Repository\OAuthProviderRepositoryInterface;
 use Slink\User\Domain\Repository\OAuthProviderStoreRepositoryInterface;
@@ -19,105 +17,46 @@ use Slink\User\Infrastructure\ReadModel\View\OAuthProviderView;
 
 final class MoveOAuthProviderHandlerTest extends TestCase {
 
-  private function expectSortOrderUpdate(MockObject $aggregate, float $sortOrder): void {
-    $aggregate->expects($this->once())
-      ->method('update')
-      ->with(null, null, null, null, null, null, null, null, null, null, $sortOrder);
-  }
-
   #[Test]
-  public function itSwapsSortOrderOnMoveUp(): void {
-    $targetId = ID::generate();
-    $neighborId = ID::generate();
+  public function itMovesProviderToEarlierPosition(): void {
+    $ids = $this->generateIds(4);
+    $providers = $this->createOrderedProviders($ids);
 
-    $targetView = $this->createProviderWithSortOrder(2.0, $targetId);
-    $neighborView = $this->createProviderWithSortOrder(1.0, $neighborId);
-
-    $targetAggregate = $this->createMock(OAuthProvider::class);
-    $this->expectSortOrderUpdate($targetAggregate, 1.0);
-
-    $neighborAggregate = $this->createMock(OAuthProvider::class);
-    $this->expectSortOrderUpdate($neighborAggregate, 2.0);
-
-    $repository = $this->createMock(OAuthProviderRepositoryInterface::class);
-    $repository->expects($this->once())
-      ->method('findById')
-      ->with($this->callback(fn(ID $id) => $id->toString() === $targetId->toString()))
-      ->willReturn($targetView);
-    $repository->expects($this->once())
-      ->method('findNeighbor')
-      ->with(2.0, SortDirection::Up)
-      ->willReturn($neighborView);
-
-    $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
-    $providerStore->expects($this->exactly(2))
-      ->method('get')
-      ->willReturnCallback(fn(ID $id) => match (true) {
-        $id->toString() === $targetId->toString() => $targetAggregate,
-        $id->toString() === $neighborId->toString() => $neighborAggregate,
-        default => $this->fail('Unexpected ID: ' . $id->toString()),
-      });
-    $providerStore->expects($this->exactly(2))
-      ->method('store');
+    $repository = $this->createRepository($providers);
+    $providerStore = $this->createProviderStore([
+      $ids[2] => 0.0,
+      $ids[0] => 1.0,
+      $ids[1] => 2.0,
+    ]);
 
     $handler = new MoveOAuthProviderHandler($providerStore, $repository);
 
-    $command = new MoveOAuthProviderCommand($targetId->toString(), 'up');
-
-    $handler($command);
+    $handler(new MoveOAuthProviderCommand($ids[2], 0));
   }
 
   #[Test]
-  public function itSwapsSortOrderOnMoveDown(): void {
-    $targetId = ID::generate();
-    $neighborId = ID::generate();
+  public function itMovesProviderToLaterPosition(): void {
+    $ids = $this->generateIds(4);
+    $providers = $this->createOrderedProviders($ids);
 
-    $targetView = $this->createProviderWithSortOrder(1.0, $targetId);
-    $neighborView = $this->createProviderWithSortOrder(2.0, $neighborId);
-
-    $targetAggregate = $this->createMock(OAuthProvider::class);
-    $this->expectSortOrderUpdate($targetAggregate, 2.0);
-
-    $neighborAggregate = $this->createMock(OAuthProvider::class);
-    $this->expectSortOrderUpdate($neighborAggregate, 1.0);
-
-    $repository = $this->createMock(OAuthProviderRepositoryInterface::class);
-    $repository->expects($this->once())
-      ->method('findById')
-      ->willReturn($targetView);
-    $repository->expects($this->once())
-      ->method('findNeighbor')
-      ->with(1.0, SortDirection::Down)
-      ->willReturn($neighborView);
-
-    $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
-    $providerStore->expects($this->exactly(2))
-      ->method('get')
-      ->willReturnCallback(fn(ID $id) => match (true) {
-        $id->toString() === $targetId->toString() => $targetAggregate,
-        $id->toString() === $neighborId->toString() => $neighborAggregate,
-        default => $this->fail('Unexpected ID: ' . $id->toString()),
-      });
-    $providerStore->expects($this->exactly(2))
-      ->method('store');
+    $repository = $this->createRepository($providers);
+    $providerStore = $this->createProviderStore([
+      $ids[1] => 0.0,
+      $ids[2] => 1.0,
+      $ids[0] => 2.0,
+    ]);
 
     $handler = new MoveOAuthProviderHandler($providerStore, $repository);
 
-    $command = new MoveOAuthProviderCommand($targetId->toString(), 'down');
-
-    $handler($command);
+    $handler(new MoveOAuthProviderCommand($ids[0], 2));
   }
 
   #[Test]
-  public function itThrowsWhenNoTargetFound(): void {
-    $targetId = ID::generate();
+  public function itDoesNothingWhenPositionIsUnchanged(): void {
+    $ids = $this->generateIds(3);
+    $providers = $this->createOrderedProviders($ids);
 
-    $repository = $this->createMock(OAuthProviderRepositoryInterface::class);
-    $repository->expects($this->once())
-      ->method('findById')
-      ->willReturn(null);
-    $repository->expects($this->never())
-      ->method('findNeighbor');
+    $repository = $this->createRepository($providers);
 
     $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
     $providerStore->expects($this->never())->method('get');
@@ -125,45 +64,98 @@ final class MoveOAuthProviderHandlerTest extends TestCase {
 
     $handler = new MoveOAuthProviderHandler($providerStore, $repository);
 
-    $command = new MoveOAuthProviderCommand($targetId->toString(), 'up');
+    $handler(new MoveOAuthProviderCommand($ids[1], 1));
+  }
+
+  #[Test]
+  public function itClampsPositionBeyondEndToLast(): void {
+    $ids = $this->generateIds(3);
+    $providers = $this->createOrderedProviders($ids);
+
+    $repository = $this->createRepository($providers);
+    $providerStore = $this->createProviderStore([
+      $ids[1] => 0.0,
+      $ids[2] => 1.0,
+      $ids[0] => 2.0,
+    ]);
+
+    $handler = new MoveOAuthProviderHandler($providerStore, $repository);
+
+    $handler(new MoveOAuthProviderCommand($ids[0], 99));
+  }
+
+  #[Test]
+  public function itThrowsWhenProviderIsNotFound(): void {
+    $ids = $this->generateIds(2);
+    $providers = $this->createOrderedProviders($ids);
+
+    $repository = $this->createRepository($providers);
+
+    $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
+    $providerStore->expects($this->never())->method('get');
+    $providerStore->expects($this->never())->method('store');
+
+    $handler = new MoveOAuthProviderHandler($providerStore, $repository);
 
     $this->expectException(OAuthProviderNotFoundException::class);
 
-    $handler($command);
+    $handler(new MoveOAuthProviderCommand(ID::generate()->toString(), 0));
   }
 
-  #[Test]
-  public function itReturnsEarlyWhenNoNeighborFound(): void {
-    $targetId = ID::generate();
+  /**
+   * @return array<int, string>
+   */
+  private function generateIds(int $count): array {
+    return array_map(static fn(): string => ID::generate()->toString(), range(1, $count));
+  }
 
-    $targetView = $this->createStub(OAuthProviderView::class);
-    $targetView->method('getSortOrder')->willReturn(1.0);
+  /**
+   * @param array<int, string> $ids
+   * @return array<int, OAuthProviderView>
+   */
+  private function createOrderedProviders(array $ids): array {
+    return array_map(function (int $index) use ($ids): OAuthProviderView {
+      $view = $this->createStub(OAuthProviderView::class);
+      $view->method('getId')->willReturn($ids[$index]);
+      $view->method('getSortOrder')->willReturn((float) $index);
 
+      return $view;
+    }, array_keys($ids));
+  }
+
+  /**
+   * @param array<int, OAuthProviderView> $providers
+   */
+  private function createRepository(array $providers): OAuthProviderRepositoryInterface {
     $repository = $this->createMock(OAuthProviderRepositoryInterface::class);
     $repository->expects($this->once())
-      ->method('findById')
-      ->willReturn($targetView);
-    $repository->expects($this->once())
-      ->method('findNeighbor')
-      ->willReturn(null);
+      ->method('getProviders')
+      ->willReturn($providers);
 
-    $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
-    $providerStore->expects($this->never())->method('get');
-    $providerStore->expects($this->never())->method('store');
-
-    $handler = new MoveOAuthProviderHandler($providerStore, $repository);
-
-    $command = new MoveOAuthProviderCommand($targetId->toString(), 'up');
-
-    $handler($command);
+    return $repository;
   }
 
-  private function createProviderWithSortOrder(float $sortOrder, ?ID $id = null): OAuthProviderView {
-    $id ??= ID::generate();
-    $view = $this->createStub(OAuthProviderView::class);
-    $view->method('getId')->willReturn($id->toString());
-    $view->method('getSortOrder')->willReturn($sortOrder);
+  /**
+   * @param array<string, float> $expectedSortOrders
+   */
+  private function createProviderStore(array $expectedSortOrders): OAuthProviderStoreRepositoryInterface {
+    $aggregates = [];
 
-    return $view;
+    foreach ($expectedSortOrders as $id => $sortOrder) {
+      $aggregate = $this->createMock(OAuthProvider::class);
+      $aggregate->expects($this->once())
+        ->method('update')
+        ->with(null, null, null, null, null, null, null, null, null, null, $sortOrder);
+      $aggregates[$id] = $aggregate;
+    }
+
+    $providerStore = $this->createMock(OAuthProviderStoreRepositoryInterface::class);
+    $providerStore->expects($this->exactly(count($expectedSortOrders)))
+      ->method('get')
+      ->willReturnCallback(fn(ID $id) => $aggregates[$id->toString()] ?? $this->fail('Unexpected ID: ' . $id->toString()));
+    $providerStore->expects($this->exactly(count($expectedSortOrders)))
+      ->method('store');
+
+    return $providerStore;
   }
 }

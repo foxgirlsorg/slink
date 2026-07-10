@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Slink\User\Application\Command\MoveOAuthProvider;
 
 use Slink\Shared\Application\Command\CommandHandlerInterface;
-use Slink\Shared\Domain\Enum\SortDirection;
 use Slink\Shared\Domain\ValueObject\ID;
 use Slink\User\Domain\Exception\OAuthProviderNotFoundException;
+use Slink\User\Domain\Filter\OAuthProviderFilter;
 use Slink\User\Domain\Repository\OAuthProviderRepositoryInterface;
 use Slink\User\Domain\Repository\OAuthProviderStoreRepositoryInterface;
+use Slink\User\Infrastructure\ReadModel\View\OAuthProviderView;
 
 final readonly class MoveOAuthProviderHandler implements CommandHandlerInterface {
   public function __construct(
@@ -18,27 +19,48 @@ final readonly class MoveOAuthProviderHandler implements CommandHandlerInterface
   ) {}
 
   public function __invoke(MoveOAuthProviderCommand $command): void {
-    $direction = SortDirection::from($command->getDirection());
+    $providers = $this->repository->getProviders(new OAuthProviderFilter(enabledOnly: false));
 
-    $target = $this->repository->findById(ID::fromString($command->getId()));
+    $currentIndex = $this->findIndex($providers, $command->getId());
 
-    if ($target === null) {
+    if ($currentIndex === null) {
       throw new OAuthProviderNotFoundException($command->getId());
     }
 
-    $neighbor = $this->repository->findNeighbor($target->getSortOrder(), $direction);
+    $targetIndex = min($command->getPosition(), count($providers) - 1);
 
-    if ($neighbor === null) {
+    if ($targetIndex === $currentIndex) {
       return;
     }
 
-    $targetAggregate = $this->providerStore->get(ID::fromString($target->getId()));
-    $neighborAggregate = $this->providerStore->get(ID::fromString($neighbor->getId()));
+    [$target] = array_splice($providers, $currentIndex, 1);
+    array_splice($providers, $targetIndex, 0, [$target]);
 
-    $targetAggregate->update(sortOrder: $neighbor->getSortOrder());
-    $neighborAggregate->update(sortOrder: $target->getSortOrder());
+    foreach ($providers as $index => $provider) {
+      $this->applySortOrder($provider, (float) $index);
+    }
+  }
 
-    $this->providerStore->store($targetAggregate);
-    $this->providerStore->store($neighborAggregate);
+  /**
+   * @param array<int, OAuthProviderView> $providers
+   */
+  private function findIndex(array $providers, string $id): ?int {
+    foreach ($providers as $index => $provider) {
+      if ($provider->getId() === $id) {
+        return $index;
+      }
+    }
+
+    return null;
+  }
+
+  private function applySortOrder(OAuthProviderView $provider, float $sortOrder): void {
+    if ($provider->getSortOrder() === $sortOrder) {
+      return;
+    }
+
+    $aggregate = $this->providerStore->get(ID::fromString($provider->getId()));
+    $aggregate->update(sortOrder: $sortOrder);
+    $this->providerStore->store($aggregate);
   }
 }

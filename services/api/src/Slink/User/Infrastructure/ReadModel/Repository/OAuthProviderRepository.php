@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Slink\User\Infrastructure\ReadModel\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Slink\Shared\Domain\Enum\SortDirection;
 use Slink\Shared\Domain\ValueObject\ID;
 use Slink\Shared\Infrastructure\Persistence\ReadModel\AbstractRepository;
 use Slink\User\Domain\Filter\OAuthProviderFilter;
@@ -68,25 +67,6 @@ class OAuthProviderRepository extends AbstractRepository implements OAuthProvide
 
   public function delete(OAuthProviderView $provider): void {
     $this->getEntityManager()->remove($provider);
-  }
-
-  public function findNeighbor(float $sortOrder, SortDirection $direction): ?OAuthProviderView {
-    $qb = $this->createQueryBuilder('p');
-
-    if ($direction === SortDirection::Up) {
-      $qb->where('p.sortOrder < :sortOrder')
-        ->orderBy('p.sortOrder', 'DESC')
-        ->addOrderBy('p.id', 'DESC');
-    } else {
-      $qb->where('p.sortOrder > :sortOrder')
-        ->orderBy('p.sortOrder', 'ASC')
-        ->addOrderBy('p.id', 'ASC');
-    }
-
-    $qb->setParameter('sortOrder', $sortOrder)
-      ->setMaxResults(1);
-
-    return $qb->getQuery()->getOneOrNullResult();
   }
 
   public function getMaxSortOrder(): float {

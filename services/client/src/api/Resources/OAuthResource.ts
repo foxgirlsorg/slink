@@ -1,8 +1,6 @@
 import { AbstractResource } from '@slink/api/AbstractResource';
 import type { EmptyResponse } from '@slink/api/Response';
 
-import type { SortDirection } from '@slink/lib/enum/SortDirection';
-
 export type OAuthRegistrationPolicy = 'inherit' | 'allowed' | 'blocked';
 export type OAuthApprovalPolicy = 'inherit' | 'required' | 'none';
 
@@ -58,12 +56,9 @@ export class OAuthResource extends AbstractResource {
     return this.delete(`/admin/oauth/providers/${id}`);
   }
 
-  public async move(
-    id: string,
-    direction: SortDirection,
-  ): Promise<EmptyResponse> {
+  public async move(id: string, position: number): Promise<EmptyResponse> {
     return this.patch(`/admin/oauth/providers/sort-order`, {
-      json: { id, direction },
+      json: { id, position },
     });
   }
 }
