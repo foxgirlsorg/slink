@@ -1,78 +1,87 @@
 <script lang="ts">
+  import { PrefersReducedMotion } from '@slink/ui/hooks/prefers-reduced-motion.svelte';
   import type { Snippet } from 'svelte';
 
   import { className as cn } from '$lib/utils/ui/className';
   import Icon from '@iconify/svelte';
-  import { fade, fly } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
 
   import {
+    actionVariants,
     containerVariants,
+    contentVariants,
     descriptionVariants,
-    iconContainerVariants,
+    hintVariants,
     iconVariants,
+    previewVariants,
     titleVariants,
   } from './EmptyState.theme';
 
   interface Props {
-    icon?: string;
+    kind: 'first-use' | 'no-results';
     title: string;
     description: string;
+    icon?: string;
+    tone?: 'default' | 'danger';
+    preview?: Snippet;
     action?: Snippet;
-    variant?: 'default' | 'blue' | 'purple' | 'pink' | 'red';
-    size?: 'sm' | 'md' | 'lg';
+    hint?: Snippet;
     class?: string;
-    children?: Snippet;
   }
 
   let {
-    icon = 'ph:image-duotone',
+    kind,
     title,
     description,
+    icon = 'ph:magnifying-glass',
+    tone = 'default',
+    preview,
     action,
-    variant = 'default',
-    size = 'md',
+    hint,
     class: className,
-    children,
   }: Props = $props();
+
+  const reducedMotion = new PrefersReducedMotion();
 </script>
 
-<div
-  class={cn(containerVariants({ size }), className)}
-  in:fade={{ duration: 600, delay: 100 }}
->
+{#if kind === 'first-use'}
   <div
-    class={iconContainerVariants({ size, variant })}
-    in:fly={{ y: -20, duration: 500, delay: 200 }}
+    class={cn(containerVariants({ kind }), className)}
+    in:fade={{ duration: reducedMotion.current ? 0 : 200 }}
   >
-    <div
-      class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:12px_12px] rounded-3xl"
-    ></div>
-
-    <Icon {icon} class={iconVariants({ size, variant })} />
-
-    <div
-      class="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/10"
-    ></div>
-  </div>
-
-  <div class="space-y-3 mb-8" in:fly={{ y: 20, duration: 500, delay: 300 }}>
-    <h2 class={titleVariants({ size, variant })}>
-      {title}
-    </h2>
-    <p class={descriptionVariants({ size })}>
-      {description}
-    </p>
-  </div>
-
-  {#if children}
-    <div in:fly={{ y: 20, duration: 500, delay: 400 }}>
-      {@render children()}
+    {#if preview}
+      <div class={previewVariants()} aria-hidden="true">
+        {@render preview()}
+      </div>
+    {/if}
+    <div class={contentVariants({ withPreview: !!preview })}>
+      <h2 class={titleVariants({ kind })}>{title}</h2>
+      <p class={descriptionVariants({ kind })}>{description}</p>
+      {#if action}
+        <div class={actionVariants({ kind })}>
+          {@render action()}
+        </div>
+      {/if}
+      {#if hint}
+        <div class={hintVariants()}>
+          {@render hint()}
+        </div>
+      {/if}
     </div>
-  {/if}
-
-  {#if action}
-    <div in:fly={{ y: 20, duration: 500, delay: 500 }}>
-      {@render action()}
+  </div>
+{:else}
+  <div class={cn(containerVariants({ kind }), className)} role="status">
+    <span class={iconVariants({ tone })} aria-hidden="true">
+      <Icon {icon} class="h-4 w-4" />
+    </span>
+    <div class="min-w-0 flex-1 text-left">
+      <h3 class={titleVariants({ kind })}>{title}</h3>
+      <p class={descriptionVariants({ kind })}>{description}</p>
     </div>
-  {/if}
-</div>
+    {#if action}
+      <div class={actionVariants({ kind })}>
+        {@render action()}
+      </div>
+    {/if}
+  </div>
+{/if}

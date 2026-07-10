@@ -111,11 +111,10 @@
         {/snippet}
         {#snippet empty()}
           <EmptyState
+            kind="no-results"
             icon="heroicons:users"
             title="No users found"
             description="There are no users in the system yet."
-            variant="default"
-            size="md"
           />
         {/snippet}
         {#snippet more()}

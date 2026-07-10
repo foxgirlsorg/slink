@@ -12,7 +12,7 @@
   import BookmarkButton from '@slink/feature/Image/BookmarkButton/BookmarkButton.svelte';
   import { calculateImageCardWeight } from '@slink/feature/Image/utils/calculateImageCardWeight';
   import { Masonry } from '@slink/feature/Layout';
-  import { EmptyState } from '@slink/feature/Layout';
+  import { EmptyState, GhostGrid } from '@slink/feature/Layout';
   import { ExploreSkeleton } from '@slink/feature/Layout';
   import { ExpandableText, FormattedDate } from '@slink/feature/Text';
   import { UserAvatar } from '@slink/feature/User';
@@ -111,41 +111,38 @@
       <div in:fade={{ duration: 200 }}>
         {#if !publicFeedState.isSearching}
           <EmptyState
-            icon="ph:images-duotone"
-            title="No images yet"
-            description="Be the first to share something amazing with the community. Start by uploading your favorite images."
-            variant="blue"
-            size="md"
+            kind="first-use"
+            title="Nothing shared yet"
+            description="Public images from everyone on this instance show up here. Yours could be first."
           >
+            {#snippet preview()}
+              <GhostGrid />
+            {/snippet}
             {#snippet action()}
-              <Button
-                variant="soft-blue"
-                size="md"
-                rounded="full"
-                href="/upload"
-              >
+              <Button variant="primary" size="md" rounded="lg" href="/upload">
                 <Icon icon="ph:upload-simple" class="h-4 w-4" />
-                Upload First Image
+                Upload an image
               </Button>
+            {/snippet}
+            {#snippet hint()}
+              Uploads are private until you make them public
             {/snippet}
           </EmptyState>
         {:else}
           <EmptyState
-            icon="ph:images-duotone"
+            kind="no-results"
+            icon="ph:magnifying-glass"
             title="No images found"
-            description={`No images match your search for "${publicFeedState.searchTerm}". Try a different search term or browse all images.`}
-            variant="blue"
-            size="md"
+            description={`Nothing matches "${publicFeedState.searchTerm}". Try a different search term.`}
           >
             {#snippet action()}
               <Button
-                variant="soft-blue"
-                size="md"
-                rounded="full"
+                variant="outline"
+                size="sm"
+                rounded="lg"
                 onclick={() => publicFeedState.resetSearch()}
               >
-                <Icon icon="lucide:x" class="h-4 w-4" />
-                Clear Search
+                Clear search
               </Button>
             {/snippet}
           </EmptyState>

@@ -13,7 +13,7 @@
     PostViewer,
     ViewCountBadge,
   } from '@slink/feature/Image';
-  import { EmptyState, Masonry } from '@slink/feature/Layout';
+  import { EmptyState, GhostGrid, Masonry } from '@slink/feature/Layout';
   import { ExploreSkeleton } from '@slink/feature/Layout';
   import * as Share from '@slink/feature/Share';
   import {
@@ -326,23 +326,39 @@
     {:else if itemsFeed.hasError}
       <div in:fade={{ duration: 200 }}>
         <EmptyState
+          kind="no-results"
+          tone="danger"
           icon="ph:folder-notch-open-duotone"
           title="Collection not found"
           description="This collection doesn't exist or you don't have permission to view it."
-          size="md"
         />
       </div>
     {:else if itemsFeed.isEmpty}
       <div in:fade={{ duration: 200 }}>
         <EmptyState
-          icon="ph:images-duotone"
+          kind="first-use"
           title="No items yet"
           description={isOwner
-            ? 'Upload images directly to this collection.'
+            ? 'Add images to fill this collection.'
             : 'No items in this collection yet.'}
-          variant="purple"
-          size="md"
-        />
+        >
+          {#snippet preview()}
+            <GhostGrid />
+          {/snippet}
+          {#snippet action()}
+            {#if isOwner}
+              <Button
+                variant="primary"
+                size="md"
+                rounded="lg"
+                href={routes.general.uploadToCollection(data.collectionId)}
+              >
+                <Icon icon="ph:plus" class="h-4 w-4" />
+                Add images
+              </Button>
+            {/if}
+          {/snippet}
+        </EmptyState>
       </div>
     {:else if itemsFeed.items.length > 0}
       <Masonry items={itemsFeed.items} class="gap-4">

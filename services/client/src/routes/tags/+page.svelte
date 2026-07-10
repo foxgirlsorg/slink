@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { EmptyState, ViewModeToggle } from '@slink/feature/Layout';
+  import {
+    EmptyState,
+    GhostChips,
+    ViewModeToggle,
+  } from '@slink/feature/Layout';
   import { CreateTagDialog, TagTreeView } from '@slink/feature/Tag';
   import { TagsSkeleton } from '@slink/feature/Tag';
   import { createTagColumns } from '@slink/feature/Tag/TagDataTable/columns.svelte';
@@ -69,29 +73,35 @@
 {/snippet}
 
 {#snippet emptyState()}
-  <EmptyState
-    icon="ph:tag-duotone"
-    title="No tags found"
-    description={tagFeed.search
-      ? 'Try adjusting your search term'
-      : 'Create your first tag to get started'}
-    variant="blue"
-    size="md"
-  >
-    {#snippet action()}
-      {#if !tagFeed.search}
+  {#if tagFeed.search}
+    <EmptyState
+      kind="no-results"
+      icon="ph:magnifying-glass"
+      title="No tags found"
+      description="Try a different search term."
+    />
+  {:else}
+    <EmptyState
+      kind="first-use"
+      title="No tags yet"
+      description="Label your images with tags to filter and find them fast."
+    >
+      {#snippet preview()}
+        <GhostChips />
+      {/snippet}
+      {#snippet action()}
         <Button
-          variant="soft-blue"
+          variant="primary"
           size="md"
-          rounded="full"
+          rounded="lg"
           onclick={handleCreateTag}
         >
           <Icon icon="lucide:plus" class="h-4 w-4" />
-          Create Tag
+          New tag
         </Button>
-      {/if}
-    {/snippet}
-  </EmptyState>
+      {/snippet}
+    </EmptyState>
+  {/if}
 {/snippet}
 
 <svelte:head>

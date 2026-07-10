@@ -1,7 +1,12 @@
 <script lang="ts">
   import { LoadMoreButton } from '@slink/feature/Action';
   import { BookmarkButton, ImagePlaceholder } from '@slink/feature/Image';
-  import { EmptyState, Masonry } from '@slink/feature/Layout';
+  import {
+    EmptyState,
+    GhostGrid,
+    Masonry,
+    hintIconVariants,
+  } from '@slink/feature/Layout';
   import { ExploreSkeleton } from '@slink/feature/Layout';
   import { FormattedDate, Subtitle, Title } from '@slink/feature/Text';
   import { UserAvatar } from '@slink/feature/User';
@@ -59,22 +64,24 @@
     {:else if bookmarksFeed.isEmpty}
       <div in:fade={{ duration: 200 }}>
         <EmptyState
-          icon="ph:bookmark-simple-duotone"
+          kind="first-use"
           title="No bookmarks yet"
-          description="Start exploring and bookmark images you love to find them here later."
-          variant="blue"
-          size="md"
+          description="Images you bookmark are collected here, ready when you need them."
         >
+          {#snippet preview()}
+            <GhostGrid />
+          {/snippet}
           {#snippet action()}
-            <Button
-              variant="soft-blue"
-              size="md"
-              rounded="full"
-              href="/explore"
-            >
+            <Button variant="primary" size="md" rounded="lg" href="/explore">
               <Icon icon="lucide:search" class="h-4 w-4" />
-              Explore Images
+              Explore images
             </Button>
+          {/snippet}
+          {#snippet hint()}
+            <span class={hintIconVariants()}>
+              <Icon icon="ph:bookmark-simple" class="h-3 w-3" />
+            </span>
+            Tap the bookmark on any image to save it here
           {/snippet}
         </EmptyState>
       </div>

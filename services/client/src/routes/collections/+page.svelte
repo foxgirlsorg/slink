@@ -8,6 +8,7 @@
   import {
     CollectionSkeleton,
     EmptyState,
+    GhostFolders,
     ViewModeToggle,
   } from '@slink/feature/Layout';
   import { Subtitle, Title } from '@slink/feature/Text';
@@ -120,29 +121,35 @@
         <DataTable table={collectionsTable!} isLoading={feed.isLoading} />
       {/snippet}
       {#snippet empty()}
-        <EmptyState
-          icon="ph:folder-simple-duotone"
-          title="No collections found"
-          description={collectionsFeed.search
-            ? 'Try adjusting your search term'
-            : 'Create your first collection to organize and share your images.'}
-          variant="purple"
-          size="md"
-        >
-          {#snippet action()}
-            {#if !collectionsFeed.search}
+        {#if collectionsFeed.search}
+          <EmptyState
+            kind="no-results"
+            icon="ph:magnifying-glass"
+            title="No collections found"
+            description="Try a different search term."
+          />
+        {:else}
+          <EmptyState
+            kind="first-use"
+            title="No collections yet"
+            description="Group related images and share them as one link."
+          >
+            {#snippet preview()}
+              <GhostFolders />
+            {/snippet}
+            {#snippet action()}
               <Button
-                variant="soft-violet"
+                variant="primary"
                 size="md"
-                rounded="full"
+                rounded="lg"
                 onclick={handleCreateCollection}
               >
                 <Icon icon="lucide:plus" class="h-4 w-4" />
-                Create Collection
+                New collection
               </Button>
-            {/if}
-          {/snippet}
-        </EmptyState>
+            {/snippet}
+          </EmptyState>
+        {/if}
       {/snippet}
       {#snippet more()}
         <LoadMoreButton

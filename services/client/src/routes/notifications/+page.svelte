@@ -1,5 +1,6 @@
 <script lang="ts">
   import { LoadMoreButton } from '@slink/feature/Action';
+  import { EmptyState, GhostRows } from '@slink/feature/Layout';
   import {
     NotificationGroupItem,
     NotificationSkeleton,
@@ -86,24 +87,16 @@
         <NotificationSkeleton count={12} />
       </div>
     {:else if notificationFeed.isEmpty}
-      <div
-        class="flex flex-col items-center justify-center text-center rounded-2xl border border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-white/2 py-10 px-6"
-        in:fade={{ duration: 200 }}
-      >
-        <div
-          class="w-12 h-12 rounded-xl bg-gray-100 dark:bg-white/6 flex items-center justify-center mb-4"
+      <div in:fade={{ duration: 200 }}>
+        <EmptyState
+          kind="first-use"
+          title="All caught up"
+          description="Activity on your images will show up here."
         >
-          <Icon
-            icon="ph:bell-simple-slash-duotone"
-            class="w-6 h-6 text-gray-400 dark:text-gray-500"
-          />
-        </div>
-        <h3 class="text-base font-medium text-gray-900 dark:text-white mb-1">
-          All caught up
-        </h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          You'll see activity on your images here
-        </p>
+          {#snippet preview()}
+            <GhostRows />
+          {/snippet}
+        </EmptyState>
       </div>
     {:else}
       <div class="flex flex-col gap-2" in:fade={{ duration: 400 }}>

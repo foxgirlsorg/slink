@@ -19,6 +19,8 @@
   import { createHistoryColumns } from '@slink/feature/Image/History/HistoryDataTable/columns.svelte';
   import {
     EmptyState,
+    GhostGrid,
+    GhostList,
     HistorySkeleton,
     ViewModeToggle,
   } from '@slink/feature/Layout';
@@ -306,29 +308,39 @@
       {#snippet empty()}
         {#if historyFeedState.hasActiveFilter}
           <EmptyState
+            kind="no-results"
             icon="heroicons:funnel"
-            title="No matching images"
-            description="No images match your current tag filters. Try removing some tags or clearing all filters."
-            variant="blue"
-            size="md"
-          />
-        {:else}
-          <EmptyState
-            icon="ph:clock-clockwise-duotone"
-            title="No history yet"
-            description="Your upload history will appear here. Start uploading images to see your files and manage them easily."
-            variant="purple"
-            size="md"
+            title="No images match these tags"
+            description="Try removing a tag, or clear all filters."
           >
             {#snippet action()}
               <Button
-                variant="soft-violet"
-                size="md"
-                rounded="full"
-                href="/upload"
+                variant="outline"
+                size="sm"
+                rounded="lg"
+                onclick={handleClearTagFilter}
               >
+                Clear filters
+              </Button>
+            {/snippet}
+          </EmptyState>
+        {:else}
+          <EmptyState
+            kind="first-use"
+            title="No uploads yet"
+            description="Every image you upload lands here, with links ready to share and full control over visibility."
+          >
+            {#snippet preview()}
+              {#if settings.history.viewMode === 'grid'}
+                <GhostGrid />
+              {:else}
+                <GhostList />
+              {/if}
+            {/snippet}
+            {#snippet action()}
+              <Button variant="primary" size="md" rounded="lg" href="/upload">
                 <Icon icon="ph:upload-simple" class="h-4 w-4" />
-                Upload Images
+                Upload an image
               </Button>
             {/snippet}
           </EmptyState>

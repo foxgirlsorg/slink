@@ -66,6 +66,7 @@ msgid "Search users"
 msgstr "Buscar usuarios"
 
 #: src/feature/Analytics/LatestUsers.svelte
+#: src/routes/explore/+page.svelte
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
@@ -104,7 +105,6 @@ msgstr "Usuarios"
 #: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Collection/CreateCollectionModal.svelte
 #: src/feature/Comment/CommentInput.svelte
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
 #: src/feature/Image/SizePicker/ImageSizePicker.svelte
 #: src/feature/Navigation/TabMenu/TabMenuItem.svelte
 #: src/feature/Notification/NotificationListItem.svelte
@@ -442,7 +442,6 @@ msgstr "<0/> Ver historial"
 msgid "Bookmarks | Slink"
 msgstr "Marcadores | Slink"
 
-#: src/feature/Image/History/ImageMetadata.svelte
 #: src/feature/Navigation/Sidebar/config.svelte.ts
 #: src/routes/bookmarks/+page.svelte
 msgid "Bookmarks"
@@ -456,14 +455,6 @@ msgstr "Tus imágenes guardadas de la comunidad"
 #: src/routes/bookmarks/+page.svelte
 msgid "No bookmarks yet"
 msgstr "Aún no hay marcadores"
-
-#: src/routes/bookmarks/+page.svelte
-msgid "Start exploring and bookmark images you love to find them here later."
-msgstr "Comienza a explorar y marca las imágenes que te gusten para encontrarlas aquí más tarde."
-
-#: src/routes/bookmarks/+page.svelte
-msgid "<0/> Explore Images"
-msgstr "<0/> Explorar imágenes"
 
 #: src/routes/bookmarks/+page.svelte
 msgid "Image no longer available"
@@ -483,29 +474,8 @@ msgid "Explore Gallery | Slink"
 msgstr "Explorar galería | Slink"
 
 #: src/routes/explore/+page.svelte
-msgid "No images yet"
-msgstr "Aún no hay imágenes"
-
-#: src/routes/explore/+page.svelte
-msgid "Be the first to share something amazing with the community. Start by uploading your favorite images."
-msgstr "Sé el primero en compartir algo increíble con la comunidad. Comienza subiendo tus imágenes favoritas."
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Upload First Image"
-msgstr "<0/> Cargar primera imagen"
-
-#: src/routes/explore/+page.svelte
 msgid "No images found"
 msgstr "No se encontraron imágenes"
-
-#. 0: publicFeedState.searchTerm
-#: src/routes/explore/+page.svelte
-msgid "No images match your search for \"{0}\". Try a different search term or browse all images."
-msgstr "Ninguna imagen coincide con tu búsqueda de \"{0}\". Intenta con otro término o explora todas las imágenes."
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Clear Search"
-msgstr "<0/> Borrar búsqueda"
 
 #: src/routes/integrations/+page.svelte
 msgid "Integrations | Slink"
@@ -541,10 +511,6 @@ msgstr "<0/> Marcar todo como leído"
 msgid "All caught up"
 msgstr "Todo al día"
 
-#: src/routes/notifications/+page.svelte
-msgid "You'll see activity on your images here"
-msgstr "Verás la actividad de tus imágenes aquí"
-
 #: src/routes/collections/+page.svelte
 msgid "Collections | Slink"
 msgstr "Colecciones | Slink"
@@ -567,19 +533,6 @@ msgstr "Buscar colecciones..."
 #: src/routes/collections/+page.svelte
 msgid "No collections found"
 msgstr "No se encontraron colecciones"
-
-#: src/routes/collections/+page.svelte
-#: src/routes/tags/+page.svelte
-msgid "Try adjusting your search term"
-msgstr "Intenta ajustar el término de búsqueda"
-
-#: src/routes/collections/+page.svelte
-msgid "Create your first collection to organize and share your images."
-msgstr "Crea tu primera colección para organizar y compartir tus imágenes."
-
-#: src/routes/collections/+page.svelte
-msgid "<0/> Create Collection"
-msgstr "<0/> Crear colección"
 
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Password changed successfully"
@@ -838,14 +791,6 @@ msgstr "Buscar etiquetas..."
 msgid "No tags found"
 msgstr "No se encontraron etiquetas"
 
-#: src/routes/tags/+page.svelte
-msgid "Create your first tag to get started"
-msgstr "Crea tu primera etiqueta para comenzar"
-
-#: src/routes/tags/+page.svelte
-msgid "<0/> Create Tag"
-msgstr "<0/> Crear etiqueta"
-
 #: src/routes/history/+page.svelte
 msgid "Upload History | Slink"
 msgstr "Historial de subidas | Slink"
@@ -857,26 +802,6 @@ msgstr "Historial de subidas"
 #: src/routes/history/+page.svelte
 msgid "View and manage your uploaded images"
 msgstr "Visualiza y administra tus imágenes subidas"
-
-#: src/routes/history/+page.svelte
-msgid "No matching images"
-msgstr "No hay imágenes coincidentes"
-
-#: src/routes/history/+page.svelte
-msgid "No images match your current tag filters. Try removing some tags or clearing all filters."
-msgstr "Ninguna imagen coincide con los filtros de etiquetas actuales. Intenta eliminar algunas etiquetas o borrar todos los filtros."
-
-#: src/routes/history/+page.svelte
-msgid "No history yet"
-msgstr "Sin historial aún"
-
-#: src/routes/history/+page.svelte
-msgid "Your upload history will appear here. Start uploading images to see your files and manage them easily."
-msgstr "Tu historial de subidas aparecerá aquí. Comienza a subir imágenes para ver tus archivos y administrarlos fácilmente."
-
-#: src/routes/history/+page.svelte
-msgid "<0/> Upload Images"
-msgstr "<0/> Subir imágenes"
 
 #: src/routes/history/+page.svelte
 msgid "View More"
@@ -1202,18 +1127,6 @@ msgstr "Eliminar del almacenamiento"
 msgid "Permanently delete the files from storage"
 msgstr "Eliminar los archivos del almacenamiento de forma permanente"
 
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File type & dimensions"
-msgstr "Tipo de archivo y dimensiones"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File size"
-msgstr "Tamaño del archivo"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "Uploaded"
-msgstr "Subido"
-
 #: src/feature/Image/History/SelectionActionBar.svelte
 msgid "Deselect all"
 msgstr "Deseleccionar todo"
@@ -1378,22 +1291,14 @@ msgstr "Etiquetas"
 msgid "Add more tags..."
 msgstr "Agregar más etiquetas..."
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "Unsupported file format"
 msgstr "Formato de archivo no compatible"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "The file you're trying to upload is not supported. Please use one of the supported image formats."
 msgstr "El archivo que intentas subir no es compatible. Por favor, usa uno de los formatos de imagen admitidos."
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
-#: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
-msgid "<0/> View supported formats"
-msgstr "<0/> Ver formatos admitidos"
-
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/BaseToast.svelte
 #: src/ui/components/sonner/toasts/ErrorToast.svelte
 #: src/ui/components/sonner/toasts/InfoToast.svelte
@@ -1402,7 +1307,6 @@ msgstr "<0/> Ver formatos admitidos"
 msgid "Close notification"
 msgstr "Cerrar notificación"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/feature/Settings/Version/ReleaseModal.svelte
 #: src/feature/User/ApiKey/CreatedKeyDisplay.svelte
 #: src/ui/components/action-popover/action-popover-content.svelte
@@ -2202,6 +2106,7 @@ msgid "No tags assigned to this image."
 msgstr "No hay etiquetas asignadas a esta imagen."
 
 #: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+#: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "Aún no hay colecciones"
 
@@ -2238,6 +2143,7 @@ msgstr "No hay etiquetas que coincidan con \"{0}\""
 
 #: src/feature/Tag/TagPicker/TagPickerList.svelte
 #: src/feature/Tag/TagSelector/TagSelector.svelte
+#: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "Aún no hay etiquetas"
 
@@ -2578,6 +2484,7 @@ msgid "{0} items"
 msgstr "{0} elementos"
 
 #: src/routes/collection/[id]/+page.svelte
+#: src/routes/collection/[id]/+page.svelte
 msgid "<0/> Add images"
 msgstr "<0/> Agregar imágenes"
 
@@ -2594,10 +2501,6 @@ msgstr "Esta colección no existe o no tienes permiso para verla."
 #: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "Sin elementos aún"
-
-#: src/routes/collection/[id]/+page.svelte
-msgid "Upload images directly to this collection."
-msgstr "Sube imágenes directamente a esta colección."
 
 #: src/routes/collection/[id]/+page.svelte
 msgid "No items in this collection yet."
@@ -3784,6 +3687,7 @@ msgid "Polski"
 msgstr "Polski"
 
 #: src/feature/Analytics/ImageAnalytics.svelte
+#: src/routes/history/+page.svelte
 msgid "No uploads yet"
 msgstr "Aún no hay subidas"
 
@@ -4168,13 +4072,8 @@ msgid "Search shares..."
 msgstr "Buscar publicaciones..."
 
 #: src/routes/shares/+page.svelte
-#: src/routes/shares/+page.svelte
 msgid "No shares yet"
 msgstr "Aún no hay publicaciones"
-
-#: src/routes/shares/+page.svelte
-msgid "Publish a link from any image or collection to see it here."
-msgstr "Publica un enlace desde cualquier imagen o colección para verlo aquí."
 
 #: src/routes/shares/+page.svelte
 msgid "Try adjusting your filters or search term."
@@ -5036,3 +4935,101 @@ msgstr "+{0} más"
 #: src/feature/Upload/Uploader/UploaderConstraints.svelte
 msgid "Max size"
 msgstr "Tamaño máximo"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "Images you bookmark are collected here, ready when you need them."
+msgstr "Las imágenes que guardas en favoritos aparecen aquí, listas para cuando las necesites."
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Explore images"
+msgstr "<0/> Explorar imágenes"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Tap the bookmark on any image to save it here"
+msgstr "<0/> Haz clic en el marcador de una imagen para guardarla aquí"
+
+#: src/routes/explore/+page.svelte
+msgid "Nothing shared yet"
+msgstr "Aún no hay nada compartido"
+
+#: src/routes/explore/+page.svelte
+msgid "Public images from everyone on this instance show up here. Yours could be first."
+msgstr "Las imágenes públicas de todos en esta instancia aparecen aquí. La tuya podría ser la primera."
+
+#: src/routes/explore/+page.svelte
+#: src/routes/history/+page.svelte
+msgid "<0/> Upload an image"
+msgstr "<0/> Subir una imagen"
+
+#: src/routes/explore/+page.svelte
+msgid "Uploads are private until you make them public"
+msgstr "Las subidas son privadas hasta que las hagas públicas"
+
+#. 0: publicFeedState.searchTerm
+#: src/routes/explore/+page.svelte
+msgid "Nothing matches \"{0}\". Try a different search term."
+msgstr "Nada coincide con \"{0}\". Prueba con otro término de búsqueda."
+
+#: src/routes/collections/+page.svelte
+#: src/routes/tags/+page.svelte
+msgid "Try a different search term."
+msgstr "Prueba con otro término de búsqueda."
+
+#: src/routes/collections/+page.svelte
+msgid "Group related images and share them as one link."
+msgstr "Agrupa imágenes relacionadas y compártelas como un solo enlace."
+
+#: src/routes/collections/+page.svelte
+msgid "<0/> New collection"
+msgstr "<0/> Nueva colección"
+
+#: src/routes/history/+page.svelte
+msgid "No images match these tags"
+msgstr "Ninguna imagen coincide con estas etiquetas"
+
+#: src/routes/history/+page.svelte
+msgid "Try removing a tag, or clear all filters."
+msgstr "Intenta quitar una etiqueta o borrar todos los filtros."
+
+#: src/routes/history/+page.svelte
+#: src/routes/shares/+page.svelte
+msgid "Clear filters"
+msgstr "Borrar filtros"
+
+#: src/routes/history/+page.svelte
+msgid "Every image you upload lands here, with links ready to share and full control over visibility."
+msgstr "Cada imagen que subes llega aquí, con enlaces listos para compartir y control total sobre la visibilidad."
+
+#: src/routes/shares/+page.svelte
+msgid "No shares match these filters"
+msgstr "Ninguna publicación coincide con estos filtros"
+
+#: src/routes/shares/+page.svelte
+msgid "Publish a link from any image or collection to track it here."
+msgstr "Publica un enlace desde cualquier imagen o colección para seguirlo aquí."
+
+#: src/routes/shares/+page.svelte
+msgid "Go to my images"
+msgstr "Ir a mis imágenes"
+
+#: src/routes/tags/+page.svelte
+msgid "Label your images with tags to filter and find them fast."
+msgstr "Etiqueta tus imágenes para filtrarlas y encontrarlas rápidamente."
+
+#: src/routes/tags/+page.svelte
+msgid "<0/> New tag"
+msgstr "<0/> Nueva etiqueta"
+
+#: src/routes/collection/[id]/+page.svelte
+msgid "Add images to fill this collection."
+msgstr "Añade imágenes para completar esta colección."
+
+#: src/feature/Image/History/ImageMetadata.svelte
+msgid "# bookmark"
+msgid_plural "# bookmarks"
+msgstr[0] "# marcador"
+msgstr[1] "# marcadores"
+
+#: src/routes/notifications/+page.svelte
+msgid "Activity on your images will show up here."
+msgstr "La actividad de tus imágenes aparecerá aquí."

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { EmptyState, ShareSkeleton } from '@slink/feature/Layout';
+  import { EmptyState, GhostRows, ShareSkeleton } from '@slink/feature/Layout';
   import { ShareTypeBadge } from '@slink/feature/Share';
   import {
     ActionsCell,
@@ -8,6 +8,7 @@
     SharesFilterBar,
   } from '@slink/feature/Share/MyShares';
   import { FormattedDate, Subtitle, Title } from '@slink/feature/Text';
+  import { Button } from '@slink/ui/components/button';
   import { DataTable, renderComponent } from '@slink/ui/components/data-table';
   import { ViewModeLayout } from '@slink/ui/components/view-mode-layout';
   import type { ColumnDef } from '@tanstack/table-core';
@@ -114,20 +115,37 @@
       {#snippet empty()}
         {#if feed.hasActiveFilters}
           <EmptyState
+            kind="no-results"
             icon="heroicons:funnel"
-            title="No shares yet"
+            title="No shares match these filters"
             description="Try adjusting your filters or search term."
-            variant="blue"
-            size="md"
-          />
+          >
+            {#snippet action()}
+              <Button
+                variant="outline"
+                size="sm"
+                rounded="lg"
+                onclick={() => feed.resetFilters()}
+              >
+                Clear filters
+              </Button>
+            {/snippet}
+          </EmptyState>
         {:else}
           <EmptyState
-            icon="ph:paper-plane-tilt-duotone"
+            kind="first-use"
             title="No shares yet"
-            description="Publish a link from any image or collection to see it here."
-            variant="default"
-            size="md"
-          />
+            description="Publish a link from any image or collection to track it here."
+          >
+            {#snippet preview()}
+              <GhostRows />
+            {/snippet}
+            {#snippet action()}
+              <Button variant="primary" size="md" rounded="lg" href="/history">
+                Go to my images
+              </Button>
+            {/snippet}
+          </EmptyState>
         {/if}
       {/snippet}
     </ViewModeLayout>

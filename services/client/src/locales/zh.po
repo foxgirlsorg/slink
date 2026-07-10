@@ -66,6 +66,7 @@ msgid "Search users"
 msgstr "搜索用户"
 
 #: src/feature/Analytics/LatestUsers.svelte
+#: src/routes/explore/+page.svelte
 msgid "Clear search"
 msgstr "清除搜索"
 
@@ -104,7 +105,6 @@ msgstr "用户"
 #: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Collection/CreateCollectionModal.svelte
 #: src/feature/Comment/CommentInput.svelte
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
 #: src/feature/Image/SizePicker/ImageSizePicker.svelte
 #: src/feature/Navigation/TabMenu/TabMenuItem.svelte
 #: src/feature/Notification/NotificationListItem.svelte
@@ -442,7 +442,6 @@ msgstr "<0/> 查看历史"
 msgid "Bookmarks | Slink"
 msgstr "书签 | Slink"
 
-#: src/feature/Image/History/ImageMetadata.svelte
 #: src/feature/Navigation/Sidebar/config.svelte.ts
 #: src/routes/bookmarks/+page.svelte
 msgid "Bookmarks"
@@ -456,14 +455,6 @@ msgstr "你收藏的社区图片"
 #: src/routes/bookmarks/+page.svelte
 msgid "No bookmarks yet"
 msgstr "还没有收藏"
-
-#: src/routes/bookmarks/+page.svelte
-msgid "Start exploring and bookmark images you love to find them here later."
-msgstr "去探索并收藏你喜欢的图片，稍后可在这里快速找到。"
-
-#: src/routes/bookmarks/+page.svelte
-msgid "<0/> Explore Images"
-msgstr "<0/> 发现图片"
 
 #: src/routes/bookmarks/+page.svelte
 msgid "Image no longer available"
@@ -483,29 +474,8 @@ msgid "Explore Gallery | Slink"
 msgstr "发现作品 | Slink"
 
 #: src/routes/explore/+page.svelte
-msgid "No images yet"
-msgstr "暂无图片"
-
-#: src/routes/explore/+page.svelte
-msgid "Be the first to share something amazing with the community. Start by uploading your favorite images."
-msgstr "成为第一个分享精彩内容的人。先上传你最喜欢的图片吧。"
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Upload First Image"
-msgstr "<0/> 上传第一张图片"
-
-#: src/routes/explore/+page.svelte
 msgid "No images found"
 msgstr "未找到图片"
-
-#. 0: publicFeedState.searchTerm
-#: src/routes/explore/+page.svelte
-msgid "No images match your search for \"{0}\". Try a different search term or browse all images."
-msgstr "没有图片匹配你的搜索“{0}”。请尝试其他关键词，或浏览全部图片。"
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Clear Search"
-msgstr "<0/> 清除搜索"
 
 #: src/routes/integrations/+page.svelte
 msgid "Integrations | Slink"
@@ -541,10 +511,6 @@ msgstr "<0/> 全部标为已读"
 msgid "All caught up"
 msgstr "你已查看全部通知"
 
-#: src/routes/notifications/+page.svelte
-msgid "You'll see activity on your images here"
-msgstr "图片相关动态会显示在这里"
-
 #: src/routes/collections/+page.svelte
 msgid "Collections | Slink"
 msgstr "合集 | Slink"
@@ -567,19 +533,6 @@ msgstr "搜索合集..."
 #: src/routes/collections/+page.svelte
 msgid "No collections found"
 msgstr "未找到合集"
-
-#: src/routes/collections/+page.svelte
-#: src/routes/tags/+page.svelte
-msgid "Try adjusting your search term"
-msgstr "请尝试调整搜索关键词"
-
-#: src/routes/collections/+page.svelte
-msgid "Create your first collection to organize and share your images."
-msgstr "创建你的第一个合集，用于整理和分享图片。"
-
-#: src/routes/collections/+page.svelte
-msgid "<0/> Create Collection"
-msgstr "<0/> 创建合集"
 
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Password changed successfully"
@@ -838,14 +791,6 @@ msgstr "搜索标签..."
 msgid "No tags found"
 msgstr "未找到标签"
 
-#: src/routes/tags/+page.svelte
-msgid "Create your first tag to get started"
-msgstr "创建你的第一个标签开始使用"
-
-#: src/routes/tags/+page.svelte
-msgid "<0/> Create Tag"
-msgstr "<0/> 创建标签"
-
 #: src/routes/history/+page.svelte
 msgid "Upload History | Slink"
 msgstr "上传历史 | Slink"
@@ -857,26 +802,6 @@ msgstr "上传历史"
 #: src/routes/history/+page.svelte
 msgid "View and manage your uploaded images"
 msgstr "查看并管理你上传的图片"
-
-#: src/routes/history/+page.svelte
-msgid "No matching images"
-msgstr "未找到匹配图片"
-
-#: src/routes/history/+page.svelte
-msgid "No images match your current tag filters. Try removing some tags or clearing all filters."
-msgstr "当前标签筛选下没有匹配图片，请尝试移除部分标签或清空筛选。"
-
-#: src/routes/history/+page.svelte
-msgid "No history yet"
-msgstr "暂无历史记录"
-
-#: src/routes/history/+page.svelte
-msgid "Your upload history will appear here. Start uploading images to see your files and manage them easily."
-msgstr "你的上传历史会显示在这里。开始上传图片即可在此查看和管理。"
-
-#: src/routes/history/+page.svelte
-msgid "<0/> Upload Images"
-msgstr "<0/> 上传图片"
 
 #: src/routes/history/+page.svelte
 msgid "View More"
@@ -1202,18 +1127,6 @@ msgstr "从存储中移除"
 msgid "Permanently delete the files from storage"
 msgstr "从存储中永久删除这些文件"
 
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File type & dimensions"
-msgstr "文件类型和尺寸"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File size"
-msgstr "文件大小"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "Uploaded"
-msgstr "已上传"
-
 #: src/feature/Image/History/SelectionActionBar.svelte
 msgid "Deselect all"
 msgstr "取消全选"
@@ -1378,22 +1291,14 @@ msgstr "标签"
 msgid "Add more tags..."
 msgstr "继续添加标签..."
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "Unsupported file format"
 msgstr "不支持的文件格式"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "The file you're trying to upload is not supported. Please use one of the supported image formats."
 msgstr "不支持该文件格式，请上传支持的图片格式。"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
-#: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
-msgid "<0/> View supported formats"
-msgstr "<0/> 查看支持的格式"
-
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/BaseToast.svelte
 #: src/ui/components/sonner/toasts/ErrorToast.svelte
 #: src/ui/components/sonner/toasts/InfoToast.svelte
@@ -1402,7 +1307,6 @@ msgstr "<0/> 查看支持的格式"
 msgid "Close notification"
 msgstr "关闭通知"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/feature/Settings/Version/ReleaseModal.svelte
 #: src/feature/User/ApiKey/CreatedKeyDisplay.svelte
 #: src/ui/components/action-popover/action-popover-content.svelte
@@ -2202,6 +2106,7 @@ msgid "No tags assigned to this image."
 msgstr "这张图片还没有分配任何标签。"
 
 #: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+#: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "暂无合集"
 
@@ -2238,6 +2143,7 @@ msgstr "没有匹配“{0}”的标签"
 
 #: src/feature/Tag/TagPicker/TagPickerList.svelte
 #: src/feature/Tag/TagSelector/TagSelector.svelte
+#: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "暂无标签"
 
@@ -2578,6 +2484,7 @@ msgid "{0} items"
 msgstr "{0} 项"
 
 #: src/routes/collection/[id]/+page.svelte
+#: src/routes/collection/[id]/+page.svelte
 msgid "<0/> Add images"
 msgstr "<0/> 添加图片"
 
@@ -2594,10 +2501,6 @@ msgstr "该合集不存在，或你没有查看权限。"
 #: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "暂无项目"
-
-#: src/routes/collection/[id]/+page.svelte
-msgid "Upload images directly to this collection."
-msgstr "直接上传图片到此合集。"
 
 #: src/routes/collection/[id]/+page.svelte
 msgid "No items in this collection yet."
@@ -3782,6 +3685,7 @@ msgid "Polski"
 msgstr "Polski"
 
 #: src/feature/Analytics/ImageAnalytics.svelte
+#: src/routes/history/+page.svelte
 msgid "No uploads yet"
 msgstr "暂无上传"
 
@@ -4164,13 +4068,8 @@ msgid "Search shares..."
 msgstr "搜索发布..."
 
 #: src/routes/shares/+page.svelte
-#: src/routes/shares/+page.svelte
 msgid "No shares yet"
 msgstr "暂无发布"
-
-#: src/routes/shares/+page.svelte
-msgid "Publish a link from any image or collection to see it here."
-msgstr "从任意图像或收藏发布链接以在此处查看。"
 
 #: src/routes/shares/+page.svelte
 msgid "Try adjusting your filters or search term."
@@ -5030,3 +4929,100 @@ msgstr "+{0} 种"
 #: src/feature/Upload/Uploader/UploaderConstraints.svelte
 msgid "Max size"
 msgstr "最大大小"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "Images you bookmark are collected here, ready when you need them."
+msgstr "你收藏的图片都会汇集在这里，随时可以查看。"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Explore images"
+msgstr "<0/> 去发现图片"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Tap the bookmark on any image to save it here"
+msgstr "<0/> 点击图片上的收藏图标即可保存至此"
+
+#: src/routes/explore/+page.svelte
+msgid "Nothing shared yet"
+msgstr "暂无分享内容"
+
+#: src/routes/explore/+page.svelte
+msgid "Public images from everyone on this instance show up here. Yours could be first."
+msgstr "此实例上所有人的公开图片都会显示在这里，不如从你开始。"
+
+#: src/routes/explore/+page.svelte
+#: src/routes/history/+page.svelte
+msgid "<0/> Upload an image"
+msgstr "<0/> 上传图片"
+
+#: src/routes/explore/+page.svelte
+msgid "Uploads are private until you make them public"
+msgstr "上传的图片默认私密，你可以随时将其设为公开"
+
+#. 0: publicFeedState.searchTerm
+#: src/routes/explore/+page.svelte
+msgid "Nothing matches \"{0}\". Try a different search term."
+msgstr "没有找到与 \"{0}\" 匹配的内容，请尝试其他搜索词。"
+
+#: src/routes/collections/+page.svelte
+#: src/routes/tags/+page.svelte
+msgid "Try a different search term."
+msgstr "请尝试其他搜索词。"
+
+#: src/routes/collections/+page.svelte
+msgid "Group related images and share them as one link."
+msgstr "将相关图片归为一组，通过单个链接分享。"
+
+#: src/routes/collections/+page.svelte
+msgid "<0/> New collection"
+msgstr "<0/> 新建合集"
+
+#: src/routes/history/+page.svelte
+msgid "No images match these tags"
+msgstr "没有符合这些标签的图片"
+
+#: src/routes/history/+page.svelte
+msgid "Try removing a tag, or clear all filters."
+msgstr "请尝试移除一个标签，或清空所有筛选条件。"
+
+#: src/routes/history/+page.svelte
+#: src/routes/shares/+page.svelte
+msgid "Clear filters"
+msgstr "清空筛选"
+
+#: src/routes/history/+page.svelte
+msgid "Every image you upload lands here, with links ready to share and full control over visibility."
+msgstr "你上传的每张图片都会出现在这里，自带可分享链接，可见范围任你掌控。"
+
+#: src/routes/shares/+page.svelte
+msgid "No shares match these filters"
+msgstr "没有符合这些筛选条件的分享"
+
+#: src/routes/shares/+page.svelte
+msgid "Publish a link from any image or collection to track it here."
+msgstr "为图片或合集发布分享链接后，即可在此查看和管理。"
+
+#: src/routes/shares/+page.svelte
+msgid "Go to my images"
+msgstr "前往我的图片"
+
+#: src/routes/tags/+page.svelte
+msgid "Label your images with tags to filter and find them fast."
+msgstr "为图片添加标签，以便快速筛选和查找。"
+
+#: src/routes/tags/+page.svelte
+msgid "<0/> New tag"
+msgstr "<0/> 新建标签"
+
+#: src/routes/collection/[id]/+page.svelte
+msgid "Add images to fill this collection."
+msgstr "添加图片，丰富这个合集。"
+
+#: src/feature/Image/History/ImageMetadata.svelte
+msgid "# bookmark"
+msgid_plural "# bookmarks"
+msgstr[0] "# 个收藏"
+
+#: src/routes/notifications/+page.svelte
+msgid "Activity on your images will show up here."
+msgstr "你的图片相关动态会显示在这里。"

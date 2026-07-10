@@ -66,6 +66,7 @@ msgid "Search users"
 msgstr "ユーザーを検索"
 
 #: src/feature/Analytics/LatestUsers.svelte
+#: src/routes/explore/+page.svelte
 msgid "Clear search"
 msgstr "検索をクリア"
 
@@ -104,7 +105,6 @@ msgstr "ユーザー"
 #: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Collection/CreateCollectionModal.svelte
 #: src/feature/Comment/CommentInput.svelte
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
 #: src/feature/Image/SizePicker/ImageSizePicker.svelte
 #: src/feature/Navigation/TabMenu/TabMenuItem.svelte
 #: src/feature/Notification/NotificationListItem.svelte
@@ -442,7 +442,6 @@ msgstr "<0/> 履歴を表示"
 msgid "Bookmarks | Slink"
 msgstr "ブックマーク | Slink"
 
-#: src/feature/Image/History/ImageMetadata.svelte
 #: src/feature/Navigation/Sidebar/config.svelte.ts
 #: src/routes/bookmarks/+page.svelte
 msgid "Bookmarks"
@@ -456,14 +455,6 @@ msgstr "コミュニティから保存した画像"
 #: src/routes/bookmarks/+page.svelte
 msgid "No bookmarks yet"
 msgstr "まだブックマークはありません"
-
-#: src/routes/bookmarks/+page.svelte
-msgid "Start exploring and bookmark images you love to find them here later."
-msgstr "気に入った画像をブックマークして、後からここで見つけましょう。"
-
-#: src/routes/bookmarks/+page.svelte
-msgid "<0/> Explore Images"
-msgstr "<0/> 画像を探す"
 
 #: src/routes/bookmarks/+page.svelte
 msgid "Image no longer available"
@@ -483,29 +474,8 @@ msgid "Explore Gallery | Slink"
 msgstr "ギャラリーを探索 | Slink"
 
 #: src/routes/explore/+page.svelte
-msgid "No images yet"
-msgstr "まだ画像がありません"
-
-#: src/routes/explore/+page.svelte
-msgid "Be the first to share something amazing with the community. Start by uploading your favorite images."
-msgstr "コミュニティで最初に素敵な画像を共有しましょう。お気に入りの画像をアップロードしてみてください。"
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Upload First Image"
-msgstr "<0/> 最初の画像をアップロード"
-
-#: src/routes/explore/+page.svelte
 msgid "No images found"
 msgstr "画像が見つかりません"
-
-#. 0: publicFeedState.searchTerm
-#: src/routes/explore/+page.svelte
-msgid "No images match your search for \"{0}\". Try a different search term or browse all images."
-msgstr "「{0}」に一致する画像が見つかりません。別の検索語をお試しいただくか、すべての画像をご覧ください。"
-
-#: src/routes/explore/+page.svelte
-msgid "<0/> Clear Search"
-msgstr "<0/> 検索をクリア"
 
 #: src/routes/integrations/+page.svelte
 msgid "Integrations | Slink"
@@ -541,10 +511,6 @@ msgstr "<0/> すべて既読にする"
 msgid "All caught up"
 msgstr "すべて確認済みです"
 
-#: src/routes/notifications/+page.svelte
-msgid "You'll see activity on your images here"
-msgstr "画像に関するアクティビティがここに表示されます"
-
 #: src/routes/collections/+page.svelte
 msgid "Collections | Slink"
 msgstr "コレクション | Slink"
@@ -567,19 +533,6 @@ msgstr "コレクションを検索..."
 #: src/routes/collections/+page.svelte
 msgid "No collections found"
 msgstr "コレクションが見つかりません"
-
-#: src/routes/collections/+page.svelte
-#: src/routes/tags/+page.svelte
-msgid "Try adjusting your search term"
-msgstr "検索語を変更してみてください"
-
-#: src/routes/collections/+page.svelte
-msgid "Create your first collection to organize and share your images."
-msgstr "最初のコレクションを作成して、画像を整理・共有しましょう。"
-
-#: src/routes/collections/+page.svelte
-msgid "<0/> Create Collection"
-msgstr "<0/> コレクションを作成"
 
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Password changed successfully"
@@ -838,14 +791,6 @@ msgstr "タグを検索..."
 msgid "No tags found"
 msgstr "タグが見つかりません"
 
-#: src/routes/tags/+page.svelte
-msgid "Create your first tag to get started"
-msgstr "最初のタグを作成して始めましょう"
-
-#: src/routes/tags/+page.svelte
-msgid "<0/> Create Tag"
-msgstr "<0/> タグを作成"
-
 #: src/routes/history/+page.svelte
 msgid "Upload History | Slink"
 msgstr "アップロード履歴 | Slink"
@@ -857,26 +802,6 @@ msgstr "アップロード履歴"
 #: src/routes/history/+page.svelte
 msgid "View and manage your uploaded images"
 msgstr "アップロード済みの画像を表示・管理"
-
-#: src/routes/history/+page.svelte
-msgid "No matching images"
-msgstr "一致する画像がありません"
-
-#: src/routes/history/+page.svelte
-msgid "No images match your current tag filters. Try removing some tags or clearing all filters."
-msgstr "現在のタグフィルターに一致する画像がありません。タグを一部削除するか、すべてのフィルターをクリアしてください。"
-
-#: src/routes/history/+page.svelte
-msgid "No history yet"
-msgstr "履歴はまだありません"
-
-#: src/routes/history/+page.svelte
-msgid "Your upload history will appear here. Start uploading images to see your files and manage them easily."
-msgstr "アップロード履歴はここに表示されます。画像をアップロードして、ファイルを簡単に管理しましょう。"
-
-#: src/routes/history/+page.svelte
-msgid "<0/> Upload Images"
-msgstr "<0/> 画像をアップロード"
 
 #: src/routes/history/+page.svelte
 msgid "View More"
@@ -1202,18 +1127,6 @@ msgstr "ストレージから削除"
 msgid "Permanently delete the files from storage"
 msgstr "ファイルをストレージから完全に削除する"
 
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File type & dimensions"
-msgstr "ファイル形式とサイズ"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "File size"
-msgstr "ファイルサイズ"
-
-#: src/feature/Image/History/ImageMetadata.svelte
-msgid "Uploaded"
-msgstr "アップロード日"
-
 #: src/feature/Image/History/SelectionActionBar.svelte
 msgid "Deselect all"
 msgstr "すべて選択解除"
@@ -1378,22 +1291,14 @@ msgstr "タグ"
 msgid "Add more tags..."
 msgstr "タグを追加..."
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "Unsupported file format"
 msgstr "サポートされていないファイル形式"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
 msgid "The file you're trying to upload is not supported. Please use one of the supported image formats."
 msgstr "アップロードしようとしているファイルはサポートされていません。対応している画像形式をご利用ください。"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
-#: src/ui/components/sonner/toasts/UnsupportedFormatToast.svelte
-msgid "<0/> View supported formats"
-msgstr "<0/> 対応形式を確認"
-
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/ui/components/sonner/toasts/BaseToast.svelte
 #: src/ui/components/sonner/toasts/ErrorToast.svelte
 #: src/ui/components/sonner/toasts/InfoToast.svelte
@@ -1402,7 +1307,6 @@ msgstr "<0/> 対応形式を確認"
 msgid "Close notification"
 msgstr "通知を閉じる"
 
-#: src/feature/Image/UnsupportedFIleFormat/UnsupportedFileFormat.svelte
 #: src/feature/Settings/Version/ReleaseModal.svelte
 #: src/feature/User/ApiKey/CreatedKeyDisplay.svelte
 #: src/ui/components/action-popover/action-popover-content.svelte
@@ -2202,6 +2106,7 @@ msgid "No tags assigned to this image."
 msgstr "この画像にタグは割り当てられていません。"
 
 #: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+#: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "コレクションはまだありません"
 
@@ -2238,6 +2143,7 @@ msgstr "「{0}」に一致するタグはありません"
 
 #: src/feature/Tag/TagPicker/TagPickerList.svelte
 #: src/feature/Tag/TagSelector/TagSelector.svelte
+#: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "タグはまだありません"
 
@@ -2578,6 +2484,7 @@ msgid "{0} items"
 msgstr "{0} 件"
 
 #: src/routes/collection/[id]/+page.svelte
+#: src/routes/collection/[id]/+page.svelte
 msgid "<0/> Add images"
 msgstr "<0/> 画像を追加"
 
@@ -2594,10 +2501,6 @@ msgstr "このコレクションは存在しないか、閲覧権限がありま
 #: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "アイテムはまだありません"
-
-#: src/routes/collection/[id]/+page.svelte
-msgid "Upload images directly to this collection."
-msgstr "このコレクションに直接画像をアップロードできます。"
 
 #: src/routes/collection/[id]/+page.svelte
 msgid "No items in this collection yet."
@@ -3784,6 +3687,7 @@ msgid "Polski"
 msgstr "Polski"
 
 #: src/feature/Analytics/ImageAnalytics.svelte
+#: src/routes/history/+page.svelte
 msgid "No uploads yet"
 msgstr "アップロードはまだありません"
 
@@ -4168,13 +4072,8 @@ msgid "Search shares..."
 msgstr "公開を検索..."
 
 #: src/routes/shares/+page.svelte
-#: src/routes/shares/+page.svelte
 msgid "No shares yet"
 msgstr "まだ公開はありません"
-
-#: src/routes/shares/+page.svelte
-msgid "Publish a link from any image or collection to see it here."
-msgstr "画像やコレクションからリンクを公開すると、ここに表示されます。"
 
 #: src/routes/shares/+page.svelte
 msgid "Try adjusting your filters or search term."
@@ -5036,3 +4935,100 @@ msgstr "他{0}件"
 #: src/feature/Upload/Uploader/UploaderConstraints.svelte
 msgid "Max size"
 msgstr "最大サイズ"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "Images you bookmark are collected here, ready when you need them."
+msgstr "ブックマークした画像はここに集まり、いつでも見返せます。"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Explore images"
+msgstr "<0/> 画像を探索"
+
+#: src/routes/bookmarks/+page.svelte
+msgid "<0/> Tap the bookmark on any image to save it here"
+msgstr "<0/> 画像のブックマークをタップして保存"
+
+#: src/routes/explore/+page.svelte
+msgid "Nothing shared yet"
+msgstr "まだ共有された画像はありません"
+
+#: src/routes/explore/+page.svelte
+msgid "Public images from everyone on this instance show up here. Yours could be first."
+msgstr "このインスタンスの全ユーザーの公開画像がここに表示されます。最初の1枚はあなたかもしれません。"
+
+#: src/routes/explore/+page.svelte
+#: src/routes/history/+page.svelte
+msgid "<0/> Upload an image"
+msgstr "<0/> 画像をアップロード"
+
+#: src/routes/explore/+page.svelte
+msgid "Uploads are private until you make them public"
+msgstr "アップロードした画像は、公開するまで非公開のままです"
+
+#. 0: publicFeedState.searchTerm
+#: src/routes/explore/+page.svelte
+msgid "Nothing matches \"{0}\". Try a different search term."
+msgstr "「{0}」に一致する結果はありません。別のキーワードでお試しください。"
+
+#: src/routes/collections/+page.svelte
+#: src/routes/tags/+page.svelte
+msgid "Try a different search term."
+msgstr "別のキーワードでお試しください。"
+
+#: src/routes/collections/+page.svelte
+msgid "Group related images and share them as one link."
+msgstr "関連する画像をまとめて、1つのリンクとして共有できます。"
+
+#: src/routes/collections/+page.svelte
+msgid "<0/> New collection"
+msgstr "<0/> 新しいコレクション"
+
+#: src/routes/history/+page.svelte
+msgid "No images match these tags"
+msgstr "これらのタグに一致する画像がありません"
+
+#: src/routes/history/+page.svelte
+msgid "Try removing a tag, or clear all filters."
+msgstr "タグを1つ外すか、すべてのフィルタを解除してみてください。"
+
+#: src/routes/history/+page.svelte
+#: src/routes/shares/+page.svelte
+msgid "Clear filters"
+msgstr "フィルタを解除"
+
+#: src/routes/history/+page.svelte
+msgid "Every image you upload lands here, with links ready to share and full control over visibility."
+msgstr "アップロードした画像はすべてここに集まり、共有用のリンクや公開設定をいつでも管理できます。"
+
+#: src/routes/shares/+page.svelte
+msgid "No shares match these filters"
+msgstr "これらのフィルタに一致する共有がありません"
+
+#: src/routes/shares/+page.svelte
+msgid "Publish a link from any image or collection to track it here."
+msgstr "画像やコレクションからリンクを公開すると、ここで確認できます。"
+
+#: src/routes/shares/+page.svelte
+msgid "Go to my images"
+msgstr "マイ画像へ移動"
+
+#: src/routes/tags/+page.svelte
+msgid "Label your images with tags to filter and find them fast."
+msgstr "タグを付けると、画像をすばやく絞り込んで見つけられます。"
+
+#: src/routes/tags/+page.svelte
+msgid "<0/> New tag"
+msgstr "<0/> 新しいタグ"
+
+#: src/routes/collection/[id]/+page.svelte
+msgid "Add images to fill this collection."
+msgstr "画像を追加して、このコレクションを充実させましょう。"
+
+#: src/feature/Image/History/ImageMetadata.svelte
+msgid "# bookmark"
+msgid_plural "# bookmarks"
+msgstr[0] "# 件のブックマーク"
+
+#: src/routes/notifications/+page.svelte
+msgid "Activity on your images will show up here."
+msgstr "画像に関するアクティビティがここに表示されます。"
