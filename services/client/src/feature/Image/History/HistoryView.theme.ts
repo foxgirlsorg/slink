@@ -76,17 +76,18 @@ export const actionBarVisibilityVariants = cva('absolute top-2 right-2', {
 
 export const historyItemActionsVariants = tv({
   slots: {
-    bar: '@max-2xl:hidden',
-    menu: '@2xl:hidden',
+    bar: '',
+    menu: '',
   },
   variants: {
     layout: {
       table: {
-        bar: 'flex items-center justify-end',
+        bar: '@container flex items-center justify-end',
+        menu: 'hidden',
       },
       list: {
-        bar: 'shrink-0',
-        menu: 'shrink-0',
+        bar: 'shrink-0 @max-2xl:hidden',
+        menu: 'shrink-0 @2xl:hidden',
       },
     },
     hoverReveal: {

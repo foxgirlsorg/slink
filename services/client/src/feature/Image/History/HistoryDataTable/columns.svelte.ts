@@ -200,7 +200,7 @@ export function createHistoryColumns(
       header: () => 'Actions',
       enableHiding: false,
       meta: {
-        className: 'text-right w-[100px]',
+        className: 'text-right w-[132px]',
       },
       cell: ({ row }) => {
         return renderComponent(HistoryActionsCell, {

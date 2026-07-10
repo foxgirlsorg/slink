@@ -44,9 +44,17 @@
 
 <StopPropagation>
   <div class={theme.bar()}>
-    <ImageActionBar {image} buttons={historyActionBarButtons} {on} compact />
+    <ImageActionBar
+      {image}
+      buttons={historyActionBarButtons}
+      {on}
+      compact
+      responsive={layout === 'table'}
+    />
   </div>
-  <div class={theme.menu()}>
-    <HistoryActionsMenu {image} {on} />
-  </div>
+  {#if layout === 'list'}
+    <div class={theme.menu()}>
+      <HistoryActionsMenu {image} {on} />
+    </div>
+  {/if}
 </StopPropagation>
