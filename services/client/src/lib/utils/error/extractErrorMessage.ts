@@ -14,7 +14,7 @@ export function extractErrorMessage(
         .join('\n');
     }
     const violation = error.violations[0];
-    return violation?.message || 'Validation failed';
+    return violation?.message || error.message || 'Validation failed';
   }
 
   if (error instanceof HttpException) {

@@ -28,6 +28,39 @@ test.describe('Upload errors', () => {
     expect(uploadRequested).toBe(false);
   });
 
+  test('shows an error toast when the server rejects an unrecognized mime type', async ({
+    uploadPage,
+    page,
+  }) => {
+    await uploadPage.goto();
+    await expect(uploadPage.heading).toBeVisible();
+
+    await expect(async () => {
+      const requestPromise = page.waitForRequest(
+        (request) =>
+          /\/api\/upload\/chunked$/.test(request.url()) &&
+          request.method() === 'POST',
+        { timeout: 1500 },
+      );
+      await uploadPage.fileInput.evaluate((input: HTMLInputElement) => {
+        const file = new File(['icns-like binary payload'], 'chatflow.icns', {
+          type: '',
+        });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        input.files = dataTransfer.files;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      await requestPromise;
+    }).toPass({ timeout: 15000 });
+
+    const toast = await uploadPage.waitForToast();
+    await expect(toast).toContainText(/not supported/i);
+
+    await expect(uploadPage.successHeading).toBeHidden();
+    await expect(uploadPage.heading).toBeVisible();
+  });
+
   test('uploads two valid files and both succeed', async ({
     uploadPage,
     page,

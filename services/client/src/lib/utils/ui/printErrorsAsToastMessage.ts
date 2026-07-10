@@ -46,11 +46,11 @@ function showHttpErrorsAsToasts(errors: HttpException['errors']) {
 
 export function printErrorsAsToastMessage(error: Error | undefined) {
   if (error instanceof ValidationException) {
-    showViolationsAsToasts(error.violations);
-    return;
-  }
-
-  if (error instanceof HttpException) {
+    if (error.violations.length > 0) {
+      showViolationsAsToasts(error.violations);
+      return;
+    }
+  } else if (error instanceof HttpException) {
     showHttpErrorsAsToasts(error.errors);
     return;
   }
