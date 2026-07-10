@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Loader } from '@slink/feature/Layout';
   import { TagBadge } from '@slink/feature/Tag';
-  import * as Command from '@slink/ui/components/command';
   import * as Filter from '@slink/ui/components/filter';
   import type { FilterVariant } from '@slink/ui/components/filter';
   import { PickerEmptyState } from '@slink/ui/components/picker';
@@ -174,30 +173,26 @@
           <Loader variant="minimal" size="sm" />
         </div>
       {:else if searchTerm.trim()}
-        <Command.Empty>
-          <PickerEmptyState>
-            {#snippet icon()}
-              <Icon
-                icon="ph:magnifying-glass"
-                class="w-5 h-5 text-muted-foreground"
-              />
-            {/snippet}
-            {#snippet message()}
-              No tags matching "{searchTerm}"
-            {/snippet}
-          </PickerEmptyState>
-        </Command.Empty>
+        <PickerEmptyState>
+          {#snippet icon()}
+            <Icon
+              icon="ph:magnifying-glass"
+              class="w-5 h-5 text-muted-foreground"
+            />
+          {/snippet}
+          {#snippet message()}
+            No tags matching "{searchTerm}"
+          {/snippet}
+        </PickerEmptyState>
       {:else}
-        <Command.Empty>
-          <PickerEmptyState>
-            {#snippet icon()}
-              <Icon icon="ph:tag" class="w-5 h-5 text-muted-foreground" />
-            {/snippet}
-            {#snippet message()}
-              No tags yet
-            {/snippet}
-          </PickerEmptyState>
-        </Command.Empty>
+        <PickerEmptyState>
+          {#snippet icon()}
+            <Icon icon="ph:tag" class="w-5 h-5 text-muted-foreground" />
+          {/snippet}
+          {#snippet message()}
+            No tags yet
+          {/snippet}
+        </PickerEmptyState>
       {/if}
     </Filter.Content>
   {/snippet}
