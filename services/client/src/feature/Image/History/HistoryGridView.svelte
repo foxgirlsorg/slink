@@ -15,6 +15,9 @@
 
   import { fade, fly } from 'svelte/transition';
 
+  import type { Tag } from '@slink/api/Resources/TagResource';
+  import type { CollectionReference } from '@slink/api/Response/Collection/CollectionResponse';
+
   import { cn } from '@slink/utils/ui';
   import { PreviewUrl } from '@slink/utils/url';
 
@@ -41,6 +44,13 @@
         on?.collectionChange(imageId, collections),
       onSelectionChange: (id) => on?.selectionChange?.(id),
     });
+
+  const actionHandlers = {
+    imageDelete: handleDelete,
+    collectionChange: (imageId: string, collections: CollectionReference[]) =>
+      on?.collectionChange(imageId, collections),
+    tagChange: (imageId: string, tags: Tag[]) => on?.tagChange?.(imageId, tags),
+  };
 </script>
 
 <Masonry
@@ -69,7 +79,7 @@
       role="button"
       tabindex={0}
     >
-      <div class="relative">
+      <div class="relative @container">
         <button
           type="button"
           onclick={(e) => {
@@ -113,13 +123,9 @@
             <ImageActionBar
               image={createActionBarImage(item)}
               buttons={historyActionBarButtons}
-              on={{
-                imageDelete: handleDelete,
-                collectionChange: (imageId, collections) =>
-                  on?.collectionChange(imageId, collections),
-                tagChange: (imageId, tags) => on?.tagChange?.(imageId, tags),
-              }}
+              on={actionHandlers}
               compact
+              responsive
             />
           </div>
         </StopPropagation>

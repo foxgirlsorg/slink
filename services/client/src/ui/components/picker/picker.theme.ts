@@ -16,6 +16,18 @@ export const pickerContainerTheme = cva('', {
   },
 });
 
+export const pickerHeaderTheme = cva(
+  'flex shrink-0 items-center justify-between gap-2 border-b border-gray-200/80 px-3 py-2 dark:border-gray-700/80',
+);
+
+export const pickerHeaderTitleTheme = cva(
+  'truncate text-[13px] font-medium text-gray-900 dark:text-gray-100',
+);
+
+export const pickerHeaderCloseTheme = cva(
+  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 dark:text-gray-400 dark:hover:bg-gray-800/60 dark:hover:text-white cursor-pointer',
+);
+
 export const pickerListTheme = cva('', {
   variants: {
     variant: {

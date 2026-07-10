@@ -66,7 +66,7 @@ export const actionBarVisibilityVariants = cva('absolute top-2 right-2', {
     selectionMode: {
       true: 'opacity-0 pointer-events-none',
       false:
-        '[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:none)]:opacity-100 [&:has([data-state=open])]:opacity-100 transition-opacity duration-200',
+        '[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:delay-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:delay-0 [&:has([data-state=open])]:opacity-100 [&:has([data-state=open])]:delay-0 transition-opacity duration-200 delay-200',
     },
   },
   defaultVariants: {

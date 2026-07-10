@@ -981,6 +981,9 @@ msgstr "Można dodawać tylko własne obrazy"
 #: src/feature/Collection/AddToCollectionButton/AddToCollectionButton.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/History/HistoryActionsMenu.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Add to collection"
 msgstr "Dodaj do kolekcji"
@@ -1042,16 +1045,22 @@ msgstr "Pobierz"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Delete image"
 msgstr "Usuń obraz"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/History/HistoryActionsMenu.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Manage tags"
 msgstr "Zarządzaj tagami"
 
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/AdminImageDropdown/AdminImageDropdown.svelte
@@ -1070,10 +1079,12 @@ msgid "Copied!"
 msgstr "Skopiowano!"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Make private"
 msgstr "Ustaw jako prywatny"
 
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Make public"
@@ -1396,6 +1407,7 @@ msgstr "Zamknij powiadomienie"
 #: src/feature/User/ApiKey/CreatedKeyDisplay.svelte
 #: src/ui/components/action-popover/action-popover-content.svelte
 #: src/ui/components/dialog/dialog-content.svelte
+#: src/ui/components/picker/ImageItemPicker.svelte
 #: src/ui/components/sheet/sheet-content.svelte
 #: src/ui/components/sonner/toasts/BaseToast.svelte
 #: src/ui/components/sonner/toasts/ErrorToast.svelte
@@ -2926,10 +2938,6 @@ msgstr "Dziękuję!"
 msgid "Every report helps me improve Slink for the entire community. I review all issues and prioritize fixes based on impact and frequency."
 msgstr "Każde zgłoszenie pomaga mi ulepszać Slink dla całej społeczności. Przeglądam wszystkie problemy i nadaję priorytety poprawkom na podstawie ich wpływu i częstotliwości."
 
-#: src/routes/help/faq/+page.svelte
-msgid "Slink supports the following mime types:"
-msgstr "Slink obsługuje następujące typy MIME:"
-
 #: src/routes/profile/(auth)/awaiting-approval/+page.svelte
 msgid "Account Approved"
 msgstr "Konto zatwierdzone"
@@ -3608,10 +3616,6 @@ msgstr[0] "# obraz"
 msgstr[1] "# obrazy"
 msgstr[2] "# obrazów"
 msgstr[3] "# obrazów"
-
-#: src/routes/help/faq/+page.svelte
-msgid "What image formats Slink supports?"
-msgstr "Jakie formaty obrazów obsługuje Slink?"
 
 #: src/routes/help/faq/+page.svelte
 msgid "I found an issue, how can I report it?"
@@ -4375,10 +4379,6 @@ msgstr "Otwarty dostęp do samego obrazu. Pojawia się na stronie eksploracji, a
 #: src/routes/help/faq/+page.svelte
 msgid "A separate, controlled link generated on top of any image, public or private. Add a password, set an expiration, or revoke it at any time without affecting the image. Use it when you want to hand someone a specific link you can pull back later."
 msgstr "Osobny, zarządzany link generowany na bazie dowolnego obrazu, publicznego lub prywatnego. Dodaj hasło, ustaw datę wygaśnięcia lub cofnij dostęp w dowolnej chwili, nie zmieniając samego obrazu. Wybierz, gdy chcesz dać komuś konkretny link, który później możesz wycofać."
-
-#: src/routes/help/faq/+page.svelte
-msgid "* These formats are automatically converted to JPEG on upload."
-msgstr "* Te formaty są automatycznie konwertowane do JPEG podczas przesyłania."
 
 #: src/feature/Analytics/analytics.language.ts
 msgid "Today"

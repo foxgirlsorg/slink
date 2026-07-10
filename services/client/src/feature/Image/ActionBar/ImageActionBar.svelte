@@ -6,7 +6,13 @@
   import { ImageDeletePopover } from '@slink/feature/Image';
   import { Loader } from '@slink/feature/Layout';
   import { CreateTagDialog, TagPicker } from '@slink/feature/Tag';
-  import { ButtonGroup, ButtonGroupItem } from '@slink/ui/components';
+  import {
+    ButtonGroup,
+    ButtonGroupItem,
+    DropdownSimple,
+    DropdownSimpleGroup,
+    DropdownSimpleItem,
+  } from '@slink/ui/components';
   import * as DropdownMenu from '@slink/ui/components/dropdown-menu/index.js';
   import { Overlay } from '@slink/ui/components/popover';
   import { TooltipProvider } from '@slink/ui/components/tooltip';
@@ -28,6 +34,7 @@
   import {
     actionButtonVariants,
     iconSizeVariants,
+    responsiveTierVariants,
     shareCapsuleVariants,
   } from './ImageActionBar.theme';
   import { createImageActionsState } from './ImageActionsState.svelte';
@@ -42,6 +49,7 @@
     };
     buttons?: ActionButton[];
     compact?: boolean;
+    responsive?: boolean;
     layout?: ActionLayout;
     on?: {
       imageDelete?: (imageId: string) => void;
@@ -57,6 +65,7 @@
     image = $bindable(),
     buttons = ['download', 'copy', 'collection', 'visibility', 'delete'],
     compact = false,
+    responsive = false,
     layout = 'default',
     on,
   }: Props = $props();
@@ -64,6 +73,7 @@
   const isHero = $derived(layout === 'hero');
   const iconClass = $derived(iconSizeVariants({ layout }));
   const capsule = $derived(shareCapsuleVariants({ layout }));
+  const tiers = responsiveTierVariants();
 
   const { settings } = page.data;
   const selectedFormat = $derived(settings.share.format);
@@ -103,9 +113,44 @@
     return 'Make public';
   });
 
+  const hasOverflowItems = $derived(middleButtons.length > 0 || hasDelete);
+
+  let responsiveAnchor = $state<HTMLElement>();
+  let compactTierActive = $state(false);
+
+  const overlayContentProps = $derived.by(() => {
+    if (responsive && compactTierActive) {
+      return { align: 'end' as const, customAnchor: responsiveAnchor };
+    }
+    return { align: 'end' as const };
+  });
+
+  $effect(() => {
+    if (!responsiveAnchor) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      compactTierActive = entry.contentRect.width > 0;
+    });
+    observer.observe(responsiveAnchor);
+
+    return () => observer.disconnect();
+  });
+
   const handleCopyFormatSelect = (format: ShareFormat) => {
     settings.share = { format };
     actions.handleCopy(format);
+  };
+
+  const openCollectionFromMenu = () => {
+    actions.overlays.collection = true;
+  };
+
+  const openTagFromMenu = () => {
+    actions.overlays.tag = true;
+  };
+
+  const openDeleteFromMenu = () => {
+    actions.overlays.delete = true;
   };
 </script>
 
@@ -139,7 +184,7 @@
 {#snippet deletePopoverContent()}
   <ImageDeletePopover
     loading={actions.deleteIsLoading}
-    close={() => (actions.popover.delete = false)}
+    close={() => (actions.overlays.delete = false)}
     confirm={({ preserveOnDiskAfterDeletion }) =>
       actions.handleDelete(preserveOnDiskAfterDeletion)}
   />
@@ -181,7 +226,7 @@
       <span class={capsule.label()}>Copy</span>
     {/if}
   </ButtonGroupItem>
-  <DropdownMenu.Root>
+  <DropdownMenu.Root bind:open={actions.overlays.copyFormats}>
     <DropdownMenu.Trigger disabled={copyDisabled}>
       {#snippet child({ props })}
         <ButtonGroupItem
@@ -231,9 +276,9 @@
 
 {#snippet deleteButton()}
   <Overlay
-    bind:open={actions.popover.delete}
+    bind:open={actions.overlays.delete}
     variant="floating"
-    contentProps={{ align: 'end' }}
+    contentProps={overlayContentProps}
   >
     {#snippet trigger()}
       <ButtonGroupItem
@@ -243,7 +288,7 @@
         aria-label="Delete image"
         disabled={actions.deleteIsLoading}
         tooltip="Delete image"
-        disableTooltip={actions.popover.delete}
+        disableTooltip={actions.overlays.delete}
       >
         <Icon icon="lucide:trash-2" class={iconClass} />
       </ButtonGroupItem>
@@ -261,10 +306,10 @@
 
 {#snippet collectionButton()}
   <Overlay
-    bind:open={actions.popover.collection}
+    bind:open={actions.overlays.collection}
     variant="floating"
     size="none"
-    contentProps={{ align: 'end' }}
+    contentProps={overlayContentProps}
   >
     {#snippet trigger()}
       <ButtonGroupItem
@@ -273,7 +318,7 @@
         class={actionButtonVariants({ layout })}
         aria-label="Add to collection"
         tooltip="Add to collection"
-        disableTooltip={actions.popover.collection}
+        disableTooltip={actions.overlays.collection}
       >
         <Icon icon="lucide:folder" class={iconClass} />
       </ButtonGroupItem>
@@ -282,19 +327,22 @@
       pickerState={actions.collectionPickerState}
       createModalState={actions.createCollectionModalState}
       variant="popover"
+      onClose={() => (actions.overlays.collection = false)}
       onToggle={actions.handleCollectionToggle}
-      onBeforeCreate={actions.popover.suspend}
-      onAfterClose={actions.popover.restore}
-    />
+      onBeforeCreate={actions.overlays.suspend}
+      onAfterClose={actions.overlays.restore}
+    >
+      {#snippet title()}Add to collection{/snippet}
+    </CollectionPicker>
   </Overlay>
 {/snippet}
 
 {#snippet tagButton()}
   <Overlay
-    bind:open={actions.popover.tag}
+    bind:open={actions.overlays.tag}
     variant="floating"
     size="none"
-    contentProps={{ align: 'end' }}
+    contentProps={overlayContentProps}
   >
     {#snippet trigger()}
       <ButtonGroupItem
@@ -303,7 +351,7 @@
         class={actionButtonVariants({ layout })}
         aria-label="Manage tags"
         tooltip="Manage tags"
-        disableTooltip={actions.popover.tag}
+        disableTooltip={actions.overlays.tag}
       >
         <Icon icon="lucide:tag" class={iconClass} />
       </ButtonGroupItem>
@@ -312,10 +360,13 @@
       pickerState={actions.tagPickerState}
       createModalState={actions.createTagModalState}
       variant="popover"
+      onClose={() => (actions.overlays.tag = false)}
       onToggle={actions.handleTagToggle}
-      onBeforeCreate={actions.popover.suspend}
-      onAfterClose={actions.popover.restore}
-    />
+      onBeforeCreate={actions.overlays.suspend}
+      onAfterClose={actions.overlays.restore}
+    >
+      {#snippet title()}Manage tags{/snippet}
+    </TagPicker>
   </Overlay>
 {/snippet}
 
@@ -327,6 +378,104 @@
   {:else if button === 'tag'}
     {@render tagButton()}
   {/if}
+{/snippet}
+
+{#snippet overflowMenuItem(button: ActionButton)}
+  {#if button === 'visibility'}
+    <DropdownSimpleItem on={{ click: actions.handleVisibilityChange }}>
+      {#snippet icon()}
+        <Icon icon={actions.visibilityIcon} class="h-4 w-4" />
+      {/snippet}
+      {#if image.isPublic}
+        <span>Make private</span>
+      {:else}
+        <span>Make public</span>
+      {/if}
+    </DropdownSimpleItem>
+  {:else if button === 'collection'}
+    <DropdownSimpleItem on={{ click: openCollectionFromMenu }}>
+      {#snippet icon()}
+        <Icon icon="lucide:folder" class="h-4 w-4" />
+      {/snippet}
+      <span>Add to collection</span>
+    </DropdownSimpleItem>
+  {:else if button === 'tag'}
+    <DropdownSimpleItem on={{ click: openTagFromMenu }}>
+      {#snippet icon()}
+        <Icon icon="lucide:tag" class="h-4 w-4" />
+      {/snippet}
+      <span>Manage tags</span>
+    </DropdownSimpleItem>
+  {/if}
+{/snippet}
+
+{#snippet overflowMenu()}
+  <DropdownSimple bind:open={actions.overlays.overflow}>
+    {#snippet trigger(triggerProps)}
+      <ButtonGroupItem
+        {...triggerProps}
+        variant="default"
+        size="md"
+        class={actionButtonVariants({ layout })}
+        aria-label="Image actions"
+      >
+        <Icon icon="lucide:ellipsis" class={iconClass} />
+      </ButtonGroupItem>
+    {/snippet}
+    <DropdownSimpleGroup>
+      {#each middleButtons as button (button)}
+        {@render overflowMenuItem(button)}
+      {/each}
+      {#if hasDelete}
+        <DropdownMenu.Separator />
+        <DropdownSimpleItem danger={true} on={{ click: openDeleteFromMenu }}>
+          {#snippet icon()}
+            <Icon icon="lucide:trash-2" class="h-4 w-4" />
+          {/snippet}
+          <span>Delete image</span>
+        </DropdownSimpleItem>
+      {/if}
+    </DropdownSimpleGroup>
+  </DropdownSimple>
+{/snippet}
+
+{#snippet fullBar()}
+  <ButtonGroup
+    variant="glass"
+    size="md"
+    gap="xs"
+    padding="sm"
+    class="rounded-full"
+    role="toolbar"
+    aria-label="Image actions"
+  >
+    {#if hasShareCapsule}
+      {@render shareCapsule()}
+    {/if}
+    {#each middleButtons as button (button)}
+      {@render renderButton(button)}
+    {/each}
+    {@render deleteSection()}
+  </ButtonGroup>
+{/snippet}
+
+{#snippet compactBar()}
+  <ButtonGroup
+    variant="glass"
+    size="md"
+    gap="xs"
+    padding="sm"
+    class="rounded-full"
+    role="toolbar"
+    aria-label="Image actions"
+  >
+    {#if hasShareCapsule}
+      {@render shareCapsule()}
+    {/if}
+    {#if hasOverflowItems}
+      {@render overflowMenu()}
+    {/if}
+  </ButtonGroup>
 {/snippet}
 
 <TooltipProvider delayDuration={300}>
@@ -346,24 +495,17 @@
         {@render deleteSection()}
       </div>
     </div>
+  {:else if responsive}
+    <div>
+      <div class={tiers.full()}>
+        {@render fullBar()}
+      </div>
+      <div class={tiers.compact()} bind:this={responsiveAnchor}>
+        {@render compactBar()}
+      </div>
+    </div>
   {:else}
-    <ButtonGroup
-      variant="glass"
-      size="md"
-      gap="xs"
-      padding="sm"
-      class="rounded-full"
-      role="toolbar"
-      aria-label="Image actions"
-    >
-      {#if hasShareCapsule}
-        {@render shareCapsule()}
-      {/if}
-      {#each middleButtons as button (button)}
-        {@render renderButton(button)}
-      {/each}
-      {@render deleteSection()}
-    </ButtonGroup>
+    {@render fullBar()}
   {/if}
 </TooltipProvider>
 

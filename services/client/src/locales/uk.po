@@ -981,6 +981,9 @@ msgstr "Можна додавати лише власні зображення"
 #: src/feature/Collection/AddToCollectionButton/AddToCollectionButton.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/History/HistoryActionsMenu.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Add to collection"
 msgstr "Додати до колекції"
@@ -1042,16 +1045,22 @@ msgstr "Завантажити"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Delete image"
 msgstr "Видалити зображення"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/History/HistoryActionsMenu.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Manage tags"
 msgstr "Керувати тегами"
 
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/AdminImageDropdown/AdminImageDropdown.svelte
@@ -1070,10 +1079,12 @@ msgid "Copied!"
 msgstr "Скопійовано!"
 
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Make private"
 msgstr "Зробити приватним"
 
+#: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/ActionBar/ImageActionBar.svelte
 #: src/feature/Image/History/HistoryActionsMenu.svelte
 msgid "Make public"
@@ -1396,6 +1407,7 @@ msgstr "Закрити сповіщення"
 #: src/feature/User/ApiKey/CreatedKeyDisplay.svelte
 #: src/ui/components/action-popover/action-popover-content.svelte
 #: src/ui/components/dialog/dialog-content.svelte
+#: src/ui/components/picker/ImageItemPicker.svelte
 #: src/ui/components/sheet/sheet-content.svelte
 #: src/ui/components/sonner/toasts/BaseToast.svelte
 #: src/ui/components/sonner/toasts/ErrorToast.svelte
@@ -2926,10 +2938,6 @@ msgstr "Дякуємо!"
 msgid "Every report helps me improve Slink for the entire community. I review all issues and prioritize fixes based on impact and frequency."
 msgstr "Кожне повідомлення допомагає покращити Slink для всієї спільноти. Я переглядаю всі звернення та пріоритизую виправлення."
 
-#: src/routes/help/faq/+page.svelte
-msgid "Slink supports the following mime types:"
-msgstr "Slink підтримує наступні MIME-типи:"
-
 #: src/routes/profile/(auth)/awaiting-approval/+page.svelte
 msgid "Account Approved"
 msgstr "Обліковий запис схвалено"
@@ -3607,10 +3615,6 @@ msgid_plural "# images"
 msgstr[0] "# зображення"
 msgstr[1] "# зображення"
 msgstr[2] "# зображень"
-
-#: src/routes/help/faq/+page.svelte
-msgid "What image formats Slink supports?"
-msgstr "Які формати зображень підтримує Slink?"
 
 #: src/routes/help/faq/+page.svelte
 msgid "I found an issue, how can I report it?"
@@ -4370,10 +4374,6 @@ msgstr "Вільний доступ до самого зображення. Во
 #: src/routes/help/faq/+page.svelte
 msgid "A separate, controlled link generated on top of any image, public or private. Add a password, set an expiration, or revoke it at any time without affecting the image. Use it when you want to hand someone a specific link you can pull back later."
 msgstr "Окреме посилання поверх будь-якого зображення (публічного чи приватного), яким ви повністю керуєте. Задайте пароль, термін дії або відкличіть доступ будь-коли — саме зображення при цьому не змінюється. Використовуйте, коли хочете дати комусь окреме посилання, яке згодом зможете скасувати."
-
-#: src/routes/help/faq/+page.svelte
-msgid "* These formats are automatically converted to JPEG on upload."
-msgstr "* Ці формати автоматично конвертуються у JPEG під час завантаження."
 
 #: src/feature/Analytics/analytics.language.ts
 msgid "Today"

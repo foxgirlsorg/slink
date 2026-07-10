@@ -4,6 +4,7 @@
     ImageItemPicker,
     type PickerVariant,
   } from '@slink/ui/components/picker';
+  import type { Snippet } from 'svelte';
 
   import type { CreateTagModalState } from '@slink/lib/state/CreateTagModalState.svelte';
   import type { TagImagePickerState } from '@slink/lib/state/ImagePickerState.svelte';
@@ -12,6 +13,8 @@
     pickerState: TagImagePickerState;
     createModalState: CreateTagModalState;
     variant?: PickerVariant;
+    title?: Snippet;
+    onClose?: () => void;
     onToggle?: (result: { added: boolean; itemId: string }) => void;
     onBeforeCreate?: () => void;
     onAfterClose?: () => void;
@@ -21,6 +24,8 @@
     pickerState,
     createModalState,
     variant = 'popover',
+    title,
+    onClose,
     onToggle,
     onBeforeCreate,
     onAfterClose,
@@ -31,6 +36,8 @@
   {pickerState}
   {createModalState}
   {variant}
+  {title}
+  {onClose}
   {onToggle}
   {onBeforeCreate}
   {onAfterClose}

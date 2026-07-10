@@ -72,6 +72,13 @@ export const shareCapsuleVariants = tv({
   },
 });
 
+export const responsiveTierVariants = tv({
+  slots: {
+    full: '@max-[20rem]:hidden',
+    compact: '@[20rem]:hidden',
+  },
+});
+
 export const iconSizeVariants = cva('', {
   variants: {
     layout: {

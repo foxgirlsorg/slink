@@ -77,7 +77,13 @@ export class ImageActionsState {
 
   private _downloadLoading = useAutoReset(500);
   private _isCopied = useAutoReset(1000);
-  private _popover = createExclusiveToggle('collection', 'tag', 'delete');
+  private _overlays = createExclusiveToggle(
+    'collection',
+    'tag',
+    'delete',
+    'copyFormats',
+    'overflow',
+  );
 
   private _collectionPickerState = createCollectionPickerState();
   private _createCollectionModalState = createCreateCollectionModalState();
@@ -105,13 +111,13 @@ export class ImageActionsState {
     });
 
     $effect(() => {
-      if (this._popover.collection) {
+      if (this._overlays.collection) {
         this._collectionPickerState.load();
       }
     });
 
     $effect(() => {
-      if (this._popover.tag) {
+      if (this._overlays.tag) {
         this._tagPickerState.load();
       }
     });
@@ -145,8 +151,8 @@ export class ImageActionsState {
     return this._isCopied;
   }
 
-  get popover() {
-    return this._popover;
+  get overlays() {
+    return this._overlays;
   }
 
   get collectionPickerState() {
@@ -173,6 +179,7 @@ export class ImageActionsState {
   };
 
   handleDownload = (): void => {
+    this._overlays.close();
     if (this._downloadLoading.active) return;
     const image = this._config.getImage();
     const directLink = routes.image.view(image.fileName, {
@@ -208,6 +215,7 @@ export class ImageActionsState {
   };
 
   handleCopy = async (format: ShareFormat): Promise<void> => {
+    this._overlays.close();
     const image = this._config.getImage();
     const descriptor = getShareFormat(format);
     const source = {
@@ -270,7 +278,7 @@ export class ImageActionsState {
       return;
     }
     await this._historyFeedState.removeItems([image.id]);
-    this._popover.delete = false;
+    this._overlays.delete = false;
     await goto('/history');
     this._config.onImageDelete?.(image.id);
   };

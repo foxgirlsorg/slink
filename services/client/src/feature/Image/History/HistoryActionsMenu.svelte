@@ -48,7 +48,6 @@
 
   const { settings } = page.data;
 
-  let menuOpen = $state(false);
   let anchor = $state<HTMLElement>();
 
   const actions = createImageActionsState({
@@ -65,18 +64,15 @@
   );
 
   const openCollectionPicker = () => {
-    menuOpen = false;
-    actions.popover.collection = true;
+    actions.overlays.collection = true;
   };
 
   const openTagPicker = () => {
-    menuOpen = false;
-    actions.popover.tag = true;
+    actions.overlays.tag = true;
   };
 
   const openDeleteConfirm = () => {
-    menuOpen = false;
-    actions.popover.delete = true;
+    actions.overlays.delete = true;
   };
 
   const copyWithFormat = (format: ShareFormat) => {
@@ -86,7 +82,11 @@
 </script>
 
 <div class="flex items-center justify-end" bind:this={anchor}>
-  <ActionsMenu bind:open={menuOpen} tone="surface" label="Image actions">
+  <ActionsMenu
+    bind:open={actions.overlays.overflow}
+    tone="surface"
+    label="Image actions"
+  >
     <DropdownSimpleGroup>
       <DropdownSimpleItem on={{ click: actions.handleDownload }}>
         {#snippet icon()}
@@ -150,7 +150,7 @@
 </div>
 
 <Overlay
-  bind:open={actions.popover.collection}
+  bind:open={actions.overlays.collection}
   variant="floating"
   size="none"
   triggerClass="hidden"
@@ -160,14 +160,17 @@
     pickerState={actions.collectionPickerState}
     createModalState={actions.createCollectionModalState}
     variant="popover"
+    onClose={() => (actions.overlays.collection = false)}
     onToggle={actions.handleCollectionToggle}
-    onBeforeCreate={actions.popover.suspend}
-    onAfterClose={actions.popover.restore}
-  />
+    onBeforeCreate={actions.overlays.suspend}
+    onAfterClose={actions.overlays.restore}
+  >
+    {#snippet title()}Add to collection{/snippet}
+  </CollectionPicker>
 </Overlay>
 
 <Overlay
-  bind:open={actions.popover.tag}
+  bind:open={actions.overlays.tag}
   variant="floating"
   size="none"
   triggerClass="hidden"
@@ -177,21 +180,24 @@
     pickerState={actions.tagPickerState}
     createModalState={actions.createTagModalState}
     variant="popover"
+    onClose={() => (actions.overlays.tag = false)}
     onToggle={actions.handleTagToggle}
-    onBeforeCreate={actions.popover.suspend}
-    onAfterClose={actions.popover.restore}
-  />
+    onBeforeCreate={actions.overlays.suspend}
+    onAfterClose={actions.overlays.restore}
+  >
+    {#snippet title()}Manage tags{/snippet}
+  </TagPicker>
 </Overlay>
 
 <Overlay
-  bind:open={actions.popover.delete}
+  bind:open={actions.overlays.delete}
   variant="floating"
   triggerClass="hidden"
   contentProps={{ align: 'end', customAnchor: anchor }}
 >
   <ImageDeletePopover
     loading={actions.deleteIsLoading}
-    close={() => (actions.popover.delete = false)}
+    close={() => (actions.overlays.delete = false)}
     confirm={({ preserveOnDiskAfterDeletion }) =>
       actions.handleDelete(preserveOnDiskAfterDeletion)}
   />

@@ -8,13 +8,20 @@ export function createExclusiveToggle<K extends string>(...keys: K[]) {
     Object.defineProperty(group, key, {
       get: () => _active === key,
       set: (v: boolean) => {
-        _active = v ? key : null;
+        if (v) {
+          _active = key;
+        } else if (_active === key) {
+          _active = null;
+        }
       },
       enumerable: true,
       configurable: true,
     });
   }
 
+  group.close = () => {
+    _active = null;
+  };
   group.suspend = () => {
     _suspended = _active;
     _active = null;
@@ -25,6 +32,7 @@ export function createExclusiveToggle<K extends string>(...keys: K[]) {
   };
 
   return group as { [P in K]: boolean } & {
+    close: () => void;
     suspend: () => void;
     restore: () => void;
   };
