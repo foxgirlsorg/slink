@@ -8,5 +8,11 @@ export function plural(
   rule: PluralRule = defaultRule,
 ): string {
   const index = Math.min(rule(count), candidates.length - 1);
-  return candidates[index].replace(/#/g, String(count));
+  const candidate = candidates[index];
+
+  if (!candidate) {
+    return String(count);
+  }
+
+  return candidate.replace(/#/g, String(count));
 }
