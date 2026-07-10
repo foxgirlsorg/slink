@@ -36,14 +36,13 @@
 
   const isSelectionMode = $derived(selectionState?.isSelectionMode ?? false);
 
-  const { handleSelect, handleKeydown, handleDelete, getItemState } =
-    useHistoryItemActions({
-      getSelectionState: () => selectionState,
-      onDelete: (id) => on?.delete(id),
-      onCollectionChange: (imageId, collections) =>
-        on?.collectionChange(imageId, collections),
-      onSelectionChange: (id) => on?.selectionChange?.(id),
-    });
+  const { handleSelect, handleDelete, getItemState } = useHistoryItemActions({
+    getSelectionState: () => selectionState,
+    onDelete: (id) => on?.delete(id),
+    onCollectionChange: (imageId, collections) =>
+      on?.collectionChange(imageId, collections),
+    onSelectionChange: (id) => on?.selectionChange?.(id),
+  });
 
   const actionHandlers = {
     imageDelete: handleDelete,
@@ -66,44 +65,49 @@
   getItemWeight={calculateHistoryCardWeight}
 >
   {#snippet itemTemplate(item)}
-    <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
     <article
       in:fly={{ y: 20, duration: 300, delay: Math.random() * 100 }}
       out:fade={{ duration: 200 }}
       class={cn(
         historyCardVariants({ selected: getItemState(item).isSelected }),
-        'cursor-pointer',
+        'relative',
       )}
-      onclick={(e) => handleSelect(e, item)}
-      onkeydown={(e) => handleKeydown(e, item)}
-      role="button"
-      tabindex={0}
     >
+      {#if isSelectionMode}
+        <button
+          type="button"
+          class="absolute inset-0 z-10 cursor-pointer"
+          onclick={(e) => handleSelect(e, item)}
+          aria-label={getItemState(item).selectionAriaLabel}
+        ></button>
+      {/if}
       <div class="relative @container">
         <button
           type="button"
-          onclick={(e) => {
-            e.stopPropagation();
-            handleSelect(e, item);
-          }}
+          onclick={(e) => handleSelect(e, item)}
           class={checkboxVariants({ selectionMode: isSelectionMode })}
           aria-label={getItemState(item).selectionAriaLabel}
         >
           <OverlayCheckbox selected={getItemState(item).isSelected} />
         </button>
-        <div>
+        <a
+          href={isSelectionMode ? undefined : `/info/${item.id}`}
+          class="block overflow-hidden"
+        >
           <ImagePlaceholder
             uniqueId={item.id}
             src={PreviewUrl.image(item.attributes.fileName, {
               width: 400,
               format: 'webp',
             })}
+            alt={item.attributes.description || item.attributes.fileName}
             metadata={item.metadata}
             showMetadata={false}
             showOpenInNewTab={false}
             rounded={false}
+            class="transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
           />
-        </div>
+        </a>
 
         <div class="absolute bottom-2 left-2 flex items-center gap-1.5">
           <VisibilityBadge
@@ -131,39 +135,37 @@
         </StopPropagation>
       </div>
 
-      <div class="p-3">
-        <div class="mb-2">
-          <Link
-            href={`/info/${item.id}`}
-            class="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors truncate block"
-            title={item.attributes.fileName}
-          >
-            {item.attributes.fileName}
-          </Link>
-        </div>
+      <div class="p-3 flex flex-col gap-2">
+        <Link
+          href={`/info/${item.id}`}
+          class="font-mono text-xs font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors truncate block"
+          title={item.attributes.fileName}
+        >
+          {item.attributes.fileName}
+        </Link>
 
-        <div class="mb-3">
-          <ImageMetadata {item} gap="sm" />
-        </div>
+        <ImageMetadata {item} gap="sm" />
 
-        <div class="flex flex-col gap-1">
-          {#if item.tags && item.tags.length > 0}
-            <ImageTagList
-              imageId={item.id}
-              variant="neon"
-              showImageCount={false}
-              removable={false}
-              initialTags={item.tags}
-              maxVisible={3}
-            />
-          {/if}
-          {#if item.collections && item.collections.length > 0}
-            <ImageCollectionList
-              collections={item.collections}
-              maxVisible={3}
-            />
-          {/if}
-        </div>
+        {#if (item.tags?.length ?? 0) > 0 || (item.collections?.length ?? 0) > 0}
+          <div class="flex flex-wrap items-center gap-2">
+            {#if item.tags && item.tags.length > 0}
+              <ImageTagList
+                imageId={item.id}
+                variant="neon"
+                showImageCount={false}
+                removable={false}
+                initialTags={item.tags}
+                maxVisible={3}
+              />
+            {/if}
+            {#if item.collections && item.collections.length > 0}
+              <ImageCollectionList
+                collections={item.collections}
+                maxVisible={3}
+              />
+            {/if}
+          </div>
+        {/if}
       </div>
     </article>
   {/snippet}

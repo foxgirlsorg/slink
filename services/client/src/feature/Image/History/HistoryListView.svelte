@@ -6,7 +6,6 @@
     VisibilityBadge,
   } from '@slink/feature/Image';
   import { ImageTagList } from '@slink/feature/Tag';
-  import { FormattedDate } from '@slink/feature/Text';
   import { OverlayCheckbox } from '@slink/ui/components/checkbox';
   import { Link } from '@slink/ui/components/link';
 
@@ -28,14 +27,13 @@
 
   const isSelectionMode = $derived(selectionState?.isSelectionMode ?? false);
 
-  const { handleSelect, handleKeydown, handleDelete, getItemState } =
-    useHistoryItemActions({
-      getSelectionState: () => selectionState,
-      onDelete: (id) => on?.delete(id),
-      onCollectionChange: (imageId, collections) =>
-        on?.collectionChange(imageId, collections),
-      onSelectionChange: (id) => on?.selectionChange?.(id),
-    });
+  const { handleSelect, handleDelete, getItemState } = useHistoryItemActions({
+    getSelectionState: () => selectionState,
+    onDelete: (id) => on?.delete(id),
+    onCollectionChange: (imageId, collections) =>
+      on?.collectionChange(imageId, collections),
+    onSelectionChange: (id) => on?.selectionChange?.(id),
+  });
 </script>
 
 <ul class="@container flex flex-col gap-3" role="list">
@@ -44,29 +42,29 @@
       in:fly={{ y: 20, duration: 300, delay: index * 50 }}
       out:fade={{ duration: 200 }}
     >
-      <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
       <article
         class={cn(
           historyListRowVariants({
             selected: getItemState(item).isSelected,
             selectionMode: isSelectionMode ?? false,
           }),
-          'cursor-pointer',
+          '@xl:min-h-28',
         )}
-        onclick={(e) => handleSelect(e, item)}
-        onkeydown={(e) => handleKeydown(e, item)}
-        role="button"
-        tabindex={0}
       >
+        {#if isSelectionMode}
+          <button
+            type="button"
+            class="absolute inset-0 z-10 cursor-pointer"
+            onclick={(e) => handleSelect(e, item)}
+            aria-label={getItemState(item).selectionAriaLabel}
+          ></button>
+        {/if}
         <div
           class="relative block w-full @xl:w-40 @2xl:w-48 @4xl:w-56 shrink-0 overflow-hidden bg-gray-100 dark:bg-gray-800/80"
         >
           <button
             type="button"
-            onclick={(e) => {
-              e.stopPropagation();
-              handleSelect(e, item);
-            }}
+            onclick={(e) => handleSelect(e, item)}
             class={cn(
               checkboxVariants({ selectionMode: isSelectionMode }),
               'pointer-events-auto',
@@ -75,7 +73,10 @@
           >
             <OverlayCheckbox selected={getItemState(item).isSelected} />
           </button>
-          <div class="aspect-4/3 @xl:aspect-square w-full h-full">
+          <a
+            href={isSelectionMode ? undefined : `/info/${item.id}`}
+            class="block aspect-4/3 @xl:aspect-auto w-full h-full"
+          >
             <ImagePlaceholder
               src={PreviewUrl.image(item.attributes.fileName, {
                 width: 300,
@@ -83,6 +84,7 @@
                 crop: true,
                 format: 'webp',
               })}
+              alt={item.attributes.description || item.attributes.fileName}
               metadata={item.metadata}
               uniqueId={item.id}
               showOpenInNewTab={false}
@@ -90,9 +92,9 @@
               keepAspectRatio={false}
               objectFit="cover"
               rounded={false}
-              class="h-full w-full transition-transform duration-300 group-hover:scale-105"
+              class="h-full w-full transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
             />
-          </div>
+          </a>
 
           <div class="absolute bottom-2 left-2 flex items-center gap-1.5">
             <VisibilityBadge
@@ -103,11 +105,11 @@
           </div>
         </div>
 
-        <div class="flex flex-col flex-1 p-3 @xl:p-4 min-w-0">
-          <div class="flex items-start justify-between gap-3 mb-2">
+        <div class="flex flex-col flex-1 gap-2 p-3 @xl:p-4 min-w-0">
+          <div class="flex items-start justify-between gap-3">
             <Link
               href={`/info/${item.id}`}
-              class="text-base font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors truncate"
+              class="font-mono text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors truncate"
               title={item.attributes.fileName}
             >
               {item.attributes.fileName}
@@ -127,33 +129,29 @@
             />
           </div>
 
-          <div class="mb-3">
-            <ImageMetadata {item} gap="md" />
-          </div>
+          <ImageMetadata {item} gap="md" />
 
-          <div class="mt-auto flex flex-col gap-1">
-            {#if item.tags && item.tags.length > 0}
-              <ImageTagList
-                imageId={item.id}
-                variant="neon"
-                showImageCount={false}
-                removable={false}
-                initialTags={item.tags}
-                maxVisible={5}
-              />
-            {:else}
-              <div class="text-xs text-gray-400 dark:text-gray-600 @xl:hidden">
-                <FormattedDate date={item.attributes.createdAt.timestamp} />
-              </div>
-            {/if}
+          {#if (item.tags?.length ?? 0) > 0 || (item.collections?.length ?? 0) > 0}
+            <div class="flex flex-wrap items-center gap-2">
+              {#if item.tags && item.tags.length > 0}
+                <ImageTagList
+                  imageId={item.id}
+                  variant="neon"
+                  showImageCount={false}
+                  removable={false}
+                  initialTags={item.tags}
+                  maxVisible={5}
+                />
+              {/if}
 
-            {#if item.collections && item.collections.length > 0}
-              <ImageCollectionList
-                collections={item.collections}
-                maxVisible={5}
-              />
-            {/if}
-          </div>
+              {#if item.collections && item.collections.length > 0}
+                <ImageCollectionList
+                  collections={item.collections}
+                  maxVisible={5}
+                />
+              {/if}
+            </div>
+          {/if}
         </div>
       </article>
     </li>

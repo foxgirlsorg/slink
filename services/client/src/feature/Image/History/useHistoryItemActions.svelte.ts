@@ -25,14 +25,6 @@ export function useHistoryItemActions(config: HistoryItemActionsConfig) {
     config.onSelectionChange?.(item.id);
   };
 
-  const handleKeydown = (e: KeyboardEvent, item: ImageListingItem) => {
-    if (e.key !== 'Enter') return;
-    e.preventDefault();
-    const selectionState = config.getSelectionState();
-    if (!selectionState) return;
-    selectionState.select(item.id);
-  };
-
   const handleDelete = (id: string) => {
     config.onDelete?.(id);
   };
@@ -50,5 +42,5 @@ export function useHistoryItemActions(config: HistoryItemActionsConfig) {
     };
   };
 
-  return { handleSelect, handleKeydown, handleDelete, getItemState };
+  return { handleSelect, handleDelete, getItemState };
 }
