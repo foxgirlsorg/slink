@@ -98,11 +98,45 @@ final class ShareVoterTest extends TestCase {
     $this->assertSame(VoterInterface::ACCESS_DENIED, $result);
   }
 
+  #[Test]
+  public function itGrantsCreateToOwnerOfShareableReference(): void {
+    $this->ownerResolver->method('resolveOwnerId')->willReturn(self::OWNER_ID);
+    $voter = new ShareVoter($this->ownerResolver);
+
+    $result = $voter->vote($this->token(self::OWNER_ID), $this->shareableReference(), [ShareAccess::Create]);
+
+    $this->assertSame(VoterInterface::ACCESS_GRANTED, $result);
+  }
+
+  #[Test]
+  public function itDeniesCreateToNonOwner(): void {
+    $this->ownerResolver->method('resolveOwnerId')->willReturn(self::OWNER_ID);
+    $voter = new ShareVoter($this->ownerResolver);
+
+    $result = $voter->vote($this->token(self::OTHER_ID), $this->shareableReference(), [ShareAccess::Create]);
+
+    $this->assertSame(VoterInterface::ACCESS_DENIED, $result);
+  }
+
+  #[Test]
+  public function itDeniesCreateToAnonymousToken(): void {
+    $this->ownerResolver->method('resolveOwnerId')->willReturn(self::OWNER_ID);
+    $voter = new ShareVoter($this->ownerResolver);
+
+    $result = $voter->vote($this->token(''), $this->shareableReference(), [ShareAccess::Create]);
+
+    $this->assertSame(VoterInterface::ACCESS_DENIED, $result);
+  }
+
   private function token(string $userIdentifier): TokenInterface {
     $token = $this->createStub(TokenInterface::class);
     $token->method('getUserIdentifier')->willReturn($userIdentifier);
 
     return $token;
+  }
+
+  private function shareableReference(): ShareableReference {
+    return ShareableReference::forImage(ID::fromString(self::IMAGE_ID));
   }
 
   private function shareView(): ShareView {

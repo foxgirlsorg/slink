@@ -254,7 +254,7 @@ export class ImageResource extends AbstractResource {
       filter?: string;
     },
   ): Promise<ShareResponse> {
-    return this.get(`/image/${id}/share`, {
+    return this.post(`/image/${id}/share`, {
       query: params as Record<string, unknown>,
     });
   }

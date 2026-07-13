@@ -74,7 +74,7 @@ final class TransformSignatureTest extends HttpTestCase {
   }
 
   private function publishImageShareWithWidth(string $imageId, int $width): void {
-    $this->apiRequest('GET', \sprintf('/api/image/%s/share?width=%d', $imageId, $width), $this->token);
+    $this->apiRequest('POST', \sprintf('/api/image/%s/share?width=%d', $imageId, $width), $this->token);
 
     $response = $this->client->getResponse();
     self::assertContains(

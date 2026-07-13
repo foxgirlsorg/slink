@@ -19,9 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
-#[Route(path: '/image/{id}/share', name: 'share_image', methods: ['GET'])]
+#[Route(path: '/image/{id}/share', name: 'share_image', methods: ['POST'])]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 final readonly class ShareImageController {
   use CommandTrait;
 

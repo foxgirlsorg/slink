@@ -347,7 +347,7 @@ abstract class HttpTestCase extends WebTestCase {
   }
 
   protected function createImageShare(string $token, string $imageId): string {
-    $this->apiRequest('GET', \sprintf('/api/image/%s/share', $imageId), $token);
+    $this->apiRequest('POST', \sprintf('/api/image/%s/share', $imageId), $token);
 
     return $this->extractId((string) $this->client->getResponse()->getContent());
   }

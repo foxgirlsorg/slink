@@ -20,7 +20,7 @@ final class ShareVoter extends Voter {
   ) {}
 
   protected function supports(mixed $attribute, mixed $subject): bool {
-    if ($attribute !== ShareAccess::Edit) {
+    if ($attribute !== ShareAccess::Edit && $attribute !== ShareAccess::Create) {
       return false;
     }
 
@@ -29,6 +29,10 @@ final class ShareVoter extends Voter {
     }
 
     if ($subject instanceof Share) {
+      return true;
+    }
+
+    if ($subject instanceof ShareableReference) {
       return true;
     }
 
@@ -72,6 +76,10 @@ final class ShareVoter extends Voter {
 
     if ($subject instanceof Share) {
       return $subject->getShareable();
+    }
+
+    if ($subject instanceof ShareableReference) {
+      return $subject;
     }
 
     return null;

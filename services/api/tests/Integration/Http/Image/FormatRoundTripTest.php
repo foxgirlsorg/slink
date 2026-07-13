@@ -143,7 +143,7 @@ final class FormatRoundTripTest extends HttpTestCase {
   }
 
   private function createImageShareWithWidth(string $token, string $imageId, int $width): string {
-    $this->apiRequest('GET', \sprintf('/api/image/%s/share?width=%d', $imageId, $width), $token);
+    $this->apiRequest('POST', \sprintf('/api/image/%s/share?width=%d', $imageId, $width), $token);
 
     $response = $this->client->getResponse();
     self::assertContains(
@@ -156,7 +156,7 @@ final class FormatRoundTripTest extends HttpTestCase {
   }
 
   private function createImageShareWithWidthAndFormat(string $token, string $imageId, int $width, string $format): string {
-    $this->apiRequest('GET', \sprintf('/api/image/%s/share?width=%d&format=%s', $imageId, $width, $format), $token);
+    $this->apiRequest('POST', \sprintf('/api/image/%s/share?width=%d&format=%s', $imageId, $width, $format), $token);
 
     $response = $this->client->getResponse();
     self::assertContains(

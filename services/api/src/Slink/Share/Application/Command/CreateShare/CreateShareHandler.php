@@ -4,23 +4,32 @@ declare(strict_types=1);
 
 namespace Slink\Share\Application\Command\CreateShare;
 
+use Slink\Share\Domain\Enum\ShareAccess;
 use Slink\Share\Domain\Repository\ShareStoreRepositoryInterface;
 use Slink\Share\Domain\Service\ShareServiceInterface;
 use Slink\Share\Domain\Share;
 use Slink\Shared\Application\Command\CommandHandlerInterface;
 use Slink\Shared\Domain\ValueObject\Date\DateTime;
 use Slink\Shared\Domain\ValueObject\ID;
+use Slink\Shared\Infrastructure\Exception\NotFoundException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final readonly class CreateShareHandler implements CommandHandlerInterface {
   public function __construct(
     private ShareStoreRepositoryInterface $shareStore,
     private ShareServiceInterface $shareService,
+    private AuthorizationCheckerInterface $access,
   ) {
   }
 
   public function __invoke(CreateShareCommand $command): CreateShareResult {
     $params = $command->getParams();
     $shareable = $params->getShareable();
+
+    if (!$this->access->isGranted(ShareAccess::Create, $shareable)) {
+      throw new NotFoundException();
+    }
+
     $context = $this->shareService->buildContext($shareable);
 
     $share = $this->shareStore->findByTargetPath($params->getTargetPath());

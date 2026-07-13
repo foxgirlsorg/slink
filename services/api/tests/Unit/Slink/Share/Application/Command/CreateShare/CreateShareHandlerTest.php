@@ -6,6 +6,7 @@ namespace Tests\Unit\Slink\Share\Application\Command\CreateShare;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Slink\Share\Application\Command\CreateShare\CreateShareCommand;
 use Slink\Share\Application\Command\CreateShare\CreateShareHandler;
@@ -19,10 +20,13 @@ use Slink\Share\Domain\ValueObject\ShareParams;
 use Slink\Share\Domain\ValueObject\TargetPath;
 use Slink\Shared\Domain\ValueObject\Date\DateTime;
 use Slink\Shared\Domain\ValueObject\ID;
+use Slink\Shared\Infrastructure\Exception\NotFoundException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class CreateShareHandlerTest extends TestCase {
   private ShareStoreRepositoryInterface&MockObject $shareStore;
   private ShareServiceInterface $shareService;
+  private AuthorizationCheckerInterface&Stub $access;
   private CreateShareHandler $handler;
 
   protected function setUp(): void {
@@ -30,7 +34,9 @@ final class CreateShareHandlerTest extends TestCase {
 
     $this->shareStore = $this->createMock(ShareStoreRepositoryInterface::class);
     $this->shareService = $this->createStub(ShareServiceInterface::class);
-    $this->handler = new CreateShareHandler($this->shareStore, $this->shareService);
+    $this->access = $this->createStub(AuthorizationCheckerInterface::class);
+    $this->access->method('isGranted')->willReturn(true);
+    $this->handler = new CreateShareHandler($this->shareStore, $this->shareService, $this->access);
   }
 
   #[Test]
@@ -46,6 +52,21 @@ final class CreateShareHandlerTest extends TestCase {
     $result = ($this->handler)(new CreateShareCommand(ShareParams::withTargetPath($shareable, $targetPath)));
 
     $this->assertTrue($result->wasCreated());
+  }
+
+  #[Test]
+  public function itThrowsNotFoundWhenCreateIsNotGranted(): void {
+    $shareable = ShareableReference::forImage(ID::generate());
+    $targetPath = TargetPath::fromString('/image/file.jpg');
+
+    $access = $this->createStub(AuthorizationCheckerInterface::class);
+    $access->method('isGranted')->willReturn(false);
+    $handler = new CreateShareHandler($this->shareStore, $this->shareService, $access);
+
+    $this->shareStore->expects($this->never())->method('store');
+    $this->expectException(NotFoundException::class);
+
+    $handler(new CreateShareCommand(ShareParams::withTargetPath($shareable, $targetPath)));
   }
 
   #[Test]

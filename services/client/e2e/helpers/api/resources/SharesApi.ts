@@ -13,7 +13,7 @@ export class SharesApi {
   constructor(private http: HttpClient) {}
 
   async createImageShare(imageId: string): Promise<ShareInfo> {
-    const data = await this.http.request('GET', `/api/image/${imageId}/share`);
+    const data = await this.http.request('POST', `/api/image/${imageId}/share`);
     return this.toShareInfo(data);
   }
 
