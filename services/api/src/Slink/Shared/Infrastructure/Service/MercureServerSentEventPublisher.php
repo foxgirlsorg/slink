@@ -19,10 +19,11 @@ final readonly class MercureServerSentEventPublisher implements ServerSentEventP
   /**
    * @param array<string, mixed> $data
    */
-  public function publish(string $topic, array $data): void {
+  public function publish(string $topic, array $data, bool $private = false): void {
     $update = new Update(
       $topic,
       json_encode($data, JSON_THROW_ON_ERROR),
+      $private,
     );
 
     $this->hub->publish($update);

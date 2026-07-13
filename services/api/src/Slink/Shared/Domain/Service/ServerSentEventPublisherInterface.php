@@ -8,5 +8,5 @@ interface ServerSentEventPublisherInterface {
   /**
    * @param array<string, mixed> $data
    */
-  public function publish(string $topic, array $data): void;
+  public function publish(string $topic, array $data, bool $private = false): void;
 }

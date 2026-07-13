@@ -45,7 +45,7 @@ final class CommentChangeListener {
       $this->publisher->publish($topic, [
         'event' => $eventType->value,
         'commentId' => $comment->getId(),
-      ]);
+      ], private: true);
       return;
     }
 
@@ -55,6 +55,6 @@ final class CommentChangeListener {
     $this->publisher->publish($topic, [
       'event' => $eventType->value,
       'comment' => $normalized,
-    ]);
+    ], private: true);
   }
 }

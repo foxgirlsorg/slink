@@ -17,7 +17,7 @@
 			publisher_jwt {env.MERCURE_JWT_SECRET}
 			subscriber_jwt {env.MERCURE_JWT_SECRET}
 			anonymous {
-				subscribe comments/*
+				subscribe public-feed
 			}
 			cors_origins *
 			publish_origins *

@@ -6,7 +6,9 @@ namespace UI\Http\Rest\Controller\Comment;
 
 use Slink\Comment\Application\Query\GetCommentsByImage\GetCommentsByImageQuery;
 use Slink\Shared\Application\Query\QueryTrait;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Mercure\Authorization;
 use Symfony\Component\Routing\Attribute\Route;
 use UI\Http\Rest\Response\ApiResponse;
 
@@ -16,12 +18,16 @@ final class GetCommentsController {
   use QueryTrait;
 
   public function __invoke(
+    Request $request,
+    Authorization $authorization,
     string $imageId,
     int $page = 1,
     int $limit = 50,
   ): ApiResponse {
     $query = new GetCommentsByImageQuery($imageId, $page, $limit);
     $result = $this->ask($query);
+
+    $authorization->setCookie($request, ["comments/image/{$imageId}"]);
 
     return ApiResponse::collection($result);
   }

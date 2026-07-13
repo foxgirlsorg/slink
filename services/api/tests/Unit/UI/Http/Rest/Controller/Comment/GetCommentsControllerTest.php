@@ -10,6 +10,14 @@ use Slink\Comment\Application\Query\GetCommentsByImage\GetCommentsByImageQuery;
 use Slink\Shared\Application\Http\Collection;
 use Slink\Shared\Application\Http\Item;
 use Slink\Shared\Application\Query\QueryBusInterface;
+use Slink\Shared\Infrastructure\Exception\NotFoundException;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mercure\Authorization;
+use Symfony\Component\Mercure\HubRegistry;
+use Symfony\Component\Mercure\Jwt\LcobucciFactory;
+use Symfony\Component\Mercure\Jwt\StaticTokenProvider;
+use Symfony\Component\Mercure\MockHub;
 use UI\Http\Rest\Controller\Comment\GetCommentsController;
 use UI\Http\Rest\Response\ApiResponse;
 
@@ -30,7 +38,7 @@ final class GetCommentsControllerTest extends TestCase {
     $controller = new GetCommentsController();
     $controller->setQueryBus($queryBus);
 
-    $response = $controller($imageId);
+    $response = $controller(new Request(), $this->createAuthorization(), $imageId);
 
     $this->assertInstanceOf(ApiResponse::class, $response);
     $this->assertEquals(200, $response->getStatusCode());
@@ -45,17 +53,14 @@ final class GetCommentsControllerTest extends TestCase {
     $queryBus->expects($this->once())
       ->method('ask')
       ->with($this->callback(function ($query) use ($imageId) {
-        if (!$query instanceof GetCommentsByImageQuery) {
-          return false;
-        }
-        return $query->getImageId() === $imageId;
+        return $query instanceof GetCommentsByImageQuery && $query->getImageId() === $imageId;
       }))
       ->willReturn($collection);
 
     $controller = new GetCommentsController();
     $controller->setQueryBus($queryBus);
 
-    $controller($imageId);
+    $controller(new Request(), $this->createAuthorization(), $imageId);
   }
 
   #[Test]
@@ -69,17 +74,14 @@ final class GetCommentsControllerTest extends TestCase {
     $queryBus->expects($this->once())
       ->method('ask')
       ->with($this->callback(function ($query) use ($page, $limit) {
-        if (!$query instanceof GetCommentsByImageQuery) {
-          return false;
-        }
-        return $query->getPage() === $page && $query->getLimit() === $limit;
+        return $query instanceof GetCommentsByImageQuery && $query->getPage() === $page && $query->getLimit() === $limit;
       }))
       ->willReturn($collection);
 
     $controller = new GetCommentsController();
     $controller->setQueryBus($queryBus);
 
-    $controller($imageId, $page, $limit);
+    $controller(new Request(), $this->createAuthorization(), $imageId, $page, $limit);
   }
 
   #[Test]
@@ -91,17 +93,14 @@ final class GetCommentsControllerTest extends TestCase {
     $queryBus->expects($this->once())
       ->method('ask')
       ->with($this->callback(function ($query) {
-        if (!$query instanceof GetCommentsByImageQuery) {
-          return false;
-        }
-        return $query->getPage() === 1 && $query->getLimit() === 50;
+        return $query instanceof GetCommentsByImageQuery && $query->getPage() === 1 && $query->getLimit() === 50;
       }))
       ->willReturn($collection);
 
     $controller = new GetCommentsController();
     $controller->setQueryBus($queryBus);
 
-    $controller($imageId);
+    $controller(new Request(), $this->createAuthorization(), $imageId);
   }
 
   #[Test]
@@ -118,9 +117,63 @@ final class GetCommentsControllerTest extends TestCase {
     $controller = new GetCommentsController();
     $controller->setQueryBus($queryBus);
 
-    $response = $controller($imageId);
+    $response = $controller(new Request(), $this->createAuthorization(), $imageId);
 
     $this->assertInstanceOf(ApiResponse::class, $response);
     $this->assertEquals(200, $response->getStatusCode());
+  }
+
+  #[Test]
+  public function itSetsMercureAuthorizationCookieOnSuccess(): void {
+    $queryBus = $this->createStub(QueryBusInterface::class);
+    $imageId = 'image-123';
+    $queryBus->method('ask')->willReturn(new Collection(0, 50, 0, []));
+
+    $controller = new GetCommentsController();
+    $controller->setQueryBus($queryBus);
+
+    $request = new Request();
+    $controller($request, $this->createAuthorization(), $imageId);
+
+    /** @var array<string, Cookie> $cookies */
+    $cookies = $request->attributes->get('_mercure_authorization_cookies', []);
+    $cookie = array_values($cookies)[0] ?? null;
+
+    $this->assertInstanceOf(Cookie::class, $cookie);
+    $this->assertSame('mercureAuthorization', $cookie->getName());
+    $this->assertSame('/sse', $cookie->getPath());
+
+    $payload = base64_decode(strtr(explode('.', (string) $cookie->getValue())[1], '-_', '+/'));
+    $this->assertStringContainsString('comments/image/image-123', $payload);
+  }
+
+  #[Test]
+  public function itDoesNotSetMercureAuthorizationCookieWhenQueryFails(): void {
+    $queryBus = $this->createStub(QueryBusInterface::class);
+    $queryBus->method('ask')->willThrowException(new NotFoundException());
+
+    $controller = new GetCommentsController();
+    $controller->setQueryBus($queryBus);
+
+    $request = new Request();
+
+    try {
+      $controller($request, $this->createAuthorization(), 'image-123');
+      $this->fail('Expected NotFoundException to be thrown');
+    } catch (NotFoundException) {
+      $this->assertSame([], $request->attributes->get('_mercure_authorization_cookies', []));
+    }
+  }
+
+  private function createAuthorization(): Authorization {
+    $hub = new MockHub(
+      'http://localhost:3333/.well-known/mercure',
+      new StaticTokenProvider('test.jwt.token'),
+      fn(): string => 'id',
+      new LcobucciFactory('a-string-that-is-at-least-256-bits-long-for-hs256'),
+      '/sse',
+    );
+
+    return new Authorization(new HubRegistry($hub), 1800);
   }
 }

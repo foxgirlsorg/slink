@@ -55,7 +55,8 @@ COPY --link --chmod=755 ./docker/config/s6-overlay/s6-rc.d/prod/ /etc/s6-overlay
 ENV APP_ENV=prod \
     NODE_ENV=production \
     BODY_SIZE_LIMIT=Infinity \
-    MERCURE_HUB_URL=http://localhost:8080/.well-known/mercure
+    MERCURE_HUB_URL=http://localhost:8080/.well-known/mercure \
+    MERCURE_PUBLIC_URL=/sse
 
 RUN mkdir -p /data/redis /data/caddy /app/var/data/keys /app/slink/images && \
     chown -R slink:slink /services /app /data && \

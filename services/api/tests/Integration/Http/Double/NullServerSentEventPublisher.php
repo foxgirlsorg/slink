@@ -11,6 +11,6 @@ final class NullServerSentEventPublisher implements ServerSentEventPublisherInte
    * @param array<string, mixed> $data
    */
   #[\Override]
-  public function publish(string $topic, array $data): void {
+  public function publish(string $topic, array $data, bool $private = false): void {
   }
 }
