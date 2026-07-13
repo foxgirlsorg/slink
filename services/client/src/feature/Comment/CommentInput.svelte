@@ -5,6 +5,8 @@
 
   import type { CommentItem } from '@slink/api/Response';
 
+  import { printErrorsAsToastMessage } from '@slink/utils/ui/printErrorsAsToastMessage';
+
   interface Props {
     replyingTo: CommentItem | null;
     editingComment: CommentItem | null;
@@ -42,7 +44,7 @@
       }
       content = '';
     } catch (error) {
-      console.error('Failed to submit comment:', error);
+      printErrorsAsToastMessage(error as Error);
     } finally {
       isSubmitting = false;
     }
