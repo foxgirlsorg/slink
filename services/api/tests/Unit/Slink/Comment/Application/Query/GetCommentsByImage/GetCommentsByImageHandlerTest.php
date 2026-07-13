@@ -13,14 +13,16 @@ use Slink\Comment\Domain\Repository\CommentRepositoryInterface;
 use Slink\Comment\Infrastructure\ReadModel\View\CommentView;
 use Slink\Shared\Application\Http\Collection;
 use Slink\Shared\Domain\ValueObject\Date\DateTime;
+use Slink\Shared\Infrastructure\Exception\NotFoundException;
 use Slink\User\Infrastructure\ReadModel\View\UserView;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class GetCommentsByImageHandlerTest extends TestCase {
   private function createMockCommentView(): CommentView {
     $userView = $this->createStub(UserView::class);
     $userView->method('getUuid')->willReturn('user-123');
     $userView->method('getDisplayName')->willReturn('Test User');
-    
+
     $mock = $this->createStub(CommentView::class);
     $mock->method('getId')->willReturn('comment-123');
     $mock->method('getContent')->willReturn('Test content');
@@ -31,10 +33,36 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $mock->method('isDeleted')->willReturn(false);
     $mock->method('isEdited')->willReturn(false);
     $mock->method('getUser')->willReturn($userView);
+    $mock->method('getUserId')->willReturn('user-123');
     $mock->method('getReferencedComment')->willReturn(null);
     $mock->method('getReferencedCommentSummary')->willReturn(null);
-    
+
     return $mock;
+  }
+
+  private function createAccess(bool $granted): AuthorizationCheckerInterface {
+    $access = $this->createStub(AuthorizationCheckerInterface::class);
+    $access->method('isGranted')->willReturn($granted);
+
+    return $access;
+  }
+
+  private function createHandler(CommentRepositoryInterface $commentRepository, bool $granted = true): GetCommentsByImageHandler {
+    return new GetCommentsByImageHandler(
+      $commentRepository,
+      $this->createAccess($granted),
+    );
+  }
+
+  /**
+   * @param array<CommentView> $comments
+   */
+  private function createPaginatorStub(array $comments, int $count): Paginator {
+    $paginator = $this->createStub(Paginator::class);
+    $paginator->method('getIterator')->willReturn(new \ArrayIterator($comments));
+    $paginator->method('count')->willReturn($count);
+
+    return $paginator;
   }
 
   #[Test]
@@ -42,16 +70,14 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $commentRepository = $this->createMock(CommentRepositoryInterface::class);
     $imageId = 'image-123';
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([]));
-    $paginator->method('count')->willReturn(0);
+    $paginator = $this->createPaginatorStub([], 0);
 
     $commentRepository->expects($this->once())
       ->method('findByImageId')
       ->with($imageId, 1, 20)
       ->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId);
 
@@ -61,22 +87,34 @@ final class GetCommentsByImageHandlerTest extends TestCase {
   }
 
   #[Test]
+  public function itThrowsNotFoundWhenAccessDenied(): void {
+    $commentRepository = $this->createMock(CommentRepositoryInterface::class);
+    $commentRepository->expects($this->never())->method('findByImageId');
+
+    $handler = $this->createHandler($commentRepository, granted: false);
+
+    $query = new GetCommentsByImageQuery('image-123');
+
+    $this->expectException(NotFoundException::class);
+
+    $handler($query);
+  }
+
+  #[Test]
   public function itPassesPaginationParametersToRepository(): void {
     $commentRepository = $this->createMock(CommentRepositoryInterface::class);
     $imageId = 'image-123';
     $page = 2;
     $limit = 30;
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([]));
-    $paginator->method('count')->willReturn(0);
+    $paginator = $this->createPaginatorStub([], 0);
 
     $commentRepository->expects($this->once())
       ->method('findByImageId')
       ->with($imageId, $page, $limit)
       ->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId, $page, $limit);
 
@@ -89,13 +127,11 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $imageId = 'image-123';
     $totalCount = 15;
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([]));
-    $paginator->method('count')->willReturn($totalCount);
+    $paginator = $this->createPaginatorStub([], $totalCount);
 
     $commentRepository->method('findByImageId')->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId);
 
@@ -113,13 +149,11 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $comment2 = $this->createMockCommentView();
     $comment3 = $this->createMockCommentView();
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([$comment1, $comment2, $comment3]));
-    $paginator->method('count')->willReturn(3);
+    $paginator = $this->createPaginatorStub([$comment1, $comment2, $comment3], 3);
 
     $commentRepository->method('findByImageId')->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId);
 
@@ -133,13 +167,11 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $commentRepository = $this->createStub(CommentRepositoryInterface::class);
     $imageId = 'image-with-no-comments';
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([]));
-    $paginator->method('count')->willReturn(0);
+    $paginator = $this->createPaginatorStub([], 0);
 
     $commentRepository->method('findByImageId')->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId);
 
@@ -154,16 +186,14 @@ final class GetCommentsByImageHandlerTest extends TestCase {
     $commentRepository = $this->createMock(CommentRepositoryInterface::class);
     $imageId = 'specific-image-id-12345';
 
-    $paginator = $this->createStub(Paginator::class);
-    $paginator->method('getIterator')->willReturn(new \ArrayIterator([]));
-    $paginator->method('count')->willReturn(0);
+    $paginator = $this->createPaginatorStub([], 0);
 
     $commentRepository->expects($this->once())
       ->method('findByImageId')
       ->with($imageId, $this->anything(), $this->anything())
       ->willReturn($paginator);
 
-    $handler = new GetCommentsByImageHandler($commentRepository);
+    $handler = $this->createHandler($commentRepository);
 
     $query = new GetCommentsByImageQuery($imageId);
 

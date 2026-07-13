@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Table(name: '`collection_item`')]
 #[ORM\Entity(repositoryClass: CollectionItemRepository::class)]
 #[ORM\Index(columns: ['collection_id', 'position'], name: 'idx_collection_item_position')]
+#[ORM\Index(columns: ['item_id'], name: 'idx_collection_item_item_id')]
 #[ORM\UniqueConstraint(name: 'unique_collection_item', columns: ['collection_id', 'item_id'])]
 class CollectionItemView extends AbstractView implements CursorAwareInterface {
   public function __construct(

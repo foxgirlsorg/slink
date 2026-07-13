@@ -11,8 +11,24 @@ use Slink\Comment\Application\Command\CreateComment\CreateCommentHandler;
 use Slink\Comment\Domain\Comment;
 use Slink\Comment\Domain\Repository\CommentStoreRepositoryInterface;
 use Slink\Shared\Domain\ValueObject\ID;
+use Slink\Shared\Infrastructure\Exception\NotFoundException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class CreateCommentHandlerTest extends TestCase {
+  private function createAccess(bool $granted): AuthorizationCheckerInterface {
+    $access = $this->createStub(AuthorizationCheckerInterface::class);
+    $access->method('isGranted')->willReturn($granted);
+
+    return $access;
+  }
+
+  private function createHandler(CommentStoreRepositoryInterface $commentStore, bool $granted = true): CreateCommentHandler {
+    return new CreateCommentHandler(
+      $commentStore,
+      $this->createAccess($granted),
+    );
+  }
+
   #[Test]
   public function itCreatesCommentSuccessfully(): void {
     $commentStore = $this->createMock(CommentStoreRepositoryInterface::class);
@@ -21,7 +37,7 @@ final class CreateCommentHandlerTest extends TestCase {
       ->method('store')
       ->with($this->isInstanceOf(Comment::class));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand('This is a test comment');
     $imageId = 'image-123';
@@ -30,6 +46,20 @@ final class CreateCommentHandlerTest extends TestCase {
     $result = $handler($command, $imageId, $userId);
 
     $this->assertInstanceOf(ID::class, $result);
+  }
+
+  #[Test]
+  public function itThrowsNotFoundWhenAccessDenied(): void {
+    $commentStore = $this->createMock(CommentStoreRepositoryInterface::class);
+    $commentStore->expects($this->never())->method('store');
+
+    $handler = $this->createHandler($commentStore, granted: false);
+
+    $command = new CreateCommentCommand('This is a test comment');
+
+    $this->expectException(NotFoundException::class);
+
+    $handler($command, 'image-123', 'user-456');
   }
 
   #[Test]
@@ -42,7 +72,7 @@ final class CreateCommentHandlerTest extends TestCase {
         return $comment->getReferencedCommentId() !== null;
       }));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $referencedCommentId = ID::generate()->toString();
     $command = new CreateCommentCommand('This is a reply', $referencedCommentId);
@@ -65,7 +95,7 @@ final class CreateCommentHandlerTest extends TestCase {
         return $comment->getImageId()->toString() === $imageId;
       }));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand('Test comment');
 
@@ -83,7 +113,7 @@ final class CreateCommentHandlerTest extends TestCase {
         return $comment->getUserId()->toString() === $userId;
       }));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand('Test comment');
 
@@ -101,7 +131,7 @@ final class CreateCommentHandlerTest extends TestCase {
         return $comment->getContent()->toString() === $content;
       }));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand($content);
 
@@ -118,7 +148,7 @@ final class CreateCommentHandlerTest extends TestCase {
         return $comment->getReferencedCommentId() === null;
       }));
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand('Top-level comment');
 
@@ -129,7 +159,7 @@ final class CreateCommentHandlerTest extends TestCase {
   public function itReturnsGeneratedCommentId(): void {
     $commentStore = $this->createStub(CommentStoreRepositoryInterface::class);
 
-    $handler = new CreateCommentHandler($commentStore);
+    $handler = $this->createHandler($commentStore);
 
     $command = new CreateCommentCommand('Test comment');
 
