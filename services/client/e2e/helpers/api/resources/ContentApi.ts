@@ -125,6 +125,12 @@ export class ContentApi {
     await this.http.request('POST', `/api/images/${imageId}/tags/${tagId}`);
   }
 
+  async createComment(imageId: string, content: string): Promise<void> {
+    await this.http.request('POST', `/api/image/${imageId}/comments`, {
+      content,
+    });
+  }
+
   async addImageToCollection(
     collectionId: string,
     imageId: string,
