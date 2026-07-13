@@ -83,7 +83,12 @@
       </Input>
 
       <div>
-        <Label class="mb-3">Description (Optional)</Label>
+        <div class="flex items-baseline justify-between mb-3">
+          <Label>Description</Label>
+          <span class="text-xs font-normal text-slate-400 dark:text-slate-500"
+            >Optional</span
+          >
+        </div>
         <textarea
           bind:value={formData.description}
           placeholder="What's this collection about?"
@@ -98,15 +103,13 @@
     </div>
 
     {#if mode === 'create'}
-      <Modal.Notice variant="info">
+      <Modal.Notice variant="info" appearance="plain">
         {#snippet icon()}
           <Icon icon="lucide:info" />
         {/snippet}
-        {#snippet title()}Collection Sharing{/snippet}
         {#snippet message()}
-          Collections let you group images together and share them with a single
-          link. You can add or remove images at any time after creating the
-          collection.
+          Share the whole collection with one link. Add or remove images at any
+          time.
         {/snippet}
       </Modal.Notice>
     {/if}

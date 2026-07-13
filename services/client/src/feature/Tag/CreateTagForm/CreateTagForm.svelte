@@ -85,12 +85,17 @@
       </Input>
 
       <div class="space-y-3">
-        <label
-          for="parent-tag"
-          class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3 block"
-        >
-          Parent Tag (Optional)
-        </label>
+        <div class="flex items-baseline justify-between mb-3">
+          <label
+            for="parent-tag"
+            class="text-sm font-medium text-slate-700 dark:text-slate-300"
+          >
+            Parent Tag
+          </label>
+          <span class="text-xs font-normal text-slate-400 dark:text-slate-500"
+            >Optional</span
+          >
+        </div>
         <Combobox
           items={tagItems}
           bind:value={selectedParentTagId}
@@ -103,15 +108,13 @@
       </div>
     </div>
 
-    <Modal.Notice variant="info">
+    <Modal.Notice variant="info" appearance="plain">
       {#snippet icon()}
         <Icon icon="lucide:info" />
       {/snippet}
-      {#snippet title()}Tag Organization{/snippet}
       {#snippet message()}
-        Tags help organize your images. Parent tags create a hierarchy for
-        better organization. You can always move tags later or create sub-tags
-        within existing ones.
+        Parent tags create a hierarchy. You can move tags or create sub-tags
+        later.
       {/snippet}
     </Modal.Notice>
 

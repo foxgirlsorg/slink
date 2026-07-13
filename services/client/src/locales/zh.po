@@ -245,7 +245,6 @@ msgstr "将你的图片整理至可分享的合集中"
 msgid "Collection Name"
 msgstr "合集名称"
 
-#: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Collection/CreateCollectionModal.svelte
 msgid "Description (Optional)"
 msgstr "描述（可选）"
@@ -254,14 +253,6 @@ msgstr "描述（可选）"
 #: src/feature/Collection/CreateCollectionModal.svelte
 msgid "What's this collection about?"
 msgstr "这个合集是关于什么的？"
-
-#: src/feature/Collection/CreateCollectionForm.svelte
-msgid "Collection Sharing"
-msgstr "合集分享"
-
-#: src/feature/Collection/CreateCollectionForm.svelte
-msgid "Collections let you group images together and share them with a single link. You can add or remove images at any time after creating the collection."
-msgstr "合集可以将多张图片分组并通过单个链接分享。创建后你可随时添加或移除图片。"
 
 #: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Settings/SettingsPane/SettingsPane.svelte
@@ -1071,6 +1062,7 @@ msgid "Click to add a description..."
 msgstr "点击添加描述..."
 
 #: src/feature/Collection/CollectionViews/CollectionDataTable/columns.svelte.ts
+#: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Image/Description/ImageDescription.svelte
 #: src/feature/Image/PostViewer/PostViewerSidebar.svelte
 #: src/feature/Search/SearchBar.svelte
@@ -2134,10 +2126,6 @@ msgid "Tag Name"
 msgstr "标签名"
 
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Parent Tag (Optional)"
-msgstr "父标签（可选）"
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Search for parent tag..."
 msgstr "搜索父标签..."
 
@@ -2145,14 +2133,6 @@ msgstr "搜索父标签..."
 #: src/feature/Tag/TagMoveDialog/TagMoveDialog.svelte
 msgid "No matching tags found."
 msgstr "未找到匹配标签。"
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Tag Organization"
-msgstr "标签组织"
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Tags help organize your images. Parent tags create a hierarchy for better organization. You can always move tags later or create sub-tags within existing ones."
-msgstr "标签可用于整理图片。父标签可以形成层级结构，方便管理。你也可以随时移动标签或在已有标签下创建子标签。"
 
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 #: src/feature/User/ApiKey/CreateApiKeyForm.svelte
@@ -5029,3 +5009,20 @@ msgstr "创建标签"
 #: src/ui/components/picker/picker-empty-state.svelte
 msgid "Your items will appear here"
 msgstr "你的项目将显示在这里"
+
+#: src/feature/Collection/CreateCollectionForm.svelte
+msgid "Share the whole collection with one link. Add or remove images at any time."
+msgstr "通过单个链接分享整个合集。你可随时添加或移除图片。"
+
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Parent tags create a hierarchy. You can move tags or create sub-tags later."
+msgstr "父标签可以形成层级结构。之后你可以随时移动标签或创建子标签。"
+
+#: src/feature/Collection/CreateCollectionForm.svelte
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Optional"
+msgstr "可选"
+
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Parent Tag"
+msgstr "父标签"

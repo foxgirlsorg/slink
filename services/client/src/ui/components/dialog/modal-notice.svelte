@@ -12,34 +12,57 @@
 
   type Props = {
     variant?: NoticeVariant;
+    appearance?: 'card' | 'plain';
     icon: Snippet;
-    title: Snippet;
+    title?: Snippet;
     message?: Snippet;
     children?: Snippet;
   };
 
-  let { variant = 'info', icon, title, message, children }: Props = $props();
+  let {
+    variant = 'info',
+    appearance = 'card',
+    icon,
+    title,
+    message,
+    children,
+  }: Props = $props();
 </script>
 
-<div class={noticeContainer({ variant })}>
-  <div class="flex gap-3">
-    <div class={noticeIconContainer({ variant })}>
-      <span class={noticeIcon({ variant })}>
-        {@render icon()}
+{#if appearance === 'plain'}
+  <p
+    class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400/70 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:shrink-0"
+  >
+    {@render icon()}
+    {#if message}
+      <span class="min-w-0">
+        {@render message()}
       </span>
-    </div>
-    <div class="flex-1 min-w-0">
-      <h4 class={noticeTitle({ variant })}>
-        {@render title()}
-      </h4>
-      {#if message}
-        <p class={noticeText({ variant })}>
-          {@render message()}
-        </p>
-      {/if}
-      {#if children}
-        {@render children()}
-      {/if}
+    {/if}
+  </p>
+{:else}
+  <div class={noticeContainer({ variant })}>
+    <div class="flex gap-3">
+      <div class={noticeIconContainer({ variant })}>
+        <span class={noticeIcon({ variant })}>
+          {@render icon()}
+        </span>
+      </div>
+      <div class="flex-1 min-w-0">
+        {#if title}
+          <h4 class={noticeTitle({ variant })}>
+            {@render title()}
+          </h4>
+        {/if}
+        {#if message}
+          <p class={noticeText({ variant })}>
+            {@render message()}
+          </p>
+        {/if}
+        {#if children}
+          {@render children()}
+        {/if}
+      </div>
     </div>
   </div>
-</div>
+{/if}

@@ -245,7 +245,6 @@ msgstr "Organisieren Sie Ihre Bilder in einer teilbaren Sammlung"
 msgid "Collection Name"
 msgstr "Sammlungsname"
 
-#: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Collection/CreateCollectionModal.svelte
 msgid "Description (Optional)"
 msgstr "Beschreibung (Optional)"
@@ -254,14 +253,6 @@ msgstr "Beschreibung (Optional)"
 #: src/feature/Collection/CreateCollectionModal.svelte
 msgid "What's this collection about?"
 msgstr "Worum geht es in dieser Sammlung?"
-
-#: src/feature/Collection/CreateCollectionForm.svelte
-msgid "Collection Sharing"
-msgstr "Sammlung teilen"
-
-#: src/feature/Collection/CreateCollectionForm.svelte
-msgid "Collections let you group images together and share them with a single link. You can add or remove images at any time after creating the collection."
-msgstr "Sammlungen ermöglichen es, Bilder zu gruppieren und mit einem einzelnen Link zu teilen. Sie können jederzeit Bilder hinzufügen oder entfernen."
 
 #: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Settings/SettingsPane/SettingsPane.svelte
@@ -1071,6 +1062,7 @@ msgid "Click to add a description..."
 msgstr "Klicken, um eine Beschreibung hinzuzufügen..."
 
 #: src/feature/Collection/CollectionViews/CollectionDataTable/columns.svelte.ts
+#: src/feature/Collection/CreateCollectionForm.svelte
 #: src/feature/Image/Description/ImageDescription.svelte
 #: src/feature/Image/PostViewer/PostViewerSidebar.svelte
 #: src/feature/Search/SearchBar.svelte
@@ -2134,10 +2126,6 @@ msgid "Tag Name"
 msgstr "Tag-Name"
 
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Parent Tag (Optional)"
-msgstr "Übergeordneter Tag (Optional)"
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Search for parent tag..."
 msgstr "Übergeordneten Tag suchen..."
 
@@ -2145,14 +2133,6 @@ msgstr "Übergeordneten Tag suchen..."
 #: src/feature/Tag/TagMoveDialog/TagMoveDialog.svelte
 msgid "No matching tags found."
 msgstr "Keine passenden Tags gefunden."
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Tag Organization"
-msgstr "Tag-Organisation"
-
-#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
-msgid "Tags help organize your images. Parent tags create a hierarchy for better organization. You can always move tags later or create sub-tags within existing ones."
-msgstr "Tags helfen, Ihre Bilder zu organisieren. Übergeordnete Tags erstellen eine Hierarchie für bessere Organisation. Sie können Tags jederzeit verschieben oder Unter-Tags innerhalb bestehender erstellen."
 
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 #: src/feature/User/ApiKey/CreateApiKeyForm.svelte
@@ -5035,3 +5015,20 @@ msgstr "Tag erstellen"
 #: src/ui/components/picker/picker-empty-state.svelte
 msgid "Your items will appear here"
 msgstr "Hier erscheinen deine Elemente"
+
+#: src/feature/Collection/CreateCollectionForm.svelte
+msgid "Share the whole collection with one link. Add or remove images at any time."
+msgstr "Teilen Sie die gesamte Sammlung mit einem Link. Sie können jederzeit Bilder hinzufügen oder entfernen."
+
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Parent tags create a hierarchy. You can move tags or create sub-tags later."
+msgstr "Übergeordnete Tags erstellen eine Hierarchie. Sie können Tags später verschieben oder Unter-Tags erstellen."
+
+#: src/feature/Collection/CreateCollectionForm.svelte
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Optional"
+msgstr "Optional"
+
+#: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
+msgid "Parent Tag"
+msgstr "Übergeordneter Tag"
