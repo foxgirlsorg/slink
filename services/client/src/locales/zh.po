@@ -2081,7 +2081,6 @@ msgstr "演示"
 msgid "No tags assigned to this image."
 msgstr "这张图片还没有分配任何标签。"
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
 #: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "暂无合集"
@@ -2117,8 +2116,6 @@ msgstr "这将同时影响以下内容："
 msgid "No tags matching \"{0}\""
 msgstr "没有匹配“{0}”的标签"
 
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-#: src/feature/Tag/TagSelector/TagSelector.svelte
 #: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "暂无标签"
@@ -2473,8 +2470,6 @@ msgid "This collection doesn't exist or you don't have permission to view it."
 msgstr "该合集不存在，或你没有查看权限。"
 
 #: src/routes/collection/[id]/+page.svelte
-#: src/ui/components/picker/picker-empty-state.svelte
-#: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "暂无项目"
 
@@ -4820,14 +4815,6 @@ msgstr "必须填写 SMB 共享。"
 msgid "Create <0/>"
 msgstr "创建 <0/>"
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
-msgid "Organize uploads into named groups"
-msgstr "将图片整理到命名合集中"
-
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-msgid "Label uploads to find them later"
-msgstr "为图片添加标签方便稍后查找"
-
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Failed to create collection"
 msgstr "创建合集失败"
@@ -5021,3 +5008,24 @@ msgstr "至少 {0}"
 #: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Set"
 msgstr "设置"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Your collections will appear here"
+msgstr "你的合集将显示在这里"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Create collection"
+msgstr "新建合集"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+#: src/feature/Tag/TagSelector/TagSelector.svelte
+msgid "Your tags will appear here"
+msgstr "你的标签将显示在这里"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+msgid "Create tag"
+msgstr "创建标签"
+
+#: src/ui/components/picker/picker-empty-state.svelte
+msgid "Your items will appear here"
+msgstr "你的项目将显示在这里"

@@ -3,12 +3,21 @@
 
   import Icon from '@iconify/svelte';
 
+  import { type PickerColor, pickerCreateFooterTheme } from './picker.theme';
+
   interface Props {
     children?: Snippet;
     onclick?: () => void;
+    color?: PickerColor;
+    highlighted?: boolean;
   }
 
-  let { children, onclick }: Props = $props();
+  let {
+    children,
+    onclick,
+    color = 'blue',
+    highlighted = false,
+  }: Props = $props();
 </script>
 
 {#snippet defaultLabel()}
@@ -21,7 +30,7 @@
   <button
     type="button"
     {onclick}
-    class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors w-full"
+    class={pickerCreateFooterTheme({ color, highlighted })}
   >
     <Icon icon="ph:plus" class="w-3.5 h-3.5" />
     <span>{@render (children ?? defaultLabel)()}</span>

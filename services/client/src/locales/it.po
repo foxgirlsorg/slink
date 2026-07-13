@@ -2081,7 +2081,6 @@ msgstr "DEMO"
 msgid "No tags assigned to this image."
 msgstr "Nessun tag assegnato a questa immagine."
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
 #: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "Nessuna raccolta ancora"
@@ -2117,8 +2116,6 @@ msgstr "Questa azione si propagherà a:"
 msgid "No tags matching \"{0}\""
 msgstr "Nessun tag corrisponde a \"{0}\""
 
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-#: src/feature/Tag/TagSelector/TagSelector.svelte
 #: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "Nessun tag ancora"
@@ -2473,8 +2470,6 @@ msgid "This collection doesn't exist or you don't have permission to view it."
 msgstr "Questa raccolta non esiste o non hai i permessi per visualizzarla."
 
 #: src/routes/collection/[id]/+page.svelte
-#: src/ui/components/picker/picker-empty-state.svelte
-#: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "Nessun elemento ancora"
 
@@ -4825,14 +4820,6 @@ msgstr "La condivisione SMB è obbligatoria."
 msgid "Create <0/>"
 msgstr "Crea <0/>"
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
-msgid "Organize uploads into named groups"
-msgstr "Organizza i caricamenti in raccolte denominate"
-
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-msgid "Label uploads to find them later"
-msgstr "Etichetta i caricamenti per ritrovarli in seguito"
-
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Failed to create collection"
 msgstr "Creazione della raccolta non riuscita"
@@ -5027,3 +5014,24 @@ msgstr "Almeno {0}"
 #: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Set"
 msgstr "Imposta"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Your collections will appear here"
+msgstr "Le tue raccolte appariranno qui"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Create collection"
+msgstr "Crea raccolta"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+#: src/feature/Tag/TagSelector/TagSelector.svelte
+msgid "Your tags will appear here"
+msgstr "I tuoi tag appariranno qui"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+msgid "Create tag"
+msgstr "Crea tag"
+
+#: src/ui/components/picker/picker-empty-state.svelte
+msgid "Your items will appear here"
+msgstr "I tuoi elementi appariranno qui"

@@ -2081,7 +2081,6 @@ msgstr "DEMO"
 msgid "No tags assigned to this image."
 msgstr "Diesem Bild sind keine Tags zugewiesen."
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
 #: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "Noch keine Sammlungen"
@@ -2117,8 +2116,6 @@ msgstr "Dies hat folgende Auswirkungen:"
 msgid "No tags matching \"{0}\""
 msgstr "Keine Tags passend zu „{0}\""
 
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-#: src/feature/Tag/TagSelector/TagSelector.svelte
 #: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "Noch keine Tags"
@@ -2473,8 +2470,6 @@ msgid "This collection doesn't exist or you don't have permission to view it."
 msgstr "Diese Sammlung existiert nicht oder Sie haben keine Berechtigung, sie anzuzeigen."
 
 #: src/routes/collection/[id]/+page.svelte
-#: src/ui/components/picker/picker-empty-state.svelte
-#: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "Noch keine Elemente"
 
@@ -4825,14 +4820,6 @@ msgstr "SMB-Freigabe ist erforderlich."
 msgid "Create <0/>"
 msgstr "<0/> erstellen"
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
-msgid "Organize uploads into named groups"
-msgstr "Uploads in benannten Sammlungen organisieren"
-
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-msgid "Label uploads to find them later"
-msgstr "Uploads kennzeichnen, um sie später wiederzufinden"
-
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Failed to create collection"
 msgstr "Sammlung konnte nicht erstellt werden"
@@ -5027,3 +5014,24 @@ msgstr "Mindestens {0}"
 #: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Set"
 msgstr "Setzen"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Your collections will appear here"
+msgstr "Hier erscheinen deine Sammlungen"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Create collection"
+msgstr "Sammlung erstellen"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+#: src/feature/Tag/TagSelector/TagSelector.svelte
+msgid "Your tags will appear here"
+msgstr "Hier erscheinen deine Tags"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+msgid "Create tag"
+msgstr "Tag erstellen"
+
+#: src/ui/components/picker/picker-empty-state.svelte
+msgid "Your items will appear here"
+msgstr "Hier erscheinen deine Elemente"

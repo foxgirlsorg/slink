@@ -8,8 +8,6 @@
     createSelectionResolver,
   } from '@slink/ui/components/picker';
 
-  import Icon from '@iconify/svelte';
-
   import type { CollectionResponse } from '@slink/api/Response';
 
   interface Props {
@@ -59,11 +57,8 @@
   filterFn={filterCollection}
   {create}
 >
-  {#snippet emptyIcon()}
-    <Icon icon="ph:folder-simple-duotone" class="h-[18px] w-[18px]" />
-  {/snippet}
-  {#snippet emptyMessage()}No collections yet{/snippet}
-  {#snippet emptyDescription()}Organize uploads into named groups{/snippet}
+  {#snippet emptyCaption()}Your collections will appear here{/snippet}
+  {#snippet createFooter()}Create collection{/snippet}
   {#snippet children({ item, highlighted })}
     {@const collection = item as CollectionResponse}
     <PickerItem

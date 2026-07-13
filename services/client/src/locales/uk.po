@@ -2081,7 +2081,6 @@ msgstr "ДЕМО"
 msgid "No tags assigned to this image."
 msgstr "До цього зображення не призначено жодного тегу."
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
 #: src/routes/collections/+page.svelte
 msgid "No collections yet"
 msgstr "Колекцій ще немає"
@@ -2117,8 +2116,6 @@ msgstr "Це також вплине на:"
 msgid "No tags matching \"{0}\""
 msgstr "Тегів за запитом \"{0}\" не знайдено"
 
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-#: src/feature/Tag/TagSelector/TagSelector.svelte
 #: src/routes/tags/+page.svelte
 msgid "No tags yet"
 msgstr "Тегів ще немає"
@@ -2473,8 +2470,6 @@ msgid "This collection doesn't exist or you don't have permission to view it."
 msgstr "Ця колекція не існує або у вас немає дозволу на її перегляд."
 
 #: src/routes/collection/[id]/+page.svelte
-#: src/ui/components/picker/picker-empty-state.svelte
-#: src/ui/components/picker/picker-list.svelte
 msgid "No items yet"
 msgstr "Елементів ще немає"
 
@@ -4832,14 +4827,6 @@ msgstr "Потрібно вказати ресурс SMB."
 msgid "Create <0/>"
 msgstr "Створити <0/>"
 
-#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
-msgid "Organize uploads into named groups"
-msgstr "Групуйте завантаження в іменовані колекції"
-
-#: src/feature/Tag/TagPicker/TagPickerList.svelte
-msgid "Label uploads to find them later"
-msgstr "Позначайте завантаження, щоб знайти їх пізніше"
-
 #: src/lib/utils/i18n/messages/toast.language.ts
 msgid "Failed to create collection"
 msgstr "Не вдалося створити колекцію"
@@ -5036,3 +5023,24 @@ msgstr "Щонайменше {0}"
 #: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Set"
 msgstr "Встановити"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Your collections will appear here"
+msgstr "Тут з'являться ваші колекції"
+
+#: src/feature/Collection/CollectionList/CollectionPickerList.svelte
+msgid "Create collection"
+msgstr "Створити колекцію"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+#: src/feature/Tag/TagSelector/TagSelector.svelte
+msgid "Your tags will appear here"
+msgstr "Тут з'являться ваші теги"
+
+#: src/feature/Tag/TagPicker/TagPickerList.svelte
+msgid "Create tag"
+msgstr "Створити тег"
+
+#: src/ui/components/picker/picker-empty-state.svelte
+msgid "Your items will appear here"
+msgstr "Тут з'являться ваші елементи"

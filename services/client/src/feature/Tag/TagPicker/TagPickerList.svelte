@@ -8,8 +8,6 @@
     createSelectionResolver,
   } from '@slink/ui/components/picker';
 
-  import Icon from '@iconify/svelte';
-
   import type { Tag } from '@slink/api/Resources/TagResource';
 
   import { getTagLastSegment, getTagParentPath } from '@slink/lib/utils/tag';
@@ -59,11 +57,8 @@
   filterFn={filterTag}
   {create}
 >
-  {#snippet emptyIcon()}
-    <Icon icon="ph:tag" class="h-[18px] w-[18px]" />
-  {/snippet}
-  {#snippet emptyMessage()}No tags yet{/snippet}
-  {#snippet emptyDescription()}Label uploads to find them later{/snippet}
+  {#snippet emptyCaption()}Your tags will appear here{/snippet}
+  {#snippet createFooter()}Create tag{/snippet}
   {#snippet children({ item, highlighted })}
     {@const tag = item as Tag}
     <PickerItem

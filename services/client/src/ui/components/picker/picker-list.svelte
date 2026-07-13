@@ -25,9 +25,7 @@
     searchPlaceholder?: string;
     showSearch?: boolean;
     children: Snippet<[{ item: T; index: number; highlighted: boolean }]>;
-    emptyIcon?: Snippet;
-    emptyMessage?: Snippet;
-    emptyDescription?: Snippet;
+    emptyCaption?: Snippet;
     createFooter?: Snippet;
     filterFn?: (item: T, searchTerm: string) => boolean;
     create?: PickerCreate;
@@ -41,9 +39,7 @@
     searchPlaceholder = 'Search...',
     showSearch: showSearchProp,
     children,
-    emptyIcon,
-    emptyMessage,
-    emptyDescription,
+    emptyCaption,
     createFooter,
     filterFn,
     create,
@@ -143,31 +139,15 @@
         />
       </div>
     {:else}
-      <PickerEmptyState {color}>
-        {#snippet icon()}
-          {#if emptyIcon}
-            {@render emptyIcon()}
-          {:else}
-            <Icon icon="ph:list-dashes" class="w-5 h-5" />
-          {/if}
-        {/snippet}
-        {#snippet message()}
-          {#if emptyMessage}
-            {@render emptyMessage()}
-          {:else}
-            No items yet
-          {/if}
-        {/snippet}
-        {#snippet description()}
-          {#if emptyDescription}
-            {@render emptyDescription()}
-          {/if}
-        {/snippet}
-      </PickerEmptyState>
+      <PickerEmptyState caption={emptyCaption} />
     {/if}
 
     {#if create?.detailed && (!hasInstant || !searchTerm.trim())}
-      <PickerCreateFooter onclick={() => create?.detailed?.(searchTerm)}>
+      <PickerCreateFooter
+        {color}
+        highlighted
+        onclick={() => create?.detailed?.(searchTerm)}
+      >
         {@render (createFooter ?? defaultCreateLabel)()}
       </PickerCreateFooter>
     {/if}

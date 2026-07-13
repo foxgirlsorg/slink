@@ -229,31 +229,40 @@ export const pickerSubtextTheme = cva(
   },
 );
 
-export const pickerEmptyTheme = cva('', {
-  variants: {
-    variant: {
-      popover: 'px-4',
-      panel:
-        'py-6 rounded-lg border border-dashed border-gray-200 dark:border-gray-700',
-      glass: 'px-4',
+export const pickerCreateFooterTheme = cva(
+  'flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm transition-colors w-full',
+  {
+    variants: {
+      color: {
+        blue: '',
+        indigo: '',
+      },
+      highlighted: {
+        true: '',
+        false:
+          'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5',
+      },
+    },
+    compoundVariants: [
+      {
+        color: 'blue',
+        highlighted: true,
+        class:
+          'bg-blue-50/80 text-blue-600 hover:bg-blue-100/80 dark:bg-blue-500/10 dark:text-blue-400 dark:hover:bg-blue-500/15',
+      },
+      {
+        color: 'indigo',
+        highlighted: true,
+        class:
+          'bg-indigo-50/80 text-indigo-600 hover:bg-indigo-100/80 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/15',
+      },
+    ],
+    defaultVariants: {
+      color: 'blue',
+      highlighted: false,
     },
   },
-  defaultVariants: {
-    variant: 'popover',
-  },
-});
-
-export const pickerEmptyIconTheme = cva('shrink-0 mt-0.5', {
-  variants: {
-    color: {
-      blue: 'text-blue-500 dark:text-blue-400',
-      indigo: 'text-indigo-500 dark:text-indigo-400',
-    },
-  },
-  defaultVariants: {
-    color: 'blue',
-  },
-});
+);
 
 export const pickerCreateRowTheme = cva(
   'flex items-center w-full text-left transition-all duration-150 outline-none group select-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-60',
