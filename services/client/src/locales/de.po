@@ -1052,7 +1052,6 @@ msgstr "Eigenes Bild kann nicht gemerkt werden"
 msgid "Save"
 msgstr "Speichern"
 
-#: src/feature/Image/BookmarkStat/BookmarkStat.svelte
 #: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
 msgid "Bookmarked"
 msgstr "Gemerkt"
@@ -1460,25 +1459,9 @@ msgstr "Amazon S3"
 msgid "SMB Share"
 msgstr "SMB-Freigabe"
 
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "Storage Usage"
-msgstr "Speichernutzung"
-
 #: src/feature/Settings/OAuthSettings/OAuthProviderForm.svelte
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
 msgid "Provider"
 msgstr "Anbieter"
-
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "Total Usage"
-msgstr "Gesamtnutzung"
-
-#. 0: data.fileCount.toLocaleString()
-#. 0: data.cacheFileCount.toLocaleString()
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "{0} files"
-msgstr "{0} Dateien"
 
 #: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
 msgid "Cache"
@@ -1752,14 +1735,6 @@ msgstr "Anbieter gelöscht"
 msgid "No SSO providers configured yet"
 msgstr "Noch keine SSO-Anbieter konfiguriert"
 
-#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
-msgid "Move Up"
-msgstr "Nach oben"
-
-#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
-msgid "Move Down"
-msgstr "Nach unten"
-
 #: src/feature/Settings/SettingsPane/SettingItem.svelte
 msgid "Disabled"
 msgstr "Deaktiviert"
@@ -1777,8 +1752,8 @@ msgstr "Auf {0} zurücksetzen"
 msgid "Reset to <0/>"
 msgstr "Auf <0/> zurücksetzen"
 
+#: src/feature/Image/Share/Card.svelte
 #: src/feature/Settings/ShareSettings/ShareSettings.svelte
-#: src/feature/Share/Options/Toolbar.svelte
 #: src/routes/collection/[id]/+page.svelte
 msgid "Share"
 msgstr "Veröffentlichen"
@@ -1852,6 +1827,7 @@ msgid "Authentication username"
 msgstr "Authentifizierungs-Benutzername"
 
 #: src/feature/Settings/StorageSettings/StorageSettings.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 #: src/feature/Share/Controls/PasswordDetail.svelte
 #: src/feature/Share/Locked/PasswordPrompt.svelte
@@ -2558,13 +2534,9 @@ msgstr "Größe ändern"
 msgid "Adjust dimensions for the shared link"
 msgstr "Bildabmessungen für diesen Link anpassen"
 
-#: src/routes/info/[id]/+page.svelte
+#: src/feature/Image/FilterChip/FilterChip.svelte
 msgid "Filter"
 msgstr "Filter"
-
-#: src/routes/info/[id]/+page.svelte
-msgid "Apply a color filter to the shared link"
-msgstr "Farbfilter auf diesen Link anwenden"
 
 #: src/feature/Image/Share/Card.svelte
 msgid "Select option to copy"
@@ -2595,7 +2567,7 @@ msgstr "<0/> Limit {0} <1/>"
 msgid "Select a date"
 msgstr "Datum auswählen"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 #: src/ui/components/date-picker/date-picker.svelte
 msgid "Pick a date"
 msgstr "Datum wählen"
@@ -3704,6 +3676,8 @@ msgid "Collection and its settings will be permanently removed"
 msgstr "Sammlung und ihre Einstellungen werden dauerhaft entfernt"
 
 #: src/feature/Collection/RemoveFromCollectionPopover/RemoveFromCollectionPopover.svelte
+#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -3885,20 +3859,11 @@ msgstr "Namensnennung-Nicht kommerziell-Keine Bearbeitungen"
 msgid "You may copy and distribute this work non-commercially, but not adapt it, as long as you credit the creator."
 msgstr "Sie dürfen dieses Werk nicht kommerziell kopieren und verbreiten, jedoch nicht bearbeiten, solange Sie den Urheber nennen."
 
-#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
-msgid "# time"
-msgid_plural "# times"
-msgstr[0] "# Mal"
-msgstr[1] "# Mal"
-
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/ExpirationDetail.svelte
 #: src/feature/Share/Controls/List.svelte
 msgid "Expiration"
 msgstr "Ablauf"
-
-#: src/feature/Share/Controls/ExpirationDetail.svelte
-msgid "Restrict link availability after the chosen date"
-msgstr "Verfügbarkeit des Links nach dem gewählten Datum einschränken"
 
 #: src/feature/Share/Unavailable/Unavailable.svelte
 msgid "The link you followed is no longer available or does not exist."
@@ -3914,6 +3879,7 @@ msgid "Saved"
 msgstr "Gespeichert"
 
 #: src/feature/Share/Attributes/ShareAttributes.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 #: src/feature/Share/MyShares/SharesFilterBar/SharesFilterBar.svelte
 #: src/feature/User/ApiKey/apiKey.language.ts
@@ -3929,7 +3895,6 @@ msgid "Not set"
 msgstr "Nicht festgelegt"
 
 #: src/feature/Share/Controls/List.svelte
-#: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "Require a password to view"
 msgstr "Passwort zum Anzeigen erforderlich"
 
@@ -3943,7 +3908,7 @@ msgstr "Zurück zu den Optionen"
 msgid "Manage share link"
 msgstr "Freigabelink verwalten"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 msgid "Custom"
 msgstr "Benutzerdefiniert"
 
@@ -3969,10 +3934,6 @@ msgid "Expires today"
 msgstr "Läuft heute ab"
 
 #: src/feature/Image/Share/Card.svelte
-msgid "Resize, filter, and format changes create a new share link and reset its options (e.g. expiration). The original image remains unchanged."
-msgstr "Größen-, Filter- und Formatänderungen erzeugen einen neuen Freigabelink und setzen dessen Optionen (z. B. Ablauf) zurück. Das Originalbild bleibt unverändert."
-
-#: src/feature/Image/Share/Card.svelte
 msgid "Format"
 msgstr "Format"
 
@@ -3984,7 +3945,7 @@ msgstr "Ablauf wird gespeichert"
 msgid "Failed to save expiration"
 msgstr "Ablauf konnte nicht gespeichert werden"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 msgid "# day"
 msgid_plural "# days"
 msgstr[0] "# Tag"
@@ -4002,26 +3963,19 @@ msgstr "Passwort wird gespeichert"
 msgid "Failed to save password"
 msgstr "Passwort konnte nicht gespeichert werden"
 
-#: src/feature/Share/Controls/PasswordDetail.svelte
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Enter a password"
 msgstr "Passwort eingeben"
 
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Anyone with the link will need this password to view"
-msgstr "Jeder mit dem Link benötigt dieses Passwort zum Ansehen"
-
-#: src/feature/Share/Controls/PasswordDetail.svelte
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Replace password"
 msgstr "Passwort ersetzen"
 
 #: src/feature/Share/Attributes/ShareAttributes.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 msgid "Protected"
 msgstr "Geschützt"
-
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Set password"
-msgstr "Passwort festlegen"
 
 #: src/feature/Share/Locked/PasswordPrompt.svelte
 msgid "Continue"
@@ -4048,16 +4002,12 @@ msgstr "Geben Sie unten das Passwort ein, um den geteilten Inhalt zu entsperren.
 msgid "Expires {0}"
 msgstr "Läuft {0} ab"
 
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "# character"
 msgid_plural "# characters"
 msgstr[0] "# Zeichen"
 msgstr[1] "# Zeichen"
-
-#. 0: plural(passwordState.minLength, [ '# character', '# characters', ])
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Use at least {0}"
-msgstr "Mindestens {0} verwenden"
 
 #: src/routes/shares/+page.svelte
 msgid "My Shares"
@@ -4270,6 +4220,7 @@ msgid "A separate, controlled link generated on top of any image, public or priv
 msgstr "Ein separater, verwaltbarer Link für jedes Bild, egal ob öffentlich oder privat. Füge ein Passwort hinzu, lege ein Ablaufdatum fest oder widerrufe ihn jederzeit, ohne das Bild zu verändern. Nutze das, wenn du jemandem einen bestimmten Link geben möchtest, den du später zurücknehmen kannst."
 
 #: src/feature/Analytics/analytics.language.ts
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 msgid "Today"
 msgstr "Heute"
 
@@ -5033,3 +4984,46 @@ msgstr[1] "# Lesezeichen"
 #: src/routes/notifications/+page.svelte
 msgid "Activity on your images will show up here."
 msgstr "Aktivitäten zu Ihren Bildern werden hier angezeigt."
+
+#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
+msgid "By # person"
+msgid_plural "By # people"
+msgstr[0] "Von # Person"
+msgstr[1] "Von # Personen"
+
+#. 0: remaining
+#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
+msgid "Show {0} more"
+msgstr "{0} weitere anzeigen"
+
+#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
+msgid "Drag to reorder"
+msgstr "Ziehen zum Neuanordnen"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+msgid "Remove expiration"
+msgstr "Ablauf entfernen"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+msgid "Remove password"
+msgstr "Passwort entfernen"
+
+#: src/feature/Image/FilterChip/FilterChip.svelte
+msgid "Remove filter"
+msgstr "Filter entfernen"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+#: src/feature/Share/Controls/ExpirationDetail.svelte
+msgid "Link expires <0/>"
+msgstr "Link läuft am <0/> ab"
+
+#. 0: plural(share.password.minLength, [ '# character', '# characters', ])
+#. 0: plural(passwordState.minLength, [ '# character', '# characters', ])
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+#: src/feature/Share/Controls/PasswordDetail.svelte
+msgid "At least {0}"
+msgstr "Mindestens {0}"
+
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
+msgid "Set"
+msgstr "Setzen"

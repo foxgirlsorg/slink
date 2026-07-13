@@ -1,51 +1,23 @@
 <script lang="ts">
-  import { ShareExpirationState } from '@slink/feature/Share';
-  import { DatePickerField } from '@slink/ui/components/date-picker';
-  import { Switch } from '@slink/ui/components/switch';
+  import { FormattedDate } from '@slink/feature/Text';
 
-  import { plural } from '$lib/utils/i18n';
   import Icon from '@iconify/svelte';
-  import { fly, slide } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
   import { getShareControls } from '../State/Context';
   import StatusIndicator from '../StatusIndicator/StatusIndicator.svelte';
   import type { ShareStatusKind } from '../share.theme';
+  import ExpirationPicker from './ExpirationPicker/ExpirationPicker.svelte';
   import { controls } from './Popover.theme';
 
   interface Props {
-    onBack: () => void;
+    onBack?: () => void;
+    onApply?: () => void;
   }
 
-  let { onBack }: Props = $props();
+  let { onBack, onApply }: Props = $props();
 
   const expiration = getShareControls().expiration;
-
-  let customRevealed: boolean = $state(false);
-
-  const isCustomActive = $derived.by<boolean>(() => {
-    if (!expiration.enabled) {
-      return false;
-    }
-
-    if (customRevealed) {
-      return true;
-    }
-
-    return expiration.date !== null && expiration.activePresetDays === null;
-  });
-
-  const handlePreset = (days: number): void => {
-    customRevealed = false;
-    expiration.setFromDays(days);
-  };
-
-  const handleCustomSelect = (): void => {
-    customRevealed = true;
-  };
-
-  const handleToggle = (checked: boolean): void => {
-    expiration.toggle(checked);
-  };
 
   const statusKind = $derived<ShareStatusKind | null>(expiration.status);
 
@@ -61,19 +33,36 @@
     return 'Saved';
   });
 
-  const detail = $derived(controls.detail({ chipActive: isCustomActive }));
+  const expiresTimestamp = $derived.by<number | null>(() => {
+    const date = expiration.date;
+
+    if (!expiration.enabled || date === null) {
+      return null;
+    }
+
+    return Math.floor(date.getTime() / 1000);
+  });
+
+  const handleRemove = (): void => {
+    expiration.toggle(false);
+    onApply?.();
+  };
+
+  const detail = controls.detail();
 </script>
 
 <div in:fly|local={{ x: 6, duration: 120 }} class={detail.root()}>
   <div class={detail.header()}>
-    <button
-      type="button"
-      class={detail.back()}
-      onclick={onBack}
-      aria-label="Back to options"
-    >
-      <Icon icon="ph:caret-left" class={detail.backIcon()} />
-    </button>
+    {#if onBack}
+      <button
+        type="button"
+        class={detail.back()}
+        onclick={onBack}
+        aria-label="Back to options"
+      >
+        <Icon icon="ph:caret-left" class={detail.backIcon()} />
+      </button>
+    {/if}
 
     <div class={detail.labels()}>
       <div class={detail.titleRow()}>
@@ -81,51 +70,26 @@
           <span class={detail.title()}>Expiration</span>
           <StatusIndicator kind={statusKind} title={statusTitle} />
         </div>
-        <Switch checked={expiration.enabled} onCheckedChange={handleToggle} />
+        {#if expiration.enabled}
+          <button
+            type="button"
+            class={detail.removeAction()}
+            onclick={handleRemove}
+          >
+            Remove
+          </button>
+        {/if}
       </div>
-      <span class={detail.description()}>
-        Restrict link availability after the chosen date
-      </span>
     </div>
   </div>
 
-  {#if expiration.enabled}
-    <div transition:slide={{ duration: 180 }} class={detail.body()}>
-      <div class={detail.presets()}>
-        {#each ShareExpirationState.PRESET_DAYS as days (days)}
-          <button
-            type="button"
-            class={controls
-              .detail({
-                chipActive: expiration.activePresetDays === days,
-              })
-              .chip()}
-            onclick={() => handlePreset(days)}
-            disabled={expiration.isSaving}
-          >
-            {plural(days, ['# day', '# days'])}
-          </button>
-        {/each}
-        <button
-          type="button"
-          class={detail.chip()}
-          onclick={handleCustomSelect}
-          disabled={expiration.isSaving}
-        >
-          Custom
-        </button>
-      </div>
+  <div class={detail.body()}>
+    <ExpirationPicker {onApply} />
 
-      {#if isCustomActive}
-        <div transition:slide={{ duration: 180 }}>
-          <DatePickerField
-            bind:value={expiration.date}
-            placeholder="Pick a date"
-            disabled={expiration.isSaving}
-            class={detail.field()}
-          />
-        </div>
-      {/if}
-    </div>
-  {/if}
+    {#if expiresTimestamp !== null}
+      <p class={detail.footerHint()}>
+        Link expires <FormattedDate date={expiresTimestamp} showTime={false} />
+      </p>
+    {/if}
+  </div>
 </div>

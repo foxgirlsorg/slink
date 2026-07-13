@@ -1052,7 +1052,6 @@ msgstr "不能收藏自己的图片"
 msgid "Save"
 msgstr "保存"
 
-#: src/feature/Image/BookmarkStat/BookmarkStat.svelte
 #: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
 msgid "Bookmarked"
 msgstr "已收藏"
@@ -1460,25 +1459,9 @@ msgstr "Amazon S3"
 msgid "SMB Share"
 msgstr "SMB 共享"
 
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "Storage Usage"
-msgstr "存储用量"
-
 #: src/feature/Settings/OAuthSettings/OAuthProviderForm.svelte
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
 msgid "Provider"
 msgstr "提供方"
-
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "Total Usage"
-msgstr "总用量"
-
-#. 0: data.fileCount.toLocaleString()
-#. 0: data.cacheFileCount.toLocaleString()
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-#: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
-msgid "{0} files"
-msgstr "{0} 个文件"
 
 #: src/feature/Storage/StorageUsageWidget/StorageUsageDisplay.svelte
 msgid "Cache"
@@ -1752,14 +1735,6 @@ msgstr "提供方已删除"
 msgid "No SSO providers configured yet"
 msgstr "尚未配置 SSO 提供方"
 
-#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
-msgid "Move Up"
-msgstr "上移"
-
-#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
-msgid "Move Down"
-msgstr "下移"
-
 #: src/feature/Settings/SettingsPane/SettingItem.svelte
 msgid "Disabled"
 msgstr "禁用"
@@ -1777,8 +1752,8 @@ msgstr "重置为 {0}"
 msgid "Reset to <0/>"
 msgstr "重置为 <0/>"
 
+#: src/feature/Image/Share/Card.svelte
 #: src/feature/Settings/ShareSettings/ShareSettings.svelte
-#: src/feature/Share/Options/Toolbar.svelte
 #: src/routes/collection/[id]/+page.svelte
 msgid "Share"
 msgstr "发布"
@@ -1852,6 +1827,7 @@ msgid "Authentication username"
 msgstr "认证用户名"
 
 #: src/feature/Settings/StorageSettings/StorageSettings.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 #: src/feature/Share/Controls/PasswordDetail.svelte
 #: src/feature/Share/Locked/PasswordPrompt.svelte
@@ -2558,13 +2534,9 @@ msgstr "尺寸调整"
 msgid "Adjust dimensions for the shared link"
 msgstr "调整此链接的尺寸"
 
-#: src/routes/info/[id]/+page.svelte
+#: src/feature/Image/FilterChip/FilterChip.svelte
 msgid "Filter"
 msgstr "滤镜"
-
-#: src/routes/info/[id]/+page.svelte
-msgid "Apply a color filter to the shared link"
-msgstr "为此链接应用颜色滤镜"
 
 #: src/feature/Image/Share/Card.svelte
 msgid "Select option to copy"
@@ -2595,7 +2567,7 @@ msgstr "<0/> 条/页 {0} <1/>"
 msgid "Select a date"
 msgstr "选择日期"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 #: src/ui/components/date-picker/date-picker.svelte
 msgid "Pick a date"
 msgstr "挑选日期"
@@ -3702,6 +3674,8 @@ msgid "Collection and its settings will be permanently removed"
 msgstr "收藏夹及其设置将被永久删除"
 
 #: src/feature/Collection/RemoveFromCollectionPopover/RemoveFromCollectionPopover.svelte
+#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "Remove"
 msgstr "移除"
 
@@ -3883,19 +3857,11 @@ msgstr "署名-非商业性使用-禁止演绎"
 msgid "You may copy and distribute this work non-commercially, but not adapt it, as long as you credit the creator."
 msgstr "您可以以非商业方式复制和分发本作品，但不得修改，只需署名作者。"
 
-#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
-msgid "# time"
-msgid_plural "# times"
-msgstr[0] "# 次"
-
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/ExpirationDetail.svelte
 #: src/feature/Share/Controls/List.svelte
 msgid "Expiration"
 msgstr "过期时间"
-
-#: src/feature/Share/Controls/ExpirationDetail.svelte
-msgid "Restrict link availability after the chosen date"
-msgstr "在所选日期后限制链接可用性"
 
 #: src/feature/Share/Unavailable/Unavailable.svelte
 msgid "The link you followed is no longer available or does not exist."
@@ -3911,6 +3877,7 @@ msgid "Saved"
 msgstr "已保存"
 
 #: src/feature/Share/Attributes/ShareAttributes.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 #: src/feature/Share/MyShares/SharesFilterBar/SharesFilterBar.svelte
 #: src/feature/User/ApiKey/apiKey.language.ts
@@ -3926,7 +3893,6 @@ msgid "Not set"
 msgstr "未设置"
 
 #: src/feature/Share/Controls/List.svelte
-#: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "Require a password to view"
 msgstr "查看时需要密码"
 
@@ -3940,7 +3906,7 @@ msgstr "返回选项"
 msgid "Manage share link"
 msgstr "管理分享链接"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 msgid "Custom"
 msgstr "自定义"
 
@@ -3966,10 +3932,6 @@ msgid "Expires today"
 msgstr "今天过期"
 
 #: src/feature/Image/Share/Card.svelte
-msgid "Resize, filter, and format changes create a new share link and reset its options (e.g. expiration). The original image remains unchanged."
-msgstr "调整尺寸、滤镜和格式会生成新的分享链接并重置其选项（如过期时间）。原始图片不会改变。"
-
-#: src/feature/Image/Share/Card.svelte
 msgid "Format"
 msgstr "格式"
 
@@ -3981,7 +3943,7 @@ msgstr "正在保存过期时间"
 msgid "Failed to save expiration"
 msgstr "保存过期时间失败"
 
-#: src/feature/Share/Controls/ExpirationDetail.svelte
+#: src/feature/Share/Controls/ExpirationPicker/ExpirationPicker.svelte
 msgid "# day"
 msgid_plural "# days"
 msgstr[0] "# 天"
@@ -3999,26 +3961,19 @@ msgstr "正在保存密码"
 msgid "Failed to save password"
 msgstr "保存密码失败"
 
-#: src/feature/Share/Controls/PasswordDetail.svelte
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Enter a password"
 msgstr "输入密码"
 
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Anyone with the link will need this password to view"
-msgstr "任何拥有该链接的人都需要此密码才能查看"
-
-#: src/feature/Share/Controls/PasswordDetail.svelte
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
 msgid "Replace password"
 msgstr "更换密码"
 
 #: src/feature/Share/Attributes/ShareAttributes.svelte
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/List.svelte
 msgid "Protected"
 msgstr "已保护"
-
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Set password"
-msgstr "设置密码"
 
 #: src/feature/Share/Locked/PasswordPrompt.svelte
 msgid "Continue"
@@ -4045,15 +4000,11 @@ msgstr "请在下方输入密码以解锁分享的内容。"
 msgid "Expires {0}"
 msgstr "{0}过期"
 
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 #: src/feature/Share/Controls/PasswordDetail.svelte
 msgid "# character"
 msgid_plural "# characters"
 msgstr[0] "# 个字符"
-
-#. 0: plural(passwordState.minLength, [ '# character', '# characters', ])
-#: src/feature/Share/Controls/PasswordDetail.svelte
-msgid "Use at least {0}"
-msgstr "至少使用 {0}"
 
 #: src/routes/shares/+page.svelte
 msgid "My Shares"
@@ -4265,6 +4216,7 @@ msgid "A separate, controlled link generated on top of any image, public or priv
 msgstr "在任何图片（公开或私密）之上生成的独立、可控链接。可以添加密码、设置有效期，也可以随时撤销，且不会影响图片本身。当你希望给某人一个特定链接并保留收回能力时使用。"
 
 #: src/feature/Analytics/analytics.language.ts
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
 msgid "Today"
 msgstr "今天"
 
@@ -5026,3 +4978,46 @@ msgstr[0] "# 个收藏"
 #: src/routes/notifications/+page.svelte
 msgid "Activity on your images will show up here."
 msgstr "你的图片相关动态会显示在这里。"
+
+#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
+msgid "By # person"
+msgid_plural "By # people"
+msgstr[0] "#人收藏"
+msgstr[1] ""
+
+#. 0: remaining
+#: src/feature/Image/BookmarkersPanel/BookmarkersPanel.svelte
+msgid "Show {0} more"
+msgstr "显示更多{0}位"
+
+#: src/feature/Settings/OAuthSettings/OAuthProviderList.svelte
+msgid "Drag to reorder"
+msgstr "拖拽排序"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+msgid "Remove expiration"
+msgstr "移除过期时间"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+msgid "Remove password"
+msgstr "移除密码"
+
+#: src/feature/Image/FilterChip/FilterChip.svelte
+msgid "Remove filter"
+msgstr "移除滤镜"
+
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+#: src/feature/Share/Controls/ExpirationDetail.svelte
+msgid "Link expires <0/>"
+msgstr "链接将于 <0/> 过期"
+
+#. 0: plural(share.password.minLength, [ '# character', '# characters', ])
+#. 0: plural(passwordState.minLength, [ '# character', '# characters', ])
+#: src/feature/Share/Chips/ShareAttributeChips.svelte
+#: src/feature/Share/Controls/PasswordDetail.svelte
+msgid "At least {0}"
+msgstr "至少 {0}"
+
+#: src/feature/Share/Controls/PasswordPicker/PasswordPicker.svelte
+msgid "Set"
+msgstr "设置"

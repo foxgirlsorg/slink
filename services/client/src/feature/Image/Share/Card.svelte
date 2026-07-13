@@ -1,12 +1,12 @@
 <script lang="ts">
   import {
+    FilterChip,
     FormatPicker,
     type ImageFilter,
     type ImageParams,
     ShareLinkCopy,
   } from '@slink/feature/Image';
   import * as Share from '@slink/feature/Share';
-  import { getShareStateRegistry } from '@slink/feature/Share';
   import { Notice } from '@slink/feature/Text';
   import { Shortcut } from '@slink/ui/components';
 
@@ -17,6 +17,8 @@
   interface Props {
     image: ShareCardImage;
     filter?: ImageFilter;
+    previewUrl?: string;
+    onFilterChange?: (filter: ImageFilter) => void;
     resizeParams?: Partial<ImageParams>;
     onPublished?: (shareId: string) => void | Promise<void>;
   }
@@ -24,6 +26,8 @@
   let {
     image,
     filter = 'none',
+    previewUrl,
+    onFilterChange,
     resizeParams = {},
     onPublished,
   }: Props = $props();
@@ -33,7 +37,6 @@
     getFilter: () => filter,
     getResizeParams: () => resizeParams,
     onPublished: (shareId) => onPublished?.(shareId),
-    registry: getShareStateRegistry(),
   });
 </script>
 
@@ -53,16 +56,33 @@
       </div>
     {/if}
 
-    <div class="mb-3">
-      <Share.Toolbar />
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+      Share
+    </h2>
+
+    <div class="mb-4">
+      <Share.AttributeChips>
+        {#snippet prepend()}
+          {#if previewUrl && onFilterChange}
+            <FilterChip
+              {previewUrl}
+              value={filter}
+              on={{ change: onFilterChange }}
+            />
+          {/if}
+        {/snippet}
+      </Share.AttributeChips>
     </div>
 
-    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
-      Resize, filter, and format changes create a new share link and reset its
-      options (e.g. expiration). The original image remains unchanged.
-    </p>
+    <ShareLinkCopy
+      value={state.directLink}
+      shareUrl={state.shareUrl}
+      imageAlt={image.id}
+      isLoading={state.isLoading}
+      onBeforeCopy={state.ensurePublished}
+    />
 
-    <Notice variant="info" size="xs" class="mb-4">
+    <Notice variant="info" size="xs" class="mt-4">
       <span class="flex items-center justify-between">
         <span class="flex items-center gap-2">
           <Icon icon="lucide:clipboard-copy" class="h-3.5 w-3.5 shrink-0" />
@@ -78,13 +98,5 @@
         </span>
       </span>
     </Notice>
-
-    <ShareLinkCopy
-      value={state.directLink}
-      shareUrl={state.shareUrl}
-      imageAlt={image.id}
-      isLoading={state.isLoading}
-      onBeforeCopy={state.ensurePublished}
-    />
   {/snippet}
 </Share.Panel>

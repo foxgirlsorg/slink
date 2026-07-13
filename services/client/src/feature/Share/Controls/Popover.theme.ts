@@ -57,10 +57,10 @@ export const controls = {
     slots: {
       root: 'flex flex-col gap-3 px-1.5 py-1',
       header: 'flex items-start gap-2',
-      back: 'inline-flex items-center justify-center shrink-0 rounded-md mt-0.5 h-6 w-6 text-gray-500 transition-colors cursor-pointer hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 dark:text-gray-400 dark:hover:bg-gray-800/60 dark:hover:text-white',
+      back: 'inline-flex items-center justify-center shrink-0 rounded-md h-6 w-6 text-gray-500 transition-colors cursor-pointer hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 dark:text-gray-400 dark:hover:bg-gray-800/60 dark:hover:text-white',
       backIcon: 'h-3.5 w-3.5',
       labels: 'flex min-w-0 flex-1 flex-col gap-1',
-      titleRow: 'flex items-center justify-between gap-3',
+      titleRow: 'flex min-h-6 items-center justify-between gap-3',
       titleGroup: 'flex min-w-0 items-center gap-2',
       title: 'text-sm font-medium text-gray-900 dark:text-white leading-tight',
       description: 'text-xs text-gray-500 dark:text-gray-400 leading-snug',
@@ -69,22 +69,15 @@ export const controls = {
       chip: 'inline-flex items-center rounded-full font-medium leading-none transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 px-2.5 py-1 text-xs cursor-pointer',
       field:
         'h-auto border-transparent bg-transparent shadow-none rounded-lg px-2 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800/60 dark:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent',
-      passwordRow: 'flex items-center gap-1.5',
-      passwordInput:
-        'flex-1 h-9 rounded-md border border-gray-200 bg-white px-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-colors focus-visible:border-blue-500/60 focus-visible:ring-2 focus-visible:ring-blue-500/30 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white dark:placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60',
-      passwordToggle:
-        'inline-flex items-center justify-center shrink-0 rounded-md h-8 w-8 text-gray-500 transition-colors cursor-pointer hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 dark:text-gray-400 dark:hover:bg-gray-800/60 dark:hover:text-white',
-      passwordToggleIcon: 'h-4 w-4',
-      passwordHelper:
-        'text-[11px] text-gray-500 dark:text-gray-400 leading-snug',
-      passwordHint:
-        'text-[11px] text-amber-600 dark:text-amber-400 leading-snug',
-      replaceButton:
-        'inline-flex items-center self-start rounded-full px-2.5 py-1 text-xs font-medium leading-none transition-colors cursor-pointer bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800/60 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30',
-      placeholderRow:
-        'flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/40',
-      placeholderDots:
-        'tracking-[0.2em] font-mono text-gray-400 dark:text-gray-500',
+      fieldRow:
+        'flex h-8 min-w-0 items-center gap-2 rounded-md border border-border bg-background dark:bg-input/30 px-3 shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50',
+      fieldInput:
+        'h-full min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+      footerHint: 'text-[11px] text-gray-500 dark:text-gray-400 leading-snug',
+      setAction:
+        'shrink-0 rounded-sm text-xs font-medium leading-none transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30',
+      removeAction:
+        'shrink-0 rounded-sm text-xs font-medium leading-none text-red-600 transition-colors cursor-pointer hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/30 dark:text-red-400 dark:hover:text-red-300',
     },
     variants: {
       chipActive: {
@@ -95,9 +88,19 @@ export const controls = {
           chip: 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800/60 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white',
         },
       },
+      setEnabled: {
+        true: {
+          setAction:
+            'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer',
+        },
+        false: {
+          setAction: 'text-gray-400 dark:text-gray-500 cursor-default',
+        },
+      },
     },
     defaultVariants: {
       chipActive: false,
+      setEnabled: false,
     },
   }),
 };

@@ -4,8 +4,6 @@ export * from './ActionBar/ImageActionsState.svelte';
 export { default as AdminImageDropdown } from './AdminImageDropdown/AdminImageDropdown.svelte';
 export { default as BookmarkButton } from './BookmarkButton/BookmarkButton.svelte';
 export * from './BookmarkButton/BookmarkButton.theme';
-export { default as BookmarkStat } from './BookmarkStat/BookmarkStat.svelte';
-export * from './BookmarkStat/BookmarkStat.theme';
 export { default as BookmarkersPanel } from './BookmarkersPanel/BookmarkersPanel.svelte';
 export * from './BookmarkersPanel/BookmarkersPanel.theme';
 export { default as ImageDescription } from './Description/ImageDescription.svelte';
@@ -13,6 +11,7 @@ export { default as DimensionsBadge } from './DimensionsBadge/DimensionsBadge.sv
 export * from './DimensionsBadge/DimensionsBadge.theme';
 export { default as DownloadButton } from './DownloadButton/DownloadButton.svelte';
 export * from './DownloadButton/DownloadButton.theme';
+export { default as FilterChip } from './FilterChip/FilterChip.svelte';
 export { default as FilterPicker } from './FilterPicker/FilterPicker.svelte';
 export * from './FilterPicker/FilterPicker.theme';
 export * from './FilterPicker/FilterPicker.types';
