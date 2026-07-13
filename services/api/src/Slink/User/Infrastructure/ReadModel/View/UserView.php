@@ -45,11 +45,11 @@ class UserView extends AbstractView {
     private string $uuid,
 
     #[ORM\Column(type: 'email', unique: true)]
-    #[Groups(['public', 'internal'])]
+    #[Groups(['internal'])]
     private Email $email,
     
     #[ORM\Column(type: 'username', unique: true)]
-    #[Groups(['public', 'internal'])]
+    #[Groups(['internal'])]
     #[Sanitize]
     private Username $username,
     
