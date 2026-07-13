@@ -29,7 +29,10 @@ export interface CommentItem {
   } | null;
   isDeleted: boolean;
   isEdited: boolean;
-  canEdit: boolean;
+  editable: {
+    formattedDate: string;
+    timestamp: number;
+  };
 }
 
 export interface CommentListingResponse {

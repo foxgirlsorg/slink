@@ -27,11 +27,11 @@ final class CommentNormalizer implements NormalizerInterface, NormalizerAwareInt
     /** @var array<string, mixed> $normalized */
     $normalized = $this->normalizer->normalize($data, $format, $context);
 
-    if (!$data->isDeleted()) {
-      $normalized['canEdit'] = CommentEditPolicy::canEdit($data->getCreatedAt());
-    } else {
-      $normalized['canEdit'] = false;
-    }
+    $normalized['editable'] = $this->normalizer->normalize(
+      CommentEditPolicy::getEditDeadline($data->getCreatedAt()),
+      $format,
+      $context,
+    );
 
     return $normalized;
   }

@@ -42,7 +42,11 @@
   let isAuthor = $derived(
     currentUserId !== null && comment.author.id === currentUserId,
   );
-  let canEdit = $derived(isAuthor && comment.canEdit);
+  let canEdit = $derived(
+    isAuthor &&
+      !comment.isDeleted &&
+      comment.editable.timestamp * 1000 > Date.now(),
+  );
   let canDelete = $derived(
     currentUserId !== null &&
       !comment.isDeleted &&
