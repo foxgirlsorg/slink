@@ -85,15 +85,66 @@ final class GetCommentsControllerTest extends TestCase {
   }
 
   #[Test]
-  public function itUsesDefaultPaginationValues(): void {
+  public function itClampsPageToMinimumOne(): void {
     $queryBus = $this->createMock(QueryBusInterface::class);
-    $imageId = 'image-123';
-    $collection = new Collection(0, 50, 0, []);
 
     $queryBus->expects($this->once())
       ->method('ask')
       ->with($this->callback(function ($query) {
-        return $query instanceof GetCommentsByImageQuery && $query->getPage() === 1 && $query->getLimit() === 50;
+        return $query instanceof GetCommentsByImageQuery && $query->getPage() === 1;
+      }))
+      ->willReturn(new Collection(0, 50, 0, []));
+
+    $controller = new GetCommentsController();
+    $controller->setQueryBus($queryBus);
+
+    $controller(new Request(), $this->createAuthorization(), 'image-123', 0);
+  }
+
+  #[Test]
+  public function itClampsLimitToMaximumOneHundred(): void {
+    $queryBus = $this->createMock(QueryBusInterface::class);
+
+    $queryBus->expects($this->once())
+      ->method('ask')
+      ->with($this->callback(function ($query) {
+        return $query instanceof GetCommentsByImageQuery && $query->getLimit() === 100;
+      }))
+      ->willReturn(new Collection(0, 100, 0, []));
+
+    $controller = new GetCommentsController();
+    $controller->setQueryBus($queryBus);
+
+    $controller(new Request(), $this->createAuthorization(), 'image-123', 1, 500);
+  }
+
+  #[Test]
+  public function itClampsLimitToMinimumOne(): void {
+    $queryBus = $this->createMock(QueryBusInterface::class);
+
+    $queryBus->expects($this->once())
+      ->method('ask')
+      ->with($this->callback(function ($query) {
+        return $query instanceof GetCommentsByImageQuery && $query->getLimit() === 1;
+      }))
+      ->willReturn(new Collection(0, 1, 0, []));
+
+    $controller = new GetCommentsController();
+    $controller->setQueryBus($queryBus);
+
+    $controller(new Request(), $this->createAuthorization(), 'image-123', 1, -5);
+  }
+
+  #[Test]
+  public function itUsesDefaultPaginationValues(): void {
+    $queryBus = $this->createMock(QueryBusInterface::class);
+    $imageId = 'image-123';
+    $collection = new Collection(0, 20, 0, []);
+
+    $queryBus->expects($this->once())
+      ->method('ask')
+      ->with($this->callback(function ($query) {
+        return $query instanceof GetCommentsByImageQuery && $query->getPage() === 1 && $query->getLimit() === 20;
       }))
       ->willReturn($collection);
 

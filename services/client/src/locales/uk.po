@@ -5041,3 +5041,10 @@ msgstr "Необов'язково"
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Parent Tag"
 msgstr "Батьківський тег"
+
+#: src/feature/Comment/CommentList.svelte
+msgid "# more comment"
+msgid_plural "# more comments"
+msgstr[0] "Ще # коментар"
+msgstr[1] "Ще # коментарі"
+msgstr[2] "Ще # коментарів"

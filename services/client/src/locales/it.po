@@ -5032,3 +5032,9 @@ msgstr "Opzionale"
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Parent Tag"
 msgstr "Tag padre"
+
+#: src/feature/Comment/CommentList.svelte
+msgid "# more comment"
+msgid_plural "# more comments"
+msgstr[0] "# altro commento"
+msgstr[1] "# altri commenti"

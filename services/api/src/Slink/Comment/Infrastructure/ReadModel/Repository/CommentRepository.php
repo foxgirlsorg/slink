@@ -42,7 +42,7 @@ final class CommentRepository extends AbstractRepository implements CommentRepos
       ->join('c.image', 'i')
       ->where('i.uuid = :imageId')
       ->setParameter('imageId', $imageId)
-      ->orderBy('c.createdAt', 'ASC');
+      ->orderBy('c.createdAt', 'DESC');
 
     return $this->paginate($qb, $page, $limit);
   }

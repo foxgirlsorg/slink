@@ -5031,3 +5031,9 @@ msgstr "任意"
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Parent Tag"
 msgstr "親タグ"
+
+#: src/feature/Comment/CommentList.svelte
+msgid "# more comment"
+msgid_plural "# more comments"
+msgstr[0] "他に#件のコメント"
+msgstr[1] "他に#件のコメント"

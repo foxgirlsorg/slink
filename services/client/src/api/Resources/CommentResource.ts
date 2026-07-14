@@ -5,7 +5,7 @@ export class CommentResource extends AbstractResource {
   public async getComments(
     imageId: string,
     page: number = 1,
-    limit: number = 50,
+    limit: number = 20,
   ): Promise<CommentListingResponse> {
     const searchParams = new URLSearchParams({
       page: page.toString(),

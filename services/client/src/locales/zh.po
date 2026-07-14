@@ -5026,3 +5026,9 @@ msgstr "可选"
 #: src/feature/Tag/CreateTagForm/CreateTagForm.svelte
 msgid "Parent Tag"
 msgstr "父标签"
+
+#: src/feature/Comment/CommentList.svelte
+msgid "# more comment"
+msgid_plural "# more comments"
+msgstr[0] "还有#条评论"
+msgstr[1] "还有#条评论"

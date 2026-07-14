@@ -2,7 +2,11 @@ import { ApiClient } from '@slink/api';
 
 import { browser } from '$app/environment';
 
-import type { AuthenticatedUser, CommentItem } from '@slink/api/Response';
+import type {
+  AuthenticatedUser,
+  CommentItem,
+  CommentListingResponse,
+} from '@slink/api/Response';
 
 import { CommentEventType } from '@slink/lib/enum/CommentEventType';
 import { SortOrder } from '@slink/lib/enum/SortOrder';
@@ -23,13 +27,16 @@ interface CommentListParams {
   getSortOrder: () => SortOrder;
 }
 
-export class CommentListState extends AbstractHttpState<CommentItem[]> {
+export class CommentListState extends AbstractHttpState<CommentListingResponse> {
   private _list = new IndexedList<CommentItem>({
     sortKey: (c) => c.createdAt.timestamp,
   });
   private _replyingTo: CommentItem | null = $state(null);
   private _editingComment: CommentItem | null = $state(null);
   private _hasLoaded = $state(false);
+  private _total = $state(0);
+  private _loadedPages = 0;
+  private _isLoadingMore = $state(false);
   private readonly _getSortOrder: () => SortOrder;
   private _unsubscribe: (() => void) | null = null;
 
@@ -55,15 +62,34 @@ export class CommentListState extends AbstractHttpState<CommentItem[]> {
 
   async load(): Promise<void> {
     await this.fetch(
-      () => ApiClient.comment.getComments(this.imageId).then((r) => r.data),
-      (data) => {
-        this._list.set(data);
+      () => ApiClient.comment.getComments(this.imageId),
+      (response) => {
+        this._list.set(response.data);
+        this._total = response.meta.total;
+        this._loadedPages = 1;
         this._hasLoaded = true;
       },
     );
 
     if (browser && !this._unsubscribe) {
       this.subscribeToUpdates();
+    }
+  }
+
+  async loadMore(): Promise<void> {
+    if (this._isLoadingMore || !this.hasMore) return;
+
+    this._isLoadingMore = true;
+    try {
+      const response = await ApiClient.comment.getComments(
+        this.imageId,
+        this._loadedPages + 1,
+      );
+      response.data.forEach((comment) => this._list.insert(comment));
+      this._total = response.meta.total;
+      this._loadedPages += 1;
+    } finally {
+      this._isLoadingMore = false;
     }
   }
 
@@ -95,7 +121,19 @@ export class CommentListState extends AbstractHttpState<CommentItem[]> {
   }
 
   get count(): number {
-    return this._list.size;
+    return Math.max(this._total, this._list.size);
+  }
+
+  get hasMore(): boolean {
+    return this._list.size < this._total;
+  }
+
+  get remaining(): number {
+    return Math.max(this._total - this._list.size, 0);
+  }
+
+  get isLoadingMore(): boolean {
+    return this._isLoadingMore;
   }
 
   get hasCurrentUser(): boolean {

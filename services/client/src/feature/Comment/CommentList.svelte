@@ -1,10 +1,12 @@
 <script lang="ts">
   import { CommentsSkeleton } from '@slink/feature/Image';
   import { ScrollArea } from '@slink/ui/components/scroll-area/index.js';
+  import { Skeleton } from '@slink/ui/components/skeleton';
   import { Tooltip } from '@slink/ui/components/tooltip';
   import { onDestroy } from 'svelte';
 
   import { page } from '$app/state';
+  import { plural } from '$lib/utils/i18n';
   import Icon from '@iconify/svelte';
 
   import type { AuthenticatedUser } from '@slink/api/Response';
@@ -43,6 +45,9 @@
     hasCurrentUser,
     replyingTo,
     editingComment,
+    hasMore,
+    remaining,
+    isLoadingMore,
   } = $derived({
     hasLoaded: state?.hasLoaded ?? false,
     count: state?.count ?? 0,
@@ -51,6 +56,9 @@
     hasCurrentUser: state?.hasCurrentUser ?? false,
     replyingTo: state?.replyingTo ?? null,
     editingComment: state?.editingComment ?? null,
+    hasMore: state?.hasMore ?? false,
+    remaining: state?.remaining ?? 0,
+    isLoadingMore: state?.isLoadingMore ?? false,
   });
 
   $effect(() => {
@@ -82,6 +90,29 @@
     };
   }
 </script>
+
+{#snippet loadMoreDivider()}
+  {#if isLoadingMore}
+    {#each Array(2) as _}
+      <div class="flex gap-3">
+        <Skeleton class="w-8 h-8 rounded-full shrink-0 bg-white/10" />
+        <div class="flex-1 space-y-2">
+          <Skeleton class="h-3 w-24 bg-white/10" />
+          <Skeleton class="h-3 w-3/4 bg-white/10" />
+        </div>
+      </div>
+    {/each}
+  {:else}
+    <button
+      onclick={() => state?.loadMore()}
+      class="flex w-full items-center gap-3 py-1 rounded text-[11.5px] text-white/45 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+    >
+      <span class="h-px flex-1 bg-white/12"></span>
+      <span>{plural(remaining, ['# more comment', '# more comments'])}</span>
+      <span class="h-px flex-1 bg-white/12"></span>
+    </button>
+  {/if}
+{/snippet}
 
 {#if !hasLoaded}
   <CommentsSkeleton />
@@ -134,22 +165,26 @@
           <p class="text-xs mt-1">Be the first to comment</p>
         </div>
       {:else}
-        {#key count}
-          <div class="space-y-3 pr-2">
-            {#each comments as comment (comment.id)}
-              <CommentListItem
-                {comment}
-                editingCommentId={editingComment?.id ?? null}
-                currentUserId={currentUser?.id ?? null}
-                {imageOwnerId}
-                onReply={() => state?.startReply(comment)}
-                onEdit={() => state?.startEdit(comment)}
-                onDelete={() => state?.deleteComment(comment.id)}
-                onHashtagClick={onClose}
-              />
-            {/each}
-          </div>
-        {/key}
+        <div class="space-y-3 pr-2">
+          {#if hasMore && settings.comment.sortOrder === SortOrder.Asc}
+            {@render loadMoreDivider()}
+          {/if}
+          {#each comments as comment (comment.id)}
+            <CommentListItem
+              {comment}
+              editingCommentId={editingComment?.id ?? null}
+              currentUserId={currentUser?.id ?? null}
+              {imageOwnerId}
+              onReply={() => state?.startReply(comment)}
+              onEdit={() => state?.startEdit(comment)}
+              onDelete={() => state?.deleteComment(comment.id)}
+              onHashtagClick={onClose}
+            />
+          {/each}
+          {#if hasMore && settings.comment.sortOrder === SortOrder.Desc}
+            {@render loadMoreDivider()}
+          {/if}
+        </div>
       {/if}
     </ScrollArea>
 
