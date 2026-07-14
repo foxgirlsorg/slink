@@ -1,6 +1,5 @@
 <script lang="ts">
   import { StopPropagation } from '@slink/feature/Action';
-  import { ImageCollectionList } from '@slink/feature/Collection';
   import {
     ImageActionBar,
     ImagePlaceholder,
@@ -9,43 +8,31 @@
   } from '@slink/feature/Image';
   import { calculateHistoryCardWeight } from '@slink/feature/Image/utils/calculateHistoryCardWeight';
   import { Masonry } from '@slink/feature/Layout';
-  import { ImageTagList } from '@slink/feature/Tag';
-  import { OverlayCheckbox } from '@slink/ui/components/checkbox';
+  import { SelectableCard } from '@slink/ui/components/card';
+  import { SelectionCheckbox } from '@slink/ui/components/checkbox';
   import { Link } from '@slink/ui/components/link';
-
-  import { fade, fly } from 'svelte/transition';
 
   import type { Tag } from '@slink/api/Resources/TagResource';
   import type { CollectionReference } from '@slink/api/Response/Collection/CollectionResponse';
 
-  import { cn } from '@slink/utils/ui';
   import { PreviewUrl } from '@slink/utils/url';
 
+  import { HistoryItemLabels } from './HistoryItemLabels';
   import {
     actionBarVisibilityVariants,
-    checkboxVariants,
     createActionBarImage,
     historyActionBarButtons,
     historyCardVariants,
   } from './HistoryView.theme';
   import type { HistoryViewProps } from './HistoryView.types';
   import ImageMetadata from './ImageMetadata.svelte';
-  import { useHistoryItemActions } from './useHistoryItemActions.svelte';
 
   let { items = [], selectionState, on }: HistoryViewProps = $props();
 
   const isSelectionMode = $derived(selectionState?.isSelectionMode ?? false);
 
-  const { handleSelect, handleDelete, getItemState } = useHistoryItemActions({
-    getSelectionState: () => selectionState,
-    onDelete: (id) => on?.delete(id),
-    onCollectionChange: (imageId, collections) =>
-      on?.collectionChange(imageId, collections),
-    onSelectionChange: (id) => on?.selectionChange?.(id),
-  });
-
   const actionHandlers = {
-    imageDelete: handleDelete,
+    imageDelete: (id: string) => on?.delete(id),
     collectionChange: (imageId: string, collections: CollectionReference[]) =>
       on?.collectionChange(imageId, collections),
     tagChange: (imageId: string, tags: Tag[]) => on?.tagChange?.(imageId, tags),
@@ -65,35 +52,20 @@
   getItemWeight={calculateHistoryCardWeight}
 >
   {#snippet itemTemplate(item)}
-    <article
-      in:fly={{ y: 20, duration: 300, delay: Math.random() * 100 }}
-      out:fade={{ duration: 200 }}
-      class={cn(
-        historyCardVariants({ selected: getItemState(item).isSelected }),
-        'relative',
-      )}
+    <SelectableCard
+      id={item.id}
+      {selectionState}
+      onSelectionChange={on?.selectionChange}
+      flyDelay={Math.random() * 100}
+      cardClass={(selected) => historyCardVariants({ selected })}
     >
-      {#if isSelectionMode}
-        <button
-          type="button"
-          class="absolute inset-0 z-10 cursor-pointer"
-          onclick={(e) => handleSelect(e, item)}
-          aria-label={getItemState(item).selectionAriaLabel}
-        ></button>
-      {/if}
       <div class="relative @container">
-        <button
-          type="button"
-          onclick={(e) => handleSelect(e, item)}
-          class={checkboxVariants({ selectionMode: isSelectionMode })}
-          aria-label={getItemState(item).selectionAriaLabel}
-        >
-          <OverlayCheckbox selected={getItemState(item).isSelected} />
-        </button>
-        <a
-          href={isSelectionMode ? undefined : `/info/${item.id}`}
-          class="block overflow-hidden"
-        >
+        <SelectionCheckbox
+          id={item.id}
+          {selectionState}
+          onSelectionChange={on?.selectionChange}
+        />
+        <div class="block overflow-hidden">
           <ImagePlaceholder
             uniqueId={item.id}
             src={PreviewUrl.image(item.attributes.fileName, {
@@ -107,7 +79,7 @@
             rounded={false}
             class="transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
           />
-        </a>
+        </div>
 
         <div class="absolute bottom-2 left-2 flex items-center gap-1.5">
           <VisibilityBadge
@@ -121,7 +93,7 @@
         <StopPropagation>
           <div
             class={actionBarVisibilityVariants({
-              selectionMode: isSelectionMode ?? false,
+              selectionMode: isSelectionMode,
             })}
           >
             <ImageActionBar
@@ -146,27 +118,8 @@
 
         <ImageMetadata {item} gap="sm" />
 
-        {#if (item.tags?.length ?? 0) > 0 || (item.collections?.length ?? 0) > 0}
-          <div class="flex flex-wrap items-center gap-2">
-            {#if item.tags && item.tags.length > 0}
-              <ImageTagList
-                imageId={item.id}
-                variant="neon"
-                showImageCount={false}
-                removable={false}
-                initialTags={item.tags}
-                maxVisible={3}
-              />
-            {/if}
-            {#if item.collections && item.collections.length > 0}
-              <ImageCollectionList
-                collections={item.collections}
-                maxVisible={3}
-              />
-            {/if}
-          </div>
-        {/if}
+        <HistoryItemLabels {item} maxVisible={3} />
       </div>
-    </article>
+    </SelectableCard>
   {/snippet}
 </Masonry>

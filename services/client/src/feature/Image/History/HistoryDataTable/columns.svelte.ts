@@ -12,7 +12,7 @@ import type { Tag } from '@slink/api/Resources/TagResource';
 import type { ImageListingItem } from '@slink/api/Response';
 import type { CollectionReference } from '@slink/api/Response/Collection/CollectionResponse';
 
-import type { ImageSelectionState } from '@slink/lib/state/ImageSelectionState.svelte';
+import type { SelectionState } from '@slink/lib/state/SelectionState.svelte';
 
 import HistoryActionsCell from './cells/HistoryActionsCell.svelte';
 import HistoryFileNameCell from './cells/HistoryFileNameCell.svelte';
@@ -31,7 +31,7 @@ interface HistoryColumnCallbacks {
 }
 
 export function createHistoryColumns(
-  getSelectionState: () => ImageSelectionState | undefined,
+  getSelectionState: () => SelectionState | undefined,
   getAllItemIds: () => string[],
   callbacks: HistoryColumnCallbacks,
 ): ColumnDef<ImageListingItem>[] {

@@ -50,7 +50,6 @@ export * from './History/batch-actions/delete';
 export * from './History/batch-actions/download';
 export * from './History/batch-actions/reassign';
 export * from './History/batch-actions/visibility';
-export * from './History/useHistoryItemActions.svelte';
 export { default as ImageDeleteConfirmation } from './ImageDeleteConfirmation/ImageDeleteConfirmation.svelte';
 export { default as ImageDeletePopover } from './ImageDeleteConfirmation/ImageDeletePopover.svelte';
 export { default as ImageSharesPanel } from './ImageSharesPanel/ImageSharesPanel.svelte';

@@ -118,22 +118,6 @@ export const historyItemActionsVariants = tv({
   },
 });
 
-export const checkboxVariants = cva(
-  'absolute top-2 left-2 z-20 transition-opacity duration-150',
-  {
-    variants: {
-      selectionMode: {
-        true: 'opacity-100',
-        false:
-          'opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:none)]:hidden',
-      },
-    },
-    defaultVariants: {
-      selectionMode: false,
-    },
-  },
-);
-
 export const linkVariants = cva('block', {
   variants: {
     selectionMode: {

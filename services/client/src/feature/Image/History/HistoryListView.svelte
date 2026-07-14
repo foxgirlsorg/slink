@@ -1,39 +1,37 @@
 <script lang="ts">
-  import { ImageCollectionList } from '@slink/feature/Collection';
   import {
     ImagePlaceholder,
     ViewCountBadge,
     VisibilityBadge,
   } from '@slink/feature/Image';
-  import { ImageTagList } from '@slink/feature/Tag';
-  import { OverlayCheckbox } from '@slink/ui/components/checkbox';
+  import { SelectableCard } from '@slink/ui/components/card';
+  import { SelectionCheckbox } from '@slink/ui/components/checkbox';
   import { Link } from '@slink/ui/components/link';
 
   import { fade, fly } from 'svelte/transition';
+
+  import type { Tag } from '@slink/api/Resources/TagResource';
+  import type { CollectionReference } from '@slink/api/Response/Collection/CollectionResponse';
 
   import { cn } from '@slink/utils/ui';
   import { PreviewUrl } from '@slink/utils/url';
 
   import HistoryItemActions from './HistoryItemActions.svelte';
-  import {
-    checkboxVariants,
-    historyListRowVariants,
-  } from './HistoryView.theme';
+  import { HistoryItemLabels } from './HistoryItemLabels';
+  import { historyListRowVariants } from './HistoryView.theme';
   import type { HistoryViewProps } from './HistoryView.types';
   import ImageMetadata from './ImageMetadata.svelte';
-  import { useHistoryItemActions } from './useHistoryItemActions.svelte';
 
   let { items = [], selectionState, on }: HistoryViewProps = $props();
 
   const isSelectionMode = $derived(selectionState?.isSelectionMode ?? false);
 
-  const { handleSelect, handleDelete, getItemState } = useHistoryItemActions({
-    getSelectionState: () => selectionState,
-    onDelete: (id) => on?.delete(id),
-    onCollectionChange: (imageId, collections) =>
+  const actionHandlers = {
+    imageDelete: (id: string) => on?.delete(id),
+    collectionChange: (imageId: string, collections: CollectionReference[]) =>
       on?.collectionChange(imageId, collections),
-    onSelectionChange: (id) => on?.selectionChange?.(id),
-  });
+    tagChange: (imageId: string, tags: Tag[]) => on?.tagChange?.(imageId, tags),
+  };
 </script>
 
 <ul class="@container flex flex-col gap-3" role="list">
@@ -42,41 +40,29 @@
       in:fly={{ y: 20, duration: 300, delay: index * 50 }}
       out:fade={{ duration: 200 }}
     >
-      <article
-        class={cn(
-          historyListRowVariants({
-            selected: getItemState(item).isSelected,
-            selectionMode: isSelectionMode ?? false,
-          }),
-          '@xl:min-h-28',
-        )}
+      <SelectableCard
+        id={item.id}
+        {selectionState}
+        onSelectionChange={on?.selectionChange}
+        cardClass={(selected) =>
+          cn(
+            historyListRowVariants({
+              selected,
+              selectionMode: isSelectionMode,
+            }),
+            '@xl:min-h-28',
+          )}
       >
-        {#if isSelectionMode}
-          <button
-            type="button"
-            class="absolute inset-0 z-10 cursor-pointer"
-            onclick={(e) => handleSelect(e, item)}
-            aria-label={getItemState(item).selectionAriaLabel}
-          ></button>
-        {/if}
         <div
           class="relative block w-full @xl:w-40 @2xl:w-48 @4xl:w-56 shrink-0 overflow-hidden bg-gray-100 dark:bg-gray-800/80"
         >
-          <button
-            type="button"
-            onclick={(e) => handleSelect(e, item)}
-            class={cn(
-              checkboxVariants({ selectionMode: isSelectionMode }),
-              'pointer-events-auto',
-            )}
-            aria-label={getItemState(item).selectionAriaLabel}
-          >
-            <OverlayCheckbox selected={getItemState(item).isSelected} />
-          </button>
-          <a
-            href={isSelectionMode ? undefined : `/info/${item.id}`}
-            class="block aspect-4/3 @xl:aspect-auto w-full h-full"
-          >
+          <SelectionCheckbox
+            id={item.id}
+            {selectionState}
+            onSelectionChange={on?.selectionChange}
+            class="pointer-events-auto"
+          />
+          <div class="aspect-4/3 @xl:aspect-square w-full h-full">
             <ImagePlaceholder
               src={PreviewUrl.image(item.attributes.fileName, {
                 width: 300,
@@ -94,7 +80,7 @@
               rounded={false}
               class="h-full w-full transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
             />
-          </a>
+          </div>
 
           <div class="absolute bottom-2 left-2 flex items-center gap-1.5">
             <VisibilityBadge
@@ -119,41 +105,16 @@
               {item}
               layout="list"
               hoverReveal
-              selectionMode={isSelectionMode ?? false}
-              on={{
-                imageDelete: handleDelete,
-                collectionChange: (imageId, collections) =>
-                  on?.collectionChange(imageId, collections),
-                tagChange: (imageId, tags) => on?.tagChange?.(imageId, tags),
-              }}
+              selectionMode={isSelectionMode}
+              on={actionHandlers}
             />
           </div>
 
           <ImageMetadata {item} gap="md" />
 
-          {#if (item.tags?.length ?? 0) > 0 || (item.collections?.length ?? 0) > 0}
-            <div class="flex flex-wrap items-center gap-2">
-              {#if item.tags && item.tags.length > 0}
-                <ImageTagList
-                  imageId={item.id}
-                  variant="neon"
-                  showImageCount={false}
-                  removable={false}
-                  initialTags={item.tags}
-                  maxVisible={5}
-                />
-              {/if}
-
-              {#if item.collections && item.collections.length > 0}
-                <ImageCollectionList
-                  collections={item.collections}
-                  maxVisible={5}
-                />
-              {/if}
-            </div>
-          {/if}
+          <HistoryItemLabels {item} maxVisible={5} />
         </div>
-      </article>
+      </SelectableCard>
     </li>
   {/each}
 </ul>

@@ -1,8 +1,8 @@
 import type { Tag } from '@slink/api/Resources/TagResource';
 import type { CollectionResponse, ImageListingItem } from '@slink/api/Response';
 
-import type { ImageSelectionState } from '@slink/lib/state/ImageSelectionState.svelte';
 import type { PendingMultiSelection } from '@slink/lib/state/PendingSelectionState.svelte';
+import type { SelectionState } from '@slink/lib/state/SelectionState.svelte';
 
 import { BatchContext } from './BatchContext.svelte';
 import { batchDelete } from './batch-actions/delete';
@@ -26,10 +26,7 @@ export class BatchActionsState {
     return this._ctx.selectedItemCount;
   }
 
-  constructor(
-    selection: ImageSelectionState,
-    getItems: () => ImageListingItem[],
-  ) {
+  constructor(selection: SelectionState, getItems: () => ImageListingItem[]) {
     this._ctx = new BatchContext(selection, getItems);
   }
 
@@ -46,6 +43,6 @@ export class BatchActionsState {
 }
 
 export const createBatchActionsState = (
-  selection: ImageSelectionState,
+  selection: SelectionState,
   getItems: () => ImageListingItem[],
 ) => new BatchActionsState(selection, getItems);

@@ -47,7 +47,7 @@
 
   import { skeleton } from '@slink/lib/actions/skeleton';
   import { createTagFilterManager } from '@slink/lib/composables/useTagFilterUrl';
-  import { createImageSelectionState } from '@slink/lib/state/ImageSelectionState.svelte';
+  import { createSelectionState } from '@slink/lib/state/SelectionState.svelte';
   import { useUploadHistoryFeed } from '@slink/lib/state/UploadHistoryFeed.svelte';
 
   import { cn } from '@slink/utils/ui';
@@ -69,7 +69,10 @@
     historyFeedState.reload();
   }
   const tagFilterManager = $derived(createTagFilterManager(page.url));
-  const selectionState = createImageSelectionState();
+  const selectionState = createSelectionState({
+    select: 'Select image',
+    deselect: 'Deselect image',
+  });
 
   let isWritingUrlFromState = false;
 

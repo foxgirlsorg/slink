@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Checkbox } from '@slink/ui/components/checkbox';
 
-  import type { ImageSelectionState } from '@slink/lib/state/ImageSelectionState.svelte';
+  import type { SelectionState } from '@slink/lib/state/SelectionState.svelte';
 
   interface Props {
-    selectionState?: ImageSelectionState;
+    selectionState?: SelectionState;
     allIds: string[];
   }
 

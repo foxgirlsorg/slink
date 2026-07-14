@@ -4,7 +4,7 @@ import { toast } from '$lib/utils/ui/toast-sonner.svelte.js';
 
 import type { ImageListingItem } from '@slink/api/Response';
 
-import type { ImageSelectionState } from '@slink/lib/state/ImageSelectionState.svelte';
+import type { SelectionState } from '@slink/lib/state/SelectionState.svelte';
 
 export type BatchResult = {
   processed: string[];
@@ -25,7 +25,7 @@ function countAssignments<T>(
 }
 
 export class BatchContext {
-  private _selection!: ImageSelectionState;
+  private _selection!: SelectionState;
   private _getItems!: () => ImageListingItem[];
   private _historyFeed = useUploadHistoryFeed();
   _isLoading: boolean = $state(false);
@@ -67,10 +67,7 @@ export class BatchContext {
     return this._selection;
   }
 
-  constructor(
-    selection: ImageSelectionState,
-    getItems: () => ImageListingItem[],
-  ) {
+  constructor(selection: SelectionState, getItems: () => ImageListingItem[]) {
     this._selection = selection;
     this._getItems = getItems;
   }
