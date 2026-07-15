@@ -117,6 +117,7 @@ msgstr "Users"
 #: src/feature/Upload/CollectionPrompt/CollectionPrompt.svelte
 #: src/routes/collection/[id]/+page.svelte
 #: src/routes/explore/+page.svelte
+#: src/ui/components/card/selectable-card.svelte
 #: src/ui/components/dropzone/dropzone-input.svelte
 #: src/ui/components/filter/filter-search.svelte
 #: src/ui/components/picker/picker-create-row.svelte
@@ -1131,11 +1132,11 @@ msgstr "Select all"
 msgid "{0} selected"
 msgstr "{0} selected"
 
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
+#: src/routes/history/+page.svelte
 msgid "Deselect image"
 msgstr "Deselect image"
 
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
+#: src/routes/history/+page.svelte
 msgid "Select image"
 msgstr "Select image"
 
@@ -5038,3 +5039,12 @@ msgid "# more comment"
 msgid_plural "# more comments"
 msgstr[0] "# more comment"
 msgstr[1] "# more comments"
+
+#: src/lib/state/SelectionState.svelte.ts
+#: src/ui/components/checkbox/selection-checkbox.svelte
+msgid "Select item"
+msgstr "Select item"
+
+#: src/lib/state/SelectionState.svelte.ts
+msgid "Deselect item"
+msgstr "Deselect item"

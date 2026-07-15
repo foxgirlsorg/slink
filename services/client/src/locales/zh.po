@@ -117,6 +117,7 @@ msgstr "用户"
 #: src/feature/Upload/CollectionPrompt/CollectionPrompt.svelte
 #: src/routes/collection/[id]/+page.svelte
 #: src/routes/explore/+page.svelte
+#: src/ui/components/card/selectable-card.svelte
 #: src/ui/components/dropzone/dropzone-input.svelte
 #: src/ui/components/filter/filter-search.svelte
 #: src/ui/components/picker/picker-create-row.svelte
@@ -1131,11 +1132,11 @@ msgstr "全选"
 msgid "{0} selected"
 msgstr "已选择 {0} 项"
 
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
+#: src/routes/history/+page.svelte
 msgid "Deselect image"
 msgstr "取消选择图片"
 
-#: src/feature/Image/History/useHistoryItemActions.svelte.ts
+#: src/routes/history/+page.svelte
 msgid "Select image"
 msgstr "选择图片"
 
@@ -5032,3 +5033,12 @@ msgid "# more comment"
 msgid_plural "# more comments"
 msgstr[0] "还有#条评论"
 msgstr[1] "还有#条评论"
+
+#: src/lib/state/SelectionState.svelte.ts
+#: src/ui/components/checkbox/selection-checkbox.svelte
+msgid "Select item"
+msgstr "选择项目"
+
+#: src/lib/state/SelectionState.svelte.ts
+msgid "Deselect item"
+msgstr "取消选择项目"
