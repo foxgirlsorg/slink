@@ -168,7 +168,6 @@ export const themeIcons: string[] = [
   'ph:folder-simple-fill',
   'ph:tag-fill',
   'ph:note-pencil',
-  'ph:list-dashes',
   'ph:folder-notch-open-duotone',
   'heroicons:minus',
   'heroicons:shield-check-solid',
