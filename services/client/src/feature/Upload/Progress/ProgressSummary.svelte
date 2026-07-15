@@ -5,7 +5,7 @@
 </script>
 
 <p class="text-sm text-slate-500 dark:text-slate-400">
-  {progress.completedCount} of {progress.totalCount} files uploaded
+  <span>{progress.completedCount} of {progress.totalCount} files uploaded</span>
   {#if progress.hasErrors}
     <span>• {progress.failedCount} failed</span>
   {/if}

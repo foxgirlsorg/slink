@@ -360,11 +360,6 @@ msgstr "Caricamento in corso"
 msgid "• {0} failed"
 msgstr "• {0} falliti"
 
-#. 0: progress.completedCount; 1: progress.totalCount
-#: src/feature/Upload/Progress/ProgressSummary.svelte
-msgid "{0} of {1} files uploaded <0/>"
-msgstr "{0} di {1} file caricati <0/>"
-
 #: src/routes/upload/+page.svelte
 msgid "<0/> Retry Failed"
 msgstr "<0/> Riprova i falliti"
@@ -5048,3 +5043,8 @@ msgstr "Seleziona elemento"
 #: src/lib/state/SelectionState.svelte.ts
 msgid "Deselect item"
 msgstr "Deseleziona elemento"
+
+#. 0: progress.completedCount; 1: progress.totalCount
+#: src/feature/Upload/Progress/ProgressSummary.svelte
+msgid "{0} of {1} files uploaded"
+msgstr "{0} di {1} file caricati"
