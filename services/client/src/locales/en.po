@@ -373,6 +373,7 @@ msgstr "<0/> Cancel"
 msgid "Overall Progress"
 msgstr "Overall Progress"
 
+#: src/feature/Settings/CustomizationSettings/customizationSettings.language.ts
 #: src/feature/Upload/Progress/ProgressItem.svelte
 msgid "Upload failed"
 msgstr "Upload failed"
@@ -1325,16 +1326,12 @@ msgstr "This image is publicly visible"
 msgid "This image is private"
 msgstr "This image is private"
 
-#: src/feature/Navigation/Navbar/Navbar.svelte
-#: src/feature/Navigation/Navbar/Navbar.svelte
-#: src/feature/Navigation/Sidebar/AppSidebar.svelte
-#: src/feature/Navigation/Sidebar/AppSidebar.svelte
-#: src/routes/profile/(auth)/login/+page.svelte
-#: src/routes/profile/(auth)/signup/+page.svelte
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
 msgid "Slink"
 msgstr "Slink"
 
 #: src/feature/Navigation/Navbar/Navbar.svelte
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
 msgid "<0/> Upload"
 msgstr "<0/> Upload"
 
@@ -2869,16 +2866,8 @@ msgid "Sign in to access all platform features"
 msgstr "Sign in to access all platform features"
 
 #: src/routes/profile/(auth)/login/+page.svelte
-msgid "Sign In | Slink"
-msgstr "Sign In | Slink"
-
-#: src/routes/profile/(auth)/login/+page.svelte
 msgid "Welcome back"
 msgstr "Welcome back"
-
-#: src/routes/profile/(auth)/login/+page.svelte
-msgid "Sign in to continue to Slink"
-msgstr "Sign in to continue to Slink"
 
 #: src/routes/profile/(auth)/login/+page.svelte
 msgid "Email or Username"
@@ -2925,17 +2914,9 @@ msgid "Sign Up"
 msgstr "Sign Up"
 
 #: src/routes/profile/(auth)/signup/+page.svelte
-msgid "Create Account | Slink"
-msgstr "Create Account | Slink"
-
-#: src/routes/profile/(auth)/signup/+page.svelte
 #: src/routes/profile/(auth)/signup/+page.svelte
 msgid "Create Account"
 msgstr "Create Account"
-
-#: src/routes/profile/(auth)/signup/+page.svelte
-msgid "Join Slink to start sharing your images"
-msgstr "Join Slink to start sharing your images"
 
 #: src/routes/profile/(auth)/signup/+page.svelte
 msgid "Choose a username"
@@ -5055,6 +5036,97 @@ msgstr "Deselect item"
 msgid "{0} of {1} files uploaded"
 msgstr "{0} of {1} files uploaded"
 
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Fast and secure image sharing service"
+msgstr "Fast and secure image sharing service"
+
+#. 0: customization.siteName
+#: src/routes/+layout.svelte
+msgid "{0}: Image Sharing Service"
+msgstr "{0}: Image Sharing Service"
+
+#: src/feature/Navigation/Sidebar/config.svelte.ts
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+#: src/routes/admin/settings/+page.svelte
+#: src/routes/admin/settings/customization/+page.svelte
+msgid "Customization"
+msgstr "Customization"
+
+#: src/routes/admin/settings/customization/+page.svelte
+msgid "Customize the appearance and branding of your application"
+msgstr "Customize the appearance and branding of your application"
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Site Name"
+msgstr "Site Name"
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Site Description"
+msgstr "Site Description"
+
+#: src/routes/admin/settings/customization/+page.svelte
+msgid "Customization Settings | Slink"
+msgstr "Customization Settings | Slink"
+
+#. 0: customization.siteName
+#: src/routes/profile/(auth)/login/+page.svelte
+msgid "Sign In | {0}"
+msgstr "Sign In | {0}"
+
+#. 0: customization.siteName
+#: src/routes/profile/(auth)/login/+page.svelte
+msgid "Sign in to continue to {0}"
+msgstr "Sign in to continue to {0}"
+
+#. 0: customization.siteName
+#: src/routes/profile/(auth)/signup/+page.svelte
+msgid "Create Account | {0}"
+msgstr "Create Account | {0}"
+
+#. 0: customization.siteName
+#: src/routes/profile/(auth)/signup/+page.svelte
+msgid "Join {0} to start sharing your images"
+msgstr "Join {0} to start sharing your images"
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Logo URL"
+msgstr "Logo URL"
+
+#: src/routes/admin/settings/+page.svelte
+msgid "Customize the site name, description, logo, and branding"
+msgstr "Customize the site name, description, logo, and branding"
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Name and brand your Slink instance."
+msgstr "Name and brand your Slink instance."
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "The public name of your instance."
+msgstr "The public name of your instance."
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "A short tagline describing your instance."
+msgstr "A short tagline describing your instance."
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Link to your own logo image. Leave empty to use the default."
+msgstr "Link to your own logo image. Leave empty to use the default."
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Couldn't load this image"
+msgstr "Couldn't load this image"
+
+#: src/feature/Settings/CustomizationSettings/CustomizationSettings.svelte
+msgid "Logo preview"
+msgstr "Logo preview"
+
+#: src/lib/utils/i18n/messages/api.language.ts
+msgid "The file is too large. Allowed maximum size is {limit}."
+msgstr "The file is too large. Allowed maximum size is {limit}."
+
+#: src/lib/utils/i18n/messages/api.language.ts
+msgid "An empty file is not allowed."
+msgstr "An empty file is not allowed."
 #: src/feature/Image/CopyLinkButton/CopyLinkButton.svelte
 msgid "Copy link format"
 msgstr "Copy link format"
