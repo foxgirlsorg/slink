@@ -11,6 +11,8 @@
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
 
+  import { page } from '$app/state';
+
   import type { PageData } from './$types';
 
   interface Props {
@@ -19,11 +21,14 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   let callbackUrl = $derived(data.callbackUrl);
 </script>
 
 <svelte:head>
-  <title>SSO Settings | Slink</title>
+  <title>SSO Settings | {siteName}</title>
 </svelte:head>
 
 <SettingsPageLayout

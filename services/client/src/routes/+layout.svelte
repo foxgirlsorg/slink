@@ -15,10 +15,14 @@
 
   import { theme } from '@slink/lib/actions/theme';
   import { isAdmin } from '@slink/lib/auth/utils';
-  import { customization } from '@slink/lib/settings';
   import { initResponsiveStore } from '@slink/lib/stores/responsive.svelte';
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+  const siteDescription = $derived(globalSettings?.customization?.siteDescription || 'Fast and secure image sharing service');
+  const logoUrl = $derived(globalSettings?.customization?.logoUrl || '/favicon.png');
 
   let scrollAreaRef = $state<HTMLElement | null>(null);
 
@@ -49,10 +53,10 @@
 </script>
 
 <svelte:head>
-  <title>{customization.siteName}: Image Sharing Service</title>
-  <meta name="description" content={customization.siteDescription} />
-  <meta name="apple-mobile-web-app-title" content={customization.siteName} />
-  <link rel="icon" href={customization.logoUrl} />
+  <title>{siteName}: Image Sharing Service</title>
+  <meta name="description" content={siteDescription} />
+  <meta name="apple-mobile-web-app-title" content={siteName} />
+  <link rel="icon" href={logoUrl} />
 </svelte:head>
 
 <div class="relative flex h-screen" use:theme={settings.theme.current}>

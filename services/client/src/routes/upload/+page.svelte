@@ -29,6 +29,9 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   const uploadState = useUploadPageState(data, page.url);
 
   const exifNotice = useExifNotice();
@@ -71,7 +74,7 @@
 </script>
 
 <svelte:head>
-  <title>Upload | Slink</title>
+  <title>Upload | {siteName}</title>
 </svelte:head>
 
 <div class="min-h-full">

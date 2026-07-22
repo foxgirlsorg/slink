@@ -18,7 +18,6 @@
   import { fade, fly } from 'svelte/transition';
 
   import { OAuthProviderConfig } from '@slink/lib/auth/oauth';
-  import { customization } from '@slink/lib/settings';
 
   import { withLoadingState } from '@slink/utils/form/withLoadingState';
   import { useWritable } from '@slink/utils/store/contextAwareStore';
@@ -32,6 +31,8 @@
   }
 
   let { form, data }: Props = $props();
+
+  const siteName = $derived(data.globalSettings?.customization?.siteName || 'Slink');
 
   let isLoading = useWritable('loginFormLoadingState', false);
   let usernameValue = $state('');
@@ -77,7 +78,7 @@
 </script>
 
 <svelte:head>
-  <title>Sign In | {customization.siteName}</title>
+  <title>Sign In | {siteName}</title>
 </svelte:head>
 
 <div
@@ -97,7 +98,7 @@
         Welcome back
       </h1>
       <p class="text-gray-500 dark:text-gray-400 text-sm mt-0.5">
-        Sign in to continue to {customization.siteName}
+        Sign in to continue to {siteName}
       </p>
     </div>
   </div>

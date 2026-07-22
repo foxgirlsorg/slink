@@ -6,11 +6,16 @@
   } from '@slink/feature/Analytics';
   import { Subtitle, Title } from '@slink/feature/Text';
 
+  import { page } from '$app/state';
+
   import { fade } from 'svelte/transition';
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 </script>
 
 <svelte:head>
-  <title>Dashboard | Slink</title>
+  <title>Dashboard | {siteName}</title>
 </svelte:head>
 
 <section in:fade={{ duration: 300 }} class="relative h-full grow">

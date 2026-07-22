@@ -23,6 +23,9 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   let loggedInUser = $derived(data.user);
 
   const userFeedState = useUserListFeed();
@@ -50,7 +53,7 @@
 </script>
 
 <svelte:head>
-  <title>Users | Slink Admin</title>
+  <title>Users | {siteName} Admin</title>
   <meta name="description" content="Manage user accounts and permissions" />
 </svelte:head>
 

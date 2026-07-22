@@ -44,6 +44,8 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
   const state = new PreferencesPageState(data.preferences);
 
   state.onChanged('locale', (locale) =>
@@ -104,7 +106,7 @@
 </script>
 
 <svelte:head>
-  <title>Preferences | Slink</title>
+  <title>Preferences | {siteName}</title>
 </svelte:head>
 
 <div

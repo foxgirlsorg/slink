@@ -13,6 +13,7 @@
   import { ViewModeLayout } from '@slink/ui/components/view-mode-layout';
   import type { ColumnDef } from '@tanstack/table-core';
 
+  import { page } from '$app/state';
   import { fade } from 'svelte/transition';
 
   import type { ShareListItemResponse } from '@slink/api/Response/Share/ShareListItemResponse';
@@ -27,6 +28,9 @@
   }
 
   let { data }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const feed = provideSharesFeed();
 
@@ -79,7 +83,7 @@
 </script>
 
 <svelte:head>
-  <title>My Shares | Slink</title>
+  <title>My Shares | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

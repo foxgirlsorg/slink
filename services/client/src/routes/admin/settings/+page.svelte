@@ -1,8 +1,13 @@
 <script lang="ts">
   import { Subtitle, Title } from '@slink/feature/Text';
 
+  import { page } from '$app/state';
+
   import Icon from '@iconify/svelte';
   import { fade } from 'svelte/transition';
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const categories = [
     {
@@ -53,7 +58,7 @@
 </script>
 
 <svelte:head>
-  <title>Settings | Slink</title>
+  <title>Settings | {siteName}</title>
 </svelte:head>
 
 <div class="flex flex-col w-full px-6 py-6" in:fade={{ duration: 300 }}>

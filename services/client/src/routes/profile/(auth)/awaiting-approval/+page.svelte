@@ -19,11 +19,14 @@
   }
 
   let { data }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 </script>
 
 <svelte:head>
   <title
-    >{data.status === 'active' ? 'Account Approved' : 'Awaiting Approval'} | Slink</title
+    >{data.status === 'active' ? 'Account Approved' : 'Awaiting Approval'} | {siteName}</title
   >
 </svelte:head>
 

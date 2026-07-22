@@ -37,6 +37,9 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   const userIsAdmin = $derived(isAdmin(data.user));
   const licensingEnabled = $derived(
     data.globalSettings?.image?.enableLicensing ?? false,
@@ -94,7 +97,7 @@
 </script>
 
 <svelte:head>
-  <title>Explore Gallery | Slink</title>
+  <title>Explore Gallery | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

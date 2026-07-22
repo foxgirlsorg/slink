@@ -12,6 +12,8 @@
   import { SplitButton } from '@slink/ui/components/split-button';
   import { onMount } from 'svelte';
 
+  import { page } from '$app/state';
+
   import { useApiKeyStore } from '$lib/state/ApiKeyStore.svelte.js';
   import Icon from '@iconify/svelte';
   import { fade } from 'svelte/transition';
@@ -23,6 +25,9 @@
   }
 
   let { data }: { data: PageData } = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const apiKeyStore = useApiKeyStore();
   const apiKeyService = new ApiKeyService();
@@ -74,7 +79,7 @@
 </script>
 
 <svelte:head>
-  <title>Integrations | Slink</title>
+  <title>Integrations | {siteName}</title>
 </svelte:head>
 
 <section in:fade={{ duration: 300 }}>

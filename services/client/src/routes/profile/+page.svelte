@@ -9,6 +9,8 @@
   import { enhance } from '$app/forms';
   import { fade } from 'svelte/transition';
 
+  import { page } from '$app/state';
+
   import { messages } from '@slink/lib/utils/i18n/messages/toast.language';
 
   import { withLoadingState } from '@slink/utils/form/withLoadingState';
@@ -23,6 +25,9 @@
   }
 
   let { data, form }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   let user = $derived(data.user);
 
@@ -57,7 +62,7 @@
 </script>
 
 <svelte:head>
-  <title>{user.displayName} | Slink</title>
+  <title>{user.displayName} | {siteName}</title>
 </svelte:head>
 
 <div

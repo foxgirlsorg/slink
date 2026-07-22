@@ -60,6 +60,8 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const licensingEnabled = $derived(
     data.globalSettings?.image?.enableLicensing ?? false,
@@ -158,7 +160,7 @@
 </script>
 
 <svelte:head>
-  <title>{itemsFeed.collection?.name ?? 'Collection'} | Slink</title>
+  <title>{itemsFeed.collection?.name ?? 'Collection'} | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

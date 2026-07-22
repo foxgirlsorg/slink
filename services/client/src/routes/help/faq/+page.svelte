@@ -9,6 +9,9 @@
   import Icon from '@iconify/svelte';
   import { fade, slide } from 'svelte/transition';
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   let openedQuestion: string | undefined = $state();
 
   const toggleQuestion = (slug: string) => {
@@ -94,7 +97,7 @@
 {/snippet}
 
 <svelte:head>
-  <title>FAQ | Slink</title>
+  <title>FAQ | {siteName}</title>
   <meta
     name="description"
     content="Frequently asked questions about Slink - image sharing platform"

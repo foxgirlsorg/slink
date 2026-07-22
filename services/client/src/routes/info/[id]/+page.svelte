@@ -28,6 +28,7 @@
 
   import { fly } from 'svelte/transition';
 
+  import { page } from '$app/state';
   import { SharesFeed } from '@slink/lib/state/SharesFeed.svelte';
 
   import { cn } from '@slink/utils/ui';
@@ -40,6 +41,9 @@
   }
 
   let { data }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const state = createImageInfoPageState({
     getData: () => data,
@@ -64,7 +68,7 @@
 </script>
 
 <svelte:head>
-  <title>Image Details | Slink</title>
+  <title>Image Details | {siteName}</title>
 </svelte:head>
 
 <main

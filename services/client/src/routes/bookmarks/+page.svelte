@@ -13,6 +13,7 @@
   import { Button } from '@slink/ui/components/button';
   import { untrack } from 'svelte';
 
+  import { page } from '$app/state';
   import Icon from '@iconify/svelte';
   import { fade, fly } from 'svelte/transition';
 
@@ -29,6 +30,9 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   const bookmarksFeed = useUserBookmarksFeed();
   bookmarksFeed.reset();
   bookmarksFeed.hydrate({ hasItems: data.hasAny });
@@ -44,7 +48,7 @@
 </script>
 
 <svelte:head>
-  <title>Bookmarks | Slink</title>
+  <title>Bookmarks | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

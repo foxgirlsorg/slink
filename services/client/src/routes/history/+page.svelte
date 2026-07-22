@@ -61,6 +61,8 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const historyFeedState = useUploadHistoryFeed();
   historyFeedState.hydrate({ hasItems: data.hasAny });
@@ -190,7 +192,7 @@
 </script>
 
 <svelte:head>
-  <title>Upload History | Slink</title>
+  <title>Upload History | {siteName}</title>
 </svelte:head>
 
 <section>

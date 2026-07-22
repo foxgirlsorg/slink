@@ -12,10 +12,9 @@
   import { Input } from '@slink/ui/components/input';
 
   import { enhance } from '$app/forms';
+  import { page } from '$app/state';
   import Icon from '@iconify/svelte';
   import { fade, fly } from 'svelte/transition';
-
-  import { customization } from '@slink/lib/settings';
 
   import { withLoadingState } from '@slink/utils/form/withLoadingState';
   import { useWritable } from '@slink/utils/store/contextAwareStore';
@@ -30,6 +29,9 @@
 
   let { form }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   let isLoading = useWritable('signUpFormLoadingState', false);
   let passwordValue = $state('');
   let showPassword = $state(false);
@@ -43,7 +45,7 @@
 </script>
 
 <svelte:head>
-  <title>Create Account | {customization.siteName}</title>
+  <title>Create Account | {siteName}</title>
 </svelte:head>
 
 <div
@@ -63,7 +65,7 @@
         Create Account
       </h1>
       <p class="text-gray-500 dark:text-gray-400 text-sm mt-0.5">
-        Join {customization.siteName} to start sharing your images
+        Join {siteName} to start sharing your images
       </p>
     </div>
   </div>

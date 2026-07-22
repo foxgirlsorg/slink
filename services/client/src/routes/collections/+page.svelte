@@ -35,6 +35,8 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const collectionsFeed = useCollectionListFeed();
   collectionsFeed.reset();
@@ -50,7 +52,7 @@
 </script>
 
 <svelte:head>
-  <title>Collections | Slink</title>
+  <title>Collections | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">
