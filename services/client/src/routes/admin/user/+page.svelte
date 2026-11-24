@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { LoadMoreButton } from '@slink/feature/Action';
   import {
     EmptyState,
@@ -54,7 +55,7 @@
 </script>
 
 <svelte:head>
-  <title>Users | Slink Admin</title>
+  <title>Users | {customization.siteName} Admin</title>
 </svelte:head>
 
 <div class="min-h-full p-6 w-full" use:skeleton={{ feed: userFeedState }}>

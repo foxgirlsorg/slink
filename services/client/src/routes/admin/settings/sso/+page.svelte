@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import {
     AutoRedirectSettings,
     SettingsPageLayout,
@@ -31,7 +32,7 @@
 </script>
 
 <svelte:head>
-  <title>SSO Settings | Slink</title>
+  <title>SSO Settings | {customization.siteName}</title>
 </svelte:head>
 
 <SettingsPageLayout

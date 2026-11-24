@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { LoadMoreButton } from '@slink/feature/Action';
   import {
     ExploreGridView,
@@ -118,7 +119,7 @@
 </script>
 
 <svelte:head>
-  <title>Bookmarks | Slink</title>
+  <title>Bookmarks | {customization.siteName}</title>
 </svelte:head>
 
 {#snippet savedBadge(image: ImageListingItem)}

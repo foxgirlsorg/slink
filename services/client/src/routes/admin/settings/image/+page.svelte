@@ -5,6 +5,8 @@
     ShareSettings,
   } from '@slink/feature/Settings';
 
+  import { page as appPage } from '$app/state';
+
   import { useSettingsPage } from '@slink/lib/state/SettingsPage.svelte';
 
   import type { PageData } from './$types';
@@ -14,6 +16,9 @@
   }
 
   let { data }: Props = $props();
+
+  const { globalSettings } = appPage.data;
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const page = useSettingsPage();
   let defaultSettings = $derived(data?.defaultSettings);
@@ -26,7 +31,7 @@
 </script>
 
 <svelte:head>
-  <title>Image Settings | Slink</title>
+  <title>Image Settings | {siteName}</title>
 </svelte:head>
 
 <SettingsPageLayout

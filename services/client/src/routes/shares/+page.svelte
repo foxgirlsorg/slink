@@ -10,6 +10,7 @@
   import { DataTable } from '@slink/ui/components/data-table';
   import { ViewModeLayout } from '@slink/ui/components/view-mode-layout';
 
+  import { page } from '$app/state';
   import { fade } from 'svelte/transition';
 
   import { skeleton } from '@slink/lib/actions/skeleton';
@@ -23,6 +24,9 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   const feed = provideSharesFeed();
 
   feed.setScope({});
@@ -33,7 +37,7 @@
 </script>
 
 <svelte:head>
-  <title>My Shares | Slink</title>
+  <title>My Shares | {siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

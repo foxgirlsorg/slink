@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { LoadMoreButton } from '@slink/feature/Action';
   import {
     ExploreGridView,
@@ -127,7 +128,7 @@
 </script>
 
 <svelte:head>
-  <title>Explore Gallery | Slink</title>
+  <title>Explore Gallery | {customization.siteName}</title>
 </svelte:head>
 
 <main in:fade={{ duration: 500 }} class="min-h-full">

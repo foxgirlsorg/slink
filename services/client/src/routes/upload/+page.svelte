@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { ApiClient } from '@slink/api';
   import { BannerContainer } from '@slink/feature/Layout';
   import * as Share from '@slink/feature/Share';
@@ -76,7 +77,7 @@
 </script>
 
 <svelte:head>
-  <title>Upload | Slink</title>
+  <title>Upload | {customization.siteName}</title>
 </svelte:head>
 
 <div class="min-h-full">

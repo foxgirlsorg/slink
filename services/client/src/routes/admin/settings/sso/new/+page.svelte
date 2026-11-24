@@ -10,6 +10,8 @@
 
   import { goto, invalidate } from '$app/navigation';
 
+  import { page } from '$app/state';
+
   import type { PageData } from './$types';
 
   interface Props {
@@ -17,6 +19,9 @@
   }
 
   let { data }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const formState = new OAuthProviderFormState();
   const wizard = new OAuthProviderWizardState(formState);
@@ -29,7 +34,7 @@
 </script>
 
 <svelte:head>
-  <title>Add SSO Provider | Slink</title>
+  <title>Add SSO Provider | {siteName}</title>
 </svelte:head>
 
 <SettingsPageLayout title="Add Provider" {description} isInitialized={true}>

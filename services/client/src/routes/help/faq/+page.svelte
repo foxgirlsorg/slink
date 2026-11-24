@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { InfoCard } from '@slink/feature/Feedback/InfoCard';
   import { Subtitle, Title } from '@slink/feature/Text';
   import { type Snippet, onMount } from 'svelte';
@@ -89,7 +90,7 @@
 {/snippet}
 
 <svelte:head>
-  <title>FAQ | Slink</title>
+  <title>FAQ | {customization.siteName}</title>
 </svelte:head>
 
 <div class="min-h-full">

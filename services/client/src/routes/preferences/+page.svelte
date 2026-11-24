@@ -108,7 +108,7 @@
 </script>
 
 <svelte:head>
-  <title>Preferences | Slink</title>
+  <title>Preferences | {customization.siteName}</title>
 </svelte:head>
 
 <div

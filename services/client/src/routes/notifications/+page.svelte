@@ -20,6 +20,8 @@
 
   import type { NotificationItem } from '@slink/api/Response';
 
+  import { page } from '$app/state';
+
   import { skeleton } from '@slink/lib/actions/skeleton';
   import { useNotificationFeed } from '@slink/lib/state/NotificationFeed.svelte';
 
@@ -33,6 +35,9 @@
   }
 
   let { data }: Props = $props();
+
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const notificationFeed = useNotificationFeed();
   notificationFeed.hydrate({ hasItems: data.hasAny });
@@ -70,7 +75,7 @@
 </script>
 
 <svelte:head>
-  <title>Notifications | Slink</title>
+  <title>Notifications | {siteName}</title>
 </svelte:head>
 
 <section>

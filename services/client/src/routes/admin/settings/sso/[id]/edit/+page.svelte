@@ -8,6 +8,8 @@
 
   import { goto, invalidate } from '$app/navigation';
 
+  import { page } from '$app/state';
+
   import type { PageData } from './$types';
 
   interface Props {
@@ -16,12 +18,15 @@
 
   let { data }: Props = $props();
 
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
+
   const formState = new OAuthProviderFormState();
   formState.initialize(data.provider);
 </script>
 
 <svelte:head>
-  <title>Edit SSO Provider | Slink</title>
+  <title>Edit SSO Provider | {siteName}</title>
 </svelte:head>
 
 <SettingsPageLayout

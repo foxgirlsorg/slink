@@ -33,6 +33,8 @@
   let { data }: Props = $props();
 
   const { settings } = page.data;
+  const globalSettings = $derived(page.data.globalSettings);
+  const siteName = $derived(globalSettings?.customization?.siteName || 'Slink');
 
   const tagFeed = useTagFeed();
   tagFeed.hydrate({
@@ -106,7 +108,7 @@
 {/snippet}
 
 <svelte:head>
-  <title>My Tags | Slink</title>
+  <title>My Tags | {siteName}</title>
 </svelte:head>
 
 <section in:fade={{ duration: 300 }}>

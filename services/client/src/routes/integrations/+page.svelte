@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { customization } from '@slink/lib/settings';
   import { Notice, Subtitle, Title } from '@slink/feature/Text';
   import type { ApiKeyFormData, ApiKeyManagerState } from '@slink/feature/User';
   import {
@@ -74,7 +75,7 @@
 </script>
 
 <svelte:head>
-  <title>Integrations | Slink</title>
+  <title>Integrations | {customization.siteName}</title>
 </svelte:head>
 
 <section in:fade={{ duration: 300 }}>
